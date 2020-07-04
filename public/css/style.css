@@ -1,4 +1,10 @@
 /* Test */
 body {
-    background-color: #ff00ff;
+    background-color: white;
+}
+
+footer {
+    position: absolute; 
+    bottom: 0;
+    width:100%;
 }
