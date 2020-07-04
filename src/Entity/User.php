@@ -65,7 +65,7 @@ class User
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=50)
      */
     private $country;
 
@@ -75,12 +75,12 @@ class User
     private $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=14, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $siret_number;
 
     /**
-     * @ORM\Column(type="string", length=13, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $vat_number;
 

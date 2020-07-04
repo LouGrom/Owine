@@ -23,40 +23,40 @@ class AppFixtures extends Fixture
             $user = new User();
             $address = new DeliveryAddress();
             $user->setRole($faker->randomElement(array('buyer', 'seller')));
-            if($user->getRole == 'seller') {
-                $user->setCompanyName($faker->company()->companySuffix());
+            if($user->getRole() == 'seller') {
+                $user->setCompanyName($faker->company." ".$faker->companySuffix);
             }
             $user->setEmail($faker->email);
-            $user->setPassword($faker->numberBetween(10000000, 99999999));
+            $user->setPassword($faker->numberBetween(500,1000));
 
             $user->setFirstname($faker->firstName);
-            $address->setFirstname($user->getFirstname);
+            $address->setFirstname($user->getFirstname());
 
             $user->setLastname($faker->lastName);
-            $address->setLastname($user->getLastname);
+            $address->setLastname($user->getLastname());
 
             $user->setAddress($faker->streetAddress);
-            $address->setAddress($user->getAddress);
+            $address->setAddress($user->getAddress());
 
             $user->setZipCode($faker->postcode);
-            $address->setZipCode($user->getZipCode);
+            $address->setZipCode($user->getZipCode());
 
             $user->setCity($faker->city);
-            $address->setCity($user->getCity);
+            $address->setCity($user->getCity());
 
             $user->setCountry($faker->country);
-            $address->setCountry($user->getCountry);
+            $address->setCountry($user->getCountry());
 
             $user->setPhoneNumber($faker->phoneNumber);
-            $address->setPhoneNumber($user->getPhoneNumber);
+            $address->setPhoneNumber($user->getPhoneNumber());
 
             $user->setSiretNumber($faker->siret);
             $user->setVatNumber($faker->vat);
 
             $address->setBuyer($user);
-            $user->setDeliveryAddress($address);
+            $user->addDeliveryAddress($address);
 
-            if($user->getRole == "seller"){
+            if($user->getRole() == "seller"){
                 $userSeller[] = $user;
             } else {
                 $userBuyer[] = $user;
@@ -101,12 +101,12 @@ class AppFixtures extends Fixture
             $product->setColor($faker->randomElement(array('Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F')));
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
             $product->setPrice($faker->randomFloat(1));
-            $product->setHsCode($faker->randomNumber(15));
+            $product->setHsCode($faker->randomNumber(5));
             $product->setDescription($faker->paragraph(5));
-            $product->setStatus($faker->randomNumber(0,1));
-            $product->setSeller(array_rand($userSeller));
-            $product->setBrand(array_rand($brandList));
-            $product->setCategory(array_rand($categoryList));
+            $product->setStatus($faker->numberBetween(0,1));
+            $product->setSeller($userSeller[array_rand($userSeller)]);
+            $product->setBrand($brandList[array_rand($brandList)]);
+            $product->addCategory($categoryList[array_rand($categoryList)]);
 
             $productList[] = $product;
 
