@@ -23,4 +23,11 @@ class DefaultController extends AbstractController
         return $this->render('default/contacts.html.twig');
     }
 
+    /**
+     * @Route("/legal-mentions", name="legal_mentions")
+     */
+    public function legal()
+    {
+        return $this->render('default/legal_mentions.html.twig');
+    }
 }

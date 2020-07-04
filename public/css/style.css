@@ -4,5 +4,6 @@ body {
 
 footer {
     bottom: 0;
+    height: 1em;
     width:100%;
 }
