@@ -14,4 +14,13 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/homepage.html.twig');
     }
+
+     /**
+     * @Route("/contacts", name="contacts")
+     */
+    public function contacts()
+    {
+        return $this->render('default/contacts.html.twig');
+    }
+
 }
