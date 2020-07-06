@@ -36,26 +36,10 @@ class Order
     private $trackingNumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="received_order")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $seller;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sent_order")
      * @ORM\JoinColumn(nullable=false)
      */
     private $buyer;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="order_product")
-     */
-    private $products;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Carrier::class, inversedBy="delivery", cascade={"persist", "remove"})
-     */
-    private $carrier;
 
     /**
      * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="OrderId")
@@ -72,10 +56,21 @@ class Order
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="receivedOrders")
+     */
+    private $seller;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Carrier::class, inversedBy="delivery")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $carrier;
+
     public function __construct()
     {
-        $this->products = new ArrayCollection();
         $this->orderProducts = new ArrayCollection();
+        $this->seller = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,18 +114,6 @@ class Order
         return $this;
     }
 
-    public function getSeller(): ?User
-    {
-        return $this->seller;
-    }
-
-    public function setSeller(?User $seller): self
-    {
-        $this->seller = $seller;
-
-        return $this;
-    }
-
     public function getBuyer(): ?User
     {
         return $this->buyer;
@@ -139,49 +122,6 @@ class Order
     public function setBuyer(?User $buyer): self
     {
         $this->buyer = $buyer;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setOrderProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->contains($product)) {
-            $this->products->removeElement($product);
-            // set the owning side to null (unless already changed)
-            if ($product->getOrderProduct() === $this) {
-                $product->setOrderProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCarrier(): ?Carrier
-    {
-        return $this->carrier;
-    }
-
-    public function setCarrier(?Carrier $carrier): self
-    {
-        $this->carrier = $carrier;
 
         return $this;
     }
@@ -237,6 +177,49 @@ class Order
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getSeller(): Collection
+    {
+        return $this->seller;
+    }
+
+    public function addSeller(User $seller): self
+    {
+        if (!$this->seller->contains($seller)) {
+            $this->seller[] = $seller;
+        }
+
+        return $this;
+    }
+
+    public function removeSeller(User $seller): self
+    {
+        if ($this->seller->contains($seller)) {
+            $this->seller->removeElement($seller);
+        }
+
+        return $this;
+    }
+
+    public function getCarrier(): ?Carrier
+    {
+        return $this->carrier;
+    }
+
+    public function setCarrier(?Carrier $carrier): self
+    {
+        $this->carrier = $carrier;
 
         return $this;
     }

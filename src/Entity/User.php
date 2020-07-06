@@ -90,11 +90,6 @@ class User
     private $deliveryAddress;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="seller")
-     */
-    private $receivedOrder;
-
-    /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="buyer")
      */
     private $sentOrder;
@@ -114,12 +109,17 @@ class User
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="seller")
+     */
+    private $receivedOrders;
+
     public function __construct()
     {
         $this->deliveryAddress = new ArrayCollection();
-        $this->receivedOrder = new ArrayCollection();
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
+        $this->receivedOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,37 +317,6 @@ class User
     /**
      * @return Collection|Order[]
      */
-    public function getReceivedOrder(): Collection
-    {
-        return $this->receivedOrder;
-    }
-
-    public function addReceivedOrder(Order $receivedOrder): self
-    {
-        if (!$this->receivedOrder->contains($receivedOrder)) {
-            $this->receivedOrder[] = $receivedOrder;
-            $receivedOrder->setSeller($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceivedOrder(Order $receivedOrder): self
-    {
-        if ($this->receivedOrder->contains($receivedOrder)) {
-            $this->receivedOrder->removeElement($receivedOrder);
-            // set the owning side to null (unless already changed)
-            if ($receivedOrder->getSeller() === $this) {
-                $receivedOrder->setSeller(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Order[]
-     */
     public function getSentOrder(): Collection
     {
         return $this->sentOrder;
@@ -427,6 +396,34 @@ class User
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getReceivedOrders(): Collection
+    {
+        return $this->receivedOrders;
+    }
+
+    public function addReceivedOrder(Order $receivedOrder): self
+    {
+        if (!$this->receivedOrders->contains($receivedOrder)) {
+            $this->receivedOrders[] = $receivedOrder;
+            $receivedOrder->addSeller($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedOrder(Order $receivedOrder): self
+    {
+        if ($this->receivedOrders->contains($receivedOrder)) {
+            $this->receivedOrders->removeElement($receivedOrder);
+            $receivedOrder->removeSeller($this);
+        }
 
         return $this;
     }
