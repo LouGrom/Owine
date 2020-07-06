@@ -180,12 +180,9 @@ class AppFixtures extends Fixture
                 $order_product->setProductId($oneProduct);
                 $order->setTotalQuantity($total_quantity);
                 $order->setTotalAmount($total_amount);
-                
-                $manager->persist($order);
-                $manager->flush();
-                
                 $order_product->setOrderId($order);
                 
+                $manager->persist($order_product);
             }
             
             
