@@ -25,7 +25,7 @@ class ProductCategory
     /**
      * @ORM\Column(type="integer")
      */
-    private $selection_filter;
+    private $selectionFilter;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="category")
@@ -51,12 +51,12 @@ class ProductCategory
 
     public function getSelectionFilter(): ?int
     {
-        return $this->selection_filter;
+        return $this->selectionFilter;
     }
 
-    public function setSelectionFilter(int $selection_filter): self
+    public function setSelectionFilter(int $selectionFilter): self
     {
-        $this->selection_filter = $selection_filter;
+        $this->selectionFilter = $selectionFilter;
 
         return $this;
     }

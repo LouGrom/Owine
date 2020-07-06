@@ -23,17 +23,17 @@ class Order
     /**
      * @ORM\Column(type="integer")
      */
-    private $total_quantity;
+    private $totalQuantity;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $total_amount;
+    private $totalAmount;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $tracking_number;
+    private $trackingNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="received_order")
@@ -57,9 +57,25 @@ class Order
      */
     private $carrier;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="OrderId")
+     */
+    private $orderProducts;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,36 +85,36 @@ class Order
 
     public function getTotalQuantity(): ?string
     {
-        return $this->total_quantity;
+        return $this->totalQuantity;
     }
 
-    public function setTotalQuantity(string $total_quantity): self
+    public function setTotalQuantity(string $totalQuantity): self
     {
-        $this->total_quantity = $total_quantity;
+        $this->totalQuantity = $totalQuantity;
 
         return $this;
     }
 
     public function getTotalAmount(): ?float
     {
-        return $this->total_amount;
+        return $this->totalAmount;
     }
 
-    public function setTotalAmount(float $total_amount): self
+    public function setTotalAmount(float $totalAmount): self
     {
-        $this->total_amount = $total_amount;
+        $this->totalAmount = $totalAmount;
 
         return $this;
     }
 
     public function getTrackingNumber(): ?string
     {
-        return $this->tracking_number;
+        return $this->trackingNumber;
     }
 
-    public function setTrackingNumber(string $tracking_number): self
+    public function setTrackingNumber(string $trackingNumber): self
     {
-        $this->tracking_number = $tracking_number;
+        $this->trackingNumber = $trackingNumber;
 
         return $this;
     }
@@ -166,6 +182,61 @@ class Order
     public function setCarrier(?Carrier $carrier): self
     {
         $this->carrier = $carrier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderProduct[]
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
+            $orderProduct->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->removeElement($orderProduct);
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getOrderId() === $this) {
+                $orderProduct->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

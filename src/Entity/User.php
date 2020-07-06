@@ -27,7 +27,7 @@ class User
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
-    private $company_name;
+    private $companyName;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -57,7 +57,7 @@ class User
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $zip_code;
+    private $zipCode;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -72,44 +72,54 @@ class User
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $phone_number;
+    private $phoneNumber;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $siret_number;
+    private $siretNumber;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $vat_number;
+    private $vatNumber;
 
     /**
      * @ORM\OneToMany(targetEntity=DeliveryAddress::class, mappedBy="buyer")
      */
-    private $delivery_address;
+    private $deliveryAddress;
 
     /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="seller")
      */
-    private $received_order;
+    private $receivedOrder;
 
     /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="buyer")
      */
-    private $sent_order;
+    private $sentOrder;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="seller")
      */
-    private $products_for_sale;
+    private $productsForSale;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
-        $this->delivery_address = new ArrayCollection();
-        $this->received_order = new ArrayCollection();
-        $this->sent_order = new ArrayCollection();
-        $this->products_for_sale = new ArrayCollection();
+        $this->deliveryAddress = new ArrayCollection();
+        $this->receivedOrder = new ArrayCollection();
+        $this->sentOrder = new ArrayCollection();
+        $this->productsForSale = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,12 +141,12 @@ class User
 
     public function getCompanyName(): ?string
     {
-        return $this->company_name;
+        return $this->companyName;
     }
 
-    public function setCompanyName(?string $company_name): self
+    public function setCompanyName(?string $companyName): self
     {
-        $this->company_name = $company_name;
+        $this->companyName = $companyName;
 
         return $this;
     }
@@ -203,12 +213,12 @@ class User
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -239,36 +249,36 @@ class User
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     public function getSiretNumber(): ?string
     {
-        return $this->siret_number;
+        return $this->siretNumber;
     }
 
-    public function setSiretNumber(?string $siret_number): self
+    public function setSiretNumber(?string $siretNumber): self
     {
-        $this->siret_number = $siret_number;
+        $this->siretNumber = $siretNumber;
 
         return $this;
     }
 
     public function getVatNumber(): ?string
     {
-        return $this->vat_number;
+        return $this->vatNumber;
     }
 
-    public function setVatNumber(?string $vat_number): self
+    public function setVatNumber(?string $vatNumber): self
     {
-        $this->vat_number = $vat_number;
+        $this->vatNumber = $vatNumber;
 
         return $this;
     }
@@ -278,13 +288,13 @@ class User
      */
     public function getDeliveryAddress(): Collection
     {
-        return $this->delivery_address;
+        return $this->deliveryAddress;
     }
 
     public function addDeliveryAddress(DeliveryAddress $deliveryAddress): self
     {
-        if (!$this->delivery_address->contains($deliveryAddress)) {
-            $this->delivery_address[] = $deliveryAddress;
+        if (!$this->deliveryAddress->contains($deliveryAddress)) {
+            $this->deliveryAddress[] = $deliveryAddress;
             $deliveryAddress->setBuyer($this);
         }
 
@@ -293,8 +303,8 @@ class User
 
     public function removeDeliveryAddress(DeliveryAddress $deliveryAddress): self
     {
-        if ($this->delivery_address->contains($deliveryAddress)) {
-            $this->delivery_address->removeElement($deliveryAddress);
+        if ($this->deliveryAddress->contains($deliveryAddress)) {
+            $this->deliveryAddress->removeElement($deliveryAddress);
             // set the owning side to null (unless already changed)
             if ($deliveryAddress->getBuyer() === $this) {
                 $deliveryAddress->setBuyer(null);
@@ -309,13 +319,13 @@ class User
      */
     public function getReceivedOrder(): Collection
     {
-        return $this->received_order;
+        return $this->receivedOrder;
     }
 
     public function addReceivedOrder(Order $receivedOrder): self
     {
-        if (!$this->received_order->contains($receivedOrder)) {
-            $this->received_order[] = $receivedOrder;
+        if (!$this->receivedOrder->contains($receivedOrder)) {
+            $this->receivedOrder[] = $receivedOrder;
             $receivedOrder->setSeller($this);
         }
 
@@ -324,8 +334,8 @@ class User
 
     public function removeReceivedOrder(Order $receivedOrder): self
     {
-        if ($this->received_order->contains($receivedOrder)) {
-            $this->received_order->removeElement($receivedOrder);
+        if ($this->receivedOrder->contains($receivedOrder)) {
+            $this->receivedOrder->removeElement($receivedOrder);
             // set the owning side to null (unless already changed)
             if ($receivedOrder->getSeller() === $this) {
                 $receivedOrder->setSeller(null);
@@ -340,13 +350,13 @@ class User
      */
     public function getSentOrder(): Collection
     {
-        return $this->sent_order;
+        return $this->sentOrder;
     }
 
     public function addSentOrder(Order $sentOrder): self
     {
-        if (!$this->sent_order->contains($sentOrder)) {
-            $this->sent_order[] = $sentOrder;
+        if (!$this->sentOrder->contains($sentOrder)) {
+            $this->sentOrder[] = $sentOrder;
             $sentOrder->setBuyer($this);
         }
 
@@ -355,8 +365,8 @@ class User
 
     public function removeSentOrder(Order $sentOrder): self
     {
-        if ($this->sent_order->contains($sentOrder)) {
-            $this->sent_order->removeElement($sentOrder);
+        if ($this->sentOrder->contains($sentOrder)) {
+            $this->sentOrder->removeElement($sentOrder);
             // set the owning side to null (unless already changed)
             if ($sentOrder->getBuyer() === $this) {
                 $sentOrder->setBuyer(null);
@@ -371,13 +381,13 @@ class User
      */
     public function getProductsForSale(): Collection
     {
-        return $this->products_for_sale;
+        return $this->productsForSale;
     }
 
     public function addProductsForSale(Product $productsForSale): self
     {
-        if (!$this->products_for_sale->contains($productsForSale)) {
-            $this->products_for_sale[] = $productsForSale;
+        if (!$this->productsForSale->contains($productsForSale)) {
+            $this->productsForSale[] = $productsForSale;
             $productsForSale->setSeller($this);
         }
 
@@ -386,13 +396,37 @@ class User
 
     public function removeProductsForSale(Product $productsForSale): self
     {
-        if ($this->products_for_sale->contains($productsForSale)) {
-            $this->products_for_sale->removeElement($productsForSale);
+        if ($this->productsForSale->contains($productsForSale)) {
+            $this->productsForSale->removeElement($productsForSale);
             // set the owning side to null (unless already changed)
             if ($productsForSale->getSeller() === $this) {
                 $productsForSale->setSeller(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -35,7 +35,7 @@ class DeliveryAddress
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $zip_code;
+    private $zipCode;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -50,13 +50,23 @@ class DeliveryAddress
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $phone_number;
+    private $phoneNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="delivery_address")
      * @ORM\JoinColumn(nullable=false)
      */
     private $buyer;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -101,12 +111,12 @@ class DeliveryAddress
 
     public function getZipCode(): ?string
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(string $zip_code): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -137,12 +147,12 @@ class DeliveryAddress
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phone_number = $phoneNumber;
 
         return $this;
     }
@@ -155,6 +165,30 @@ class DeliveryAddress
     public function setBuyer(?User $buyer): self
     {
         $this->buyer = $buyer;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

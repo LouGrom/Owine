@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductBrandRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,12 +32,17 @@ class ProductBrand
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $selection_filter;
+    private $selectionFilter;
 
     /**
-     * @ORM\OneToOne(targetEntity=Product::class, mappedBy="brand", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="brand")
      */
-    private $product;
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,28 +75,42 @@ class ProductBrand
 
     public function getSelectionFilter(): ?string
     {
-        return $this->selection_filter;
+        return $this->selectionFilter;
     }
 
-    public function setSelectionFilter(?string $selection_filter): self
+    public function setSelectionFilter(?string $selectionFilter): self
     {
-        $this->selection_filter = $selection_filter;
+        $this->selectionFilter = $selectionFilter;
 
         return $this;
     }
 
-    public function getProduct(): ?Product
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        return $this->product;
+        return $this->products;
     }
 
-    public function setProduct(Product $product): self
+    public function addProduct(Product $product): self
     {
-        $this->product = $product;
-
-        // set the owning side of the relation if necessary
-        if ($product->getBrand() !== $this) {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
             $product->setBrand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getBrand() === $this) {
+                $product->setBrand(null);
+            }
         }
 
         return $this;

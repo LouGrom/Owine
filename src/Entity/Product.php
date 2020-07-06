@@ -37,7 +37,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $cuvee_domaine;
+    private $cuveeDomaine;
 
     /**
      * @ORM\Column(type="float")
@@ -57,7 +57,7 @@ class Product
     /**
      * @ORM\Column(type="float")
      */
-    private $alcohol_volume;
+    private $alcoholVolume;
 
     /**
      * @ORM\Column(type="float")
@@ -67,7 +67,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $hs_code;
+    private $hsCode;
 
     /**
      * @ORM\Column(type="text")
@@ -96,19 +96,40 @@ class Product
     private $category;
 
     /**
-     * @ORM\OneToOne(targetEntity=ProductBrand::class, inversedBy="product", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="products")
+     */
+    private $orderProduct;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductBrand::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="products")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="ProductId")
      */
-    private $order_product;
+    private $orderProducts;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $stockQuantity;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
         $this->category = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,12 +175,12 @@ class Product
 
     public function getCuveeDomaine(): ?string
     {
-        return $this->cuvee_domaine;
+        return $this->cuveeDomaine;
     }
 
-    public function setCuveeDomaine(string $cuvee_domaine): self
+    public function setCuveeDomaine(string $cuveeDomaine): self
     {
-        $this->cuvee_domaine = $cuvee_domaine;
+        $this->cuveeDomaine = $cuveeDomaine;
 
         return $this;
     }
@@ -202,12 +223,12 @@ class Product
 
     public function getAlcoholVolume(): ?string
     {
-        return $this->alcohol_volume;
+        return $this->alcoholVolume;
     }
 
-    public function setAlcoholVolume(string $alcohol_volume): self
+    public function setAlcoholVolume(string $alcoholVolume): self
     {
-        $this->alcohol_volume = $alcohol_volume;
+        $this->alcoholVolume = $alcoholVolume;
 
         return $this;
     }
@@ -226,12 +247,12 @@ class Product
 
     public function getHsCode(): ?string
     {
-        return $this->hs_code;
+        return $this->hsCode;
     }
 
-    public function setHsCode(string $hs_code): self
+    public function setHsCode(string $hsCode): self
     {
-        $this->hs_code = $hs_code;
+        $this->hsCode = $hsCode;
 
         return $this;
     }
@@ -315,26 +336,93 @@ class Product
         return $this;
     }
 
+    public function getOrderProduct(): ?Order
+    {
+        return $this->orderProduct;
+    }
+
+    public function setOrderProduct(?Order $orderProduct): self
+    {
+        $this->orderProduct = $orderProduct;
+
+        return $this;
+    }
+
     public function getBrand(): ?ProductBrand
     {
         return $this->brand;
     }
 
-    public function setBrand(ProductBrand $brand): self
+    public function setBrand(?ProductBrand $brand): self
     {
         $this->brand = $brand;
 
         return $this;
     }
 
-    public function getOrderProduct(): ?Order
+    /**
+     * @return Collection|OrderProduct[]
+     */
+    public function getOrderProducts(): Collection
     {
-        return $this->order_product;
+        return $this->orderProducts;
     }
 
-    public function setOrderProduct(?Order $order_product): self
+    public function addOrderProduct(OrderProduct $orderProduct): self
     {
-        $this->order_product = $order_product;
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
+            $orderProduct->setProductId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->removeElement($orderProduct);
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getProductId() === $this) {
+                $orderProduct->setProductId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getStockQuantity(): ?int
+    {
+        return $this->stockQuantity;
+    }
+
+    public function setStockQuantity(?int $stockQuantity): self
+    {
+        $this->stockQuantity = $stockQuantity;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
