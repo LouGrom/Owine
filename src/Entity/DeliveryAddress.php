@@ -152,7 +152,7 @@ class DeliveryAddress
 
     public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->phone_number = $phoneNumber;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
