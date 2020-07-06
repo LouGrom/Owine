@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
             $manager->persist($address);
         }
 
-        
+        // On crée 4 marques
         $brand_name = ['Fabigeon', 'La villageoise', 'Cellier des Dauphins', 'Cambras'];
         for($i = 0; $i < count($brand_name); $i++){
 
@@ -87,7 +87,8 @@ class AppFixtures extends Fixture
 
             $manager->persist($brand);
         }
-
+        
+        // On crée 4 categories
         $category_name = ['AOC', 'AOVDQS', 'Vin de pays', 'Vin de table'];
         for($i = 0; $i < count($category_name); $i++){
 
@@ -101,6 +102,7 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
+        // On crée 50 produits
         for ($i = 0; $i < 50; $i++) {
 
             $product = new Product();
@@ -129,7 +131,7 @@ class AppFixtures extends Fixture
             $manager->persist($product);
         }
 
-
+        // On crée 7 transporteurs et 3 modes de transport
         $carrier_name = ['TNT', 'Vignoblexport', 'UPS', 'La Poste', 'Colissimo', 'Deliveroo', 'Uber Eat'];
         $carrier_mode=['Brouette', 'Tabouret', 'Fabigeon'];
        
@@ -146,6 +148,7 @@ class AppFixtures extends Fixture
             $manager->persist($carrier);
         }
         
+        // On crée 15 commandes
         for ($i = 0; $i < 15; $i++) {
 
             $total_quantity = 0;
@@ -158,26 +161,35 @@ class AppFixtures extends Fixture
             $order->setCarrier($carrierList[array_rand($carrierList)]);
             $order->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
             
-            
-            
-            
+            // Chaque commande contiendra entre 1 et 5 produits différents
             $nbr_products = random_int(1, 5);
             for ($k = 0; $k <= $nbr_products; $k++) {
                 $order_product = new OrderProduct();
-                
-                $quantity = random_int(1,50);
+
+                // On ajoute un produit aléatoire parmi ceux existants (qu'on a sauvegardé plus tôt dans un array)
+                $oneProduct = $productList[array_rand($productList)];
+
+                // Ces objets sont commandés dans une certaine quantité
+                $quantity = random_int(1, 50);
+                $order_product->setQuantity($quantity);
                 $total_quantity += $quantity;
+                $total_amount += $oneProduct->getPrice() * $quantity;
+                
+                // On ajoute le vendeur du produit à la liste des vendeurs
+                $order->addSeller($oneProduct->getSeller());
+                $order_product->setProductId($oneProduct);
+                $order->setTotalQuantity($total_quantity);
+                $order->setTotalAmount($total_amount);
+                
                 $manager->persist($order);
                 $manager->flush();
-                $order->getId();
                 
-                $order->addProduct($productList[array_rand($productList)]);
+                $order_product->setOrderId($order);
                 
             }
             
             
-            $order->setSeller($userSeller[array_rand($userSeller)]);
-
+            $manager->persist($order);
         }
         
         

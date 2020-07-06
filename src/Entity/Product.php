@@ -94,7 +94,7 @@ class Product
      * @ORM\OneToMany(targetEntity=ProductCategory::class, mappedBy="product")
      */
     private $category;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=ProductBrand::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)

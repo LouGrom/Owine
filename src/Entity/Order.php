@@ -42,11 +42,6 @@ class Order
     private $buyer;
 
     /**
-     * @ORM\OneToOne(targetEntity=Carrier::class, inversedBy="delivery", cascade={"persist", "remove"})
-     */
-    private $carrier;
-
-    /**
      * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="OrderId")
      */
     private $orderProducts;
@@ -65,6 +60,12 @@ class Order
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="receivedOrders")
      */
     private $seller;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Carrier::class, inversedBy="delivery")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $carrier;
 
     public function __construct()
     {
@@ -121,18 +122,6 @@ class Order
     public function setBuyer(?User $buyer): self
     {
         $this->buyer = $buyer;
-
-        return $this;
-    }
-
-    public function getCarrier(): ?Carrier
-    {
-        return $this->carrier;
-    }
-
-    public function setCarrier(?Carrier $carrier): self
-    {
-        $this->carrier = $carrier;
 
         return $this;
     }
@@ -219,6 +208,18 @@ class Order
         if ($this->seller->contains($seller)) {
             $this->seller->removeElement($seller);
         }
+
+        return $this;
+    }
+
+    public function getCarrier(): ?Carrier
+    {
+        return $this->carrier;
+    }
+
+    public function setCarrier(?Carrier $carrier): self
+    {
+        $this->carrier = $carrier;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CarrierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,9 +30,14 @@ class Carrier
     private $mode;
 
     /**
-     * @ORM\OneToOne(targetEntity=Order::class, mappedBy="carrier", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="carrier")
      */
     private $delivery;
+
+    public function __construct()
+    {
+        $this->delivery = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,19 +68,32 @@ class Carrier
         return $this;
     }
 
-    public function getDelivery(): ?Order
+    /**
+     * @return Collection|Order[]
+     */
+    public function getDelivery(): Collection
     {
         return $this->delivery;
     }
 
-    public function setDelivery(?Order $delivery): self
+    public function addDelivery(Order $delivery): self
     {
-        $this->delivery = $delivery;
+        if (!$this->delivery->contains($delivery)) {
+            $this->delivery[] = $delivery;
+            $delivery->setCarrier($this);
+        }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newCarrier = null === $delivery ? null : $this;
-        if ($delivery->getCarrier() !== $newCarrier) {
-            $delivery->setCarrier($newCarrier);
+        return $this;
+    }
+
+    public function removeDelivery(Order $delivery): self
+    {
+        if ($this->delivery->contains($delivery)) {
+            $this->delivery->removeElement($delivery);
+            // set the owning side to null (unless already changed)
+            if ($delivery->getCarrier() === $this) {
+                $delivery->setCarrier(null);
+            }
         }
 
         return $this;
