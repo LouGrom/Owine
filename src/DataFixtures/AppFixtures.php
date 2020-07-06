@@ -7,6 +7,9 @@ use App\Entity\DeliveryAddress;
 use App\Entity\Product;
 use App\Entity\ProductCategory;
 use App\Entity\ProductBrand;
+use App\Entity\Carrier;
+use App\Entity\Order;
+use App\Entity\OrderProduct;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -15,17 +18,19 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // On configure dans quelles langues nous voulons nos données
+        // On configure dans quelle langue nous voulons nos données
         $faker = Faker\Factory::create('fr_FR');
 
-        // On créé 40 personnes
+        // On crée 40 personnes et leur adreses de livraison  
         for ($i = 0; $i < 40; $i++) {
             $user = new User();
             $address = new DeliveryAddress();
             $user->setRole($faker->randomElement(array('buyer', 'seller')));
+            
             if($user->getRole() == 'seller') {
                 $user->setCompanyName($faker->company." ".$faker->companySuffix);
             }
+            
             $user->setEmail($faker->email);
             $user->setPassword($faker->numberBetween(500,1000));
 
@@ -56,6 +61,10 @@ class AppFixtures extends Fixture
             $address->setBuyer($user);
             $user->addDeliveryAddress($address);
 
+            $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+            $user->setUpdatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+
+            // On stock les objets User dans un tableau pour les utiliser plus tard
             if($user->getRole() == "seller"){
                 $userSeller[] = $user;
             } else {
@@ -66,12 +75,15 @@ class AppFixtures extends Fixture
             $manager->persist($address);
         }
 
+        
         $brand_name = ['Fabigeon', 'La villageoise', 'Cellier des Dauphins', 'Cambras'];
         for($i = 0; $i < count($brand_name); $i++){
 
             $brand = new ProductBrand();
             $brand->setName($brand_name[$i]);
             $brand->setSelectionFilter($i);
+
+            // Tableau des objets ProductBrand
             $brandList[] = $brand;
 
             $manager->persist($brand);
@@ -83,6 +95,8 @@ class AppFixtures extends Fixture
             $category = new ProductCategory();
             $category->setName($category_name[$i]);
             $category->setSelectionFilter($i);
+
+            // Tableau des objets ProductCategory
             $categoryList[] = $category;
 
             $manager->persist($category);
@@ -107,12 +121,60 @@ class AppFixtures extends Fixture
             $product->setSeller($userSeller[array_rand($userSeller)]);
             $product->setBrand($brandList[array_rand($brandList)]);
             $product->addCategory($categoryList[array_rand($categoryList)]);
+            $product->stockQuantity($faker->numberBetween(0,1500));
+            $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
 
+            //Tableau des objects ProductList
             $productList[] = $product;
 
             $manager->persist($product);
         }
 
-        $manager->flush();
+
+        $carrier_name = ['TNT', 'Vignoblexport', 'UPS', 'La Poste', 'Colissimo', 'Deliveroo', 'Uber Eat'];
+        $carrier_mode=['Brouette', 'Tabouret', 'Fabigeon'];
+       
+        for($i = 0; $i < count($carrier_name); $i++){
+
+            $carrier = new Carrier();
+            $carrier->setName($carrier_name[$i]);
+            $carrier->setMode($carrier_mode[array_rand($carrier_mode)]);
+            // $carrier_mode[1]  <---- array_rand($carrier_mode) <----- 0-2
+
+            // Tableau des objets carrier
+            $carrier[] = $carrier;
+
+            $manager->persist($carrier);
+        }
+        
+        for ($i = 0; $i < 15; $i++) {
+
+            $total_quantity = 0;
+            $total_amount = 0;
+
+            $order = new Order();
+
+            $order->setTrackingNumber($faker->bothify('##?###??##?#?'));
+
+            $order->setBuyer($userBuyer[array_rand($userBuyer)]);
+
+            $nbr_products = random_int(1, 5);
+            for ($k = 0; $k <= $nbr_products; $k++) {
+                $order_product = new OrderProduct();
+
+                $quantity = random_int(1,50);
+
+                $order->addProduct($productList[array_rand($productList)]);
+                
+            }
+
+            $order->setBuyer($faker->unique()->dateTime($max = 'now', $timezone = null));
+
+            // $order->setSeller()
+
+        }
+        
+        
+        $manager->flush(); 
     }
 }
