@@ -62,7 +62,6 @@ class AppFixtures extends Fixture
             $user->addDeliveryAddress($address);
 
             $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
-            $user->setUpdatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
 
             // On stock les objets User dans un tableau pour les utiliser plus tard
             if($user->getRole() == "seller"){
@@ -121,7 +120,7 @@ class AppFixtures extends Fixture
             $product->setSeller($userSeller[array_rand($userSeller)]);
             $product->setBrand($brandList[array_rand($brandList)]);
             $product->addCategory($categoryList[array_rand($categoryList)]);
-            $product->stockQuantity($faker->numberBetween(0,1500));
+            $product->setStockQuantity($faker->numberBetween(0,1500));
             $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
 
             //Tableau des objects ProductList
@@ -142,7 +141,7 @@ class AppFixtures extends Fixture
             // $carrier_mode[1]  <---- array_rand($carrier_mode) <----- 0-2
 
             // Tableau des objets carrier
-            $carrier[] = $carrier;
+            $carrierList[] = $carrier;
 
             $manager->persist($carrier);
         }
@@ -155,22 +154,29 @@ class AppFixtures extends Fixture
             $order = new Order();
 
             $order->setTrackingNumber($faker->bothify('##?###??##?#?'));
-
             $order->setBuyer($userBuyer[array_rand($userBuyer)]);
-
+            $order->setCarrier($carrierList[array_rand($carrierList)]);
+            $order->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+            
+            
+            
+            
             $nbr_products = random_int(1, 5);
             for ($k = 0; $k <= $nbr_products; $k++) {
                 $order_product = new OrderProduct();
-
+                
                 $quantity = random_int(1,50);
-
+                $total_quantity += $quantity;
+                $manager->persist($order);
+                $manager->flush();
+                $order->getId();
+                
                 $order->addProduct($productList[array_rand($productList)]);
                 
             }
-
-            $order->setBuyer($faker->unique()->dateTime($max = 'now', $timezone = null));
-
-            // $order->setSeller()
+            
+            
+            $order->setSeller($userSeller[array_rand($userSeller)]);
 
         }
         
