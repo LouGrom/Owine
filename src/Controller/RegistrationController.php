@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\CompanyRegistrationFormType;
+use App\Form\IndividualRegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -31,18 +32,21 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $companyForm = $this->createForm(CompanyRegistrationFormType::class, $user);
+        $companyForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $individualForm = $this->createForm(IndividualRegistrationFormType::class, $user);
+        $individualForm->handleRequest($request);
+
+        if ($companyForm->isSubmitted() && $companyForm->isValid() || $individualForm->isSubmitted() && $individualForm->isValid()) {
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $companyForm->get('plainPassword')->getData()
                 )
             );
-
+        
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -66,7 +70,8 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'companyRegistrationForm' => $companyForm->createView(),
+            'individualRegistrationForm' => $individualForm->createView(),
         ]);
     }
 

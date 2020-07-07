@@ -9,23 +9,51 @@
 
     <h1>Inscription</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.siret_number) }}
-        {{ form_row(registrationForm.vat_number) }}
-        {{ form_row(registrationForm.company_name) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.address) }}
-        {{ form_row(registrationForm.zip_code) }}
-        {{ form_row(registrationForm.city) }}
-        {{ form_row(registrationForm.country) }}
-        {{ form_row(registrationForm.phone_number) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    <ul class="nav nav-pills">
+        <li class="active mr-3"><a data-toggle="pill" href="#buyer" class="btn btn-secondary">Entreprise</a></li>
+        <li><a data-toggle="pill" href="#seller" class="btn btn-secondary">Particulier</a></li>
+    </ul>
 
-        <button type="submit" class="btn btn-secondary">Valider</button>
-    {{ form_end(registrationForm) }}
+    <div class="tab-content">
+        <div id="buyer" class="tab-pane fade in active">
+            {{ form_start(companyRegistrationForm) }}
+            {{ form_row(companyRegistrationForm.siret_number) }}
+            {{ form_row(companyRegistrationForm.vat_number) }}
+            {{ form_row(companyRegistrationForm.company_name) }}
+            {{ form_row(companyRegistrationForm.firstname) }}
+            {{ form_row(companyRegistrationForm.lastname) }}
+            {{ form_row(companyRegistrationForm.email) }}
+            {{ form_row(companyRegistrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(companyRegistrationForm.address) }}
+            {{ form_row(companyRegistrationForm.zip_code) }}
+            {{ form_row(companyRegistrationForm.city) }}
+            {{ form_row(companyRegistrationForm.country) }}
+            {{ form_row(companyRegistrationForm.phone_number) }}
+            {{ form_row(companyRegistrationForm.agreeTerms) }}
+    
+            <button type="submit" class="btn btn-secondary">Valider</button>
+        {{ form_end(companyRegistrationForm) }}
+        </div>
+        <div id="seller" class="tab-pane fade">
+            {{ form_start(individualRegistrationForm) }}
+            {{ form_row(individualRegistrationForm.firstname) }}
+            {{ form_row(individualRegistrationForm.lastname) }}
+            {{ form_row(individualRegistrationForm.email) }}
+            {{ form_row(individualRegistrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(individualRegistrationForm.address) }}
+            {{ form_row(individualRegistrationForm.zip_code) }}
+            {{ form_row(individualRegistrationForm.city) }}
+            {{ form_row(individualRegistrationForm.country) }}
+            {{ form_row(individualRegistrationForm.phone_number) }}
+            {{ form_row(individualRegistrationForm.agreeTerms) }}
+    
+            <button type="submit" class="btn btn-secondary">Valider</button>
+        {{ form_end(individualRegistrationForm) }}
+        </div>
+      </div>
+
 {% endblock %}
