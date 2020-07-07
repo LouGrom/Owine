@@ -85,7 +85,7 @@ class Product
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products_for_sale")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="productsForSale")
      * @ORM\JoinColumn(nullable=false)
      */
     private $seller;

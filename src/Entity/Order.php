@@ -36,7 +36,7 @@ class Order
     private $trackingNumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sent_order")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sentOrder")
      * @ORM\JoinColumn(nullable=false)
      */
     private $buyer;

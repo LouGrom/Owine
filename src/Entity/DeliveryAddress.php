@@ -53,7 +53,7 @@ class DeliveryAddress
     private $phoneNumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="delivery_address")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="deliveryAddress")
      * @ORM\JoinColumn(nullable=false)
      */
     private $buyer;
