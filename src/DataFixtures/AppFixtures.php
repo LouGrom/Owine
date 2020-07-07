@@ -25,14 +25,14 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 40; $i++) {
             $user = new User();
             $address = new DeliveryAddress();
-            $user->setRole($faker->randomElement(array('buyer', 'seller')));
+            $user->setRoles([$faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
             
-            if($user->getRole() == 'seller') {
+            if(in_array("ROLE_SELLER", $user->getRoles())) {
                 $user->setCompanyName($faker->company." ".$faker->companySuffix);
             }
             
             $user->setEmail($faker->email);
-            $user->setPassword($faker->numberBetween(500,1000));
+            $user->setPassword(password_hash("banane", PASSWORD_DEFAULT));
 
             $user->setFirstname($faker->firstName);
             $address->setFirstname($user->getFirstname());
@@ -64,7 +64,7 @@ class AppFixtures extends Fixture
             $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
 
             // On stock les objets User dans un tableau pour les utiliser plus tard
-            if($user->getRole() == "seller"){
+            if(in_array("ROLE_SELLER", $user->getRoles())){
                 $userSeller[] = $user;
             } else {
                 $userBuyer[] = $user;
