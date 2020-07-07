@@ -20,12 +20,32 @@ class IndividualRegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom',
+                'attr' => [
+                    'placeholder' => 'Fabio'
+                ],
+                ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Shiba'
+                ],
+                ])
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse mail',
+                'attr' => [
+                    'placeholder' => 'iloveshiba@gmail.com'
+                ],
+                ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Mot de passe',
+                'help' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffres, un caractère spécial et doit faire au moins 8 caractères',
+                'attr' => [
+                    'placeholder' => 'Azerty#123'
+                ],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -39,12 +59,38 @@ class IndividualRegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('address', TextType::class)
-            ->add('zip_code', NumberType::class)
-            ->add('city', TextType::class)
-            ->add('country', TextType::class)
-            ->add('phone_number', NumberType::class)
+            ->add('address', TextType::class,[
+                'label' => 'Adresse postale',
+                'attr' => [
+                    'placeholder' => '1 boulevard du Shiba'
+                ],
+            ])
+            ->add('zip_code', NumberType::class,[
+                'label' => 'Code postal',
+                'attr' => [
+                    'placeholder' => '75009'
+                ],
+            ])
+            ->add('city', TextType::class,[
+                'label' => 'Ville',
+                'attr' => [
+                    'placeholder' => 'Paris'
+                ],
+            ])
+            ->add('country', TextType::class,[
+                'label' => 'Pays',
+                'attr' => [
+                    'placeholder' => 'France'
+                ],
+            ])
+            ->add('phone_number', NumberType::class,[
+                'label' => 'Numéro de téléphone',
+                'attr' => [
+                    'placeholder' => '0102030405'
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'Valider les conditions de vente et d\'utilisation',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

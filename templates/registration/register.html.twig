@@ -9,14 +9,14 @@
 
     <h1>Inscription</h1>
 
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills justify-content-center mb-3">
         <li class="active mr-3"><a data-toggle="pill" href="#buyer" class="btn btn-secondary">Entreprise</a></li>
         <li><a data-toggle="pill" href="#seller" class="btn btn-secondary">Particulier</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="buyer" class="tab-pane fade in active">
-            {{ form_start(companyRegistrationForm) }}
+        {{ form_start(companyRegistrationForm) }}
             {{ form_row(companyRegistrationForm.siret_number) }}
             {{ form_row(companyRegistrationForm.vat_number) }}
             {{ form_row(companyRegistrationForm.company_name) }}
@@ -33,11 +33,11 @@
             {{ form_row(companyRegistrationForm.phone_number) }}
             {{ form_row(companyRegistrationForm.agreeTerms) }}
     
-            <button type="submit" class="btn btn-secondary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
         {{ form_end(companyRegistrationForm) }}
         </div>
         <div id="seller" class="tab-pane fade">
-            {{ form_start(individualRegistrationForm) }}
+        {{ form_start(individualRegistrationForm) }}
             {{ form_row(individualRegistrationForm.firstname) }}
             {{ form_row(individualRegistrationForm.lastname) }}
             {{ form_row(individualRegistrationForm.email) }}
@@ -51,9 +51,9 @@
             {{ form_row(individualRegistrationForm.phone_number) }}
             {{ form_row(individualRegistrationForm.agreeTerms) }}
     
-            <button type="submit" class="btn btn-secondary">Valider</button>
+            <button type="submit" class="btn btn-success">Valider</button>
         {{ form_end(individualRegistrationForm) }}
         </div>
-      </div>
+    </div>
 
 {% endblock %}
