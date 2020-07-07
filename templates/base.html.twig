@@ -55,6 +55,9 @@
                   Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
                 </div>
                 {% else %}
+                <div class="">
+                  <a class="nav-link" href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
+                </div>
                 <div class="mr-3">
                   <a class="nav-link" href="{{ path('app_login') }}" class="btn btn-secondary">Connexion</a>
                 </div>
@@ -65,11 +68,17 @@
               </form>
             </div>
           </nav>
-
-        <div class="container">
-        {% block body %}{% endblock %}
-        </div>
-
+          
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+    
+            {% block body %}{% endblock %}
+            
         {% block footer %}
           {% include "_footer.html.twig"%}
         {% endblock %}
