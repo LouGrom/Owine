@@ -32,8 +32,8 @@
         {% for product in app.user.productsForSale %}
             <tr>
             <td>{{ product.appellation }}</td>
-            <td>{{ product.type }}</td>
-            <td>{{ product.color }}</td>
+            <td>{{ product.type.name }}</td>
+            <td>{{ product.color.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.hsCode }}</td>
             <td>{{ product.stockQuantity }}</td>
