@@ -24,28 +24,51 @@ class AppFixtures extends Fixture
 
         $seller = new User();
         $buyer = new User();
+        $admin = new User();
         
         $seller->setRoles(['ROLE_USER', 'ROLE_SELLER']);
         $buyer->setRoles(['ROLE_USER', 'ROLE_BUYER']);
+        $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+
         $seller->setCompanyName($faker->company." ".$faker->companySuffix);
+
         $seller->setEmail('seller@mail.fr');
         $buyer->setEmail('buyer@mail.fr');
+        $admin->setEmail('admin@mail.fr');
+
         $seller->setPassword(password_hash("banane", PASSWORD_DEFAULT));
         $buyer->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+        $admin->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+
         $buyer->setFirstname($faker->firstName);
         $buyer->setLastname($faker->lastName);
+
         $seller->setFirstname($faker->firstName);
         $seller->setLastname($faker->lastName);
+
+        $admin->setFirstname($faker->firstName);
+        $admin->setLastname($faker->lastName);
+
         $buyer->setAddress($faker->streetAddress);
         $seller->setAddress($faker->streetAddress);
+        $admin->setAddress($faker->streetAddress);
+
         $buyer->setZipCode($faker->postcode);
         $seller->setZipCode($faker->postcode);
+        $admin->setZipCode($faker->postcode);
+
         $buyer->setCity($faker->city);
         $seller->setCity($faker->city);
+        $admin->setCity($faker->city);
+
         $buyer->setCountry($faker->country);
         $seller->setCountry($faker->country);
+        $admin->setCountry($faker->country);
+
         $buyer->setPhoneNumber($faker->phoneNumber);
         $seller->setPhoneNumber($faker->phoneNumber);
+        $admin->setPhoneNumber($faker->phoneNumber);
+
         $seller->setSiretNumber($faker->siret);
         $seller->setVatNumber($faker->vat);
         
@@ -62,6 +85,7 @@ class AppFixtures extends Fixture
 
         $buyer->addDeliveryAddress($address);
         $seller->addDeliveryAddress($address);
+        $admin->addDeliveryAddress($address);
 
         $seller->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
         $buyer->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
@@ -70,6 +94,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($buyer);
         $manager->persist($seller);
+        $manager->persist($admin);
         $manager->persist($address);
         $manager->flush();
 
