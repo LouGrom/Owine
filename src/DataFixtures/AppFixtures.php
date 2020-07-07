@@ -21,11 +21,65 @@ class AppFixtures extends Fixture
         // On configure dans quelle langue nous voulons nos données
         $faker = Faker\Factory::create('fr_FR');
 
-        // On crée 40 personnes et leur adreses de livraison  
-        for ($i = 0; $i < 40; $i++) {
+
+        $seller = new User();
+        $buyer = new User();
+        
+        $seller->setRoles(['ROLE_USER', 'ROLE_SELLER']);
+        $buyer->setRoles(['ROLE_USER', 'ROLE_BUYER']);
+        $seller->setCompanyName($faker->company." ".$faker->companySuffix);
+        $seller->setEmail('seller@mail.fr');
+        $buyer->setEmail('buyer@mail.fr');
+        $seller->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+        $buyer->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+        $buyer->setFirstname($faker->firstName);
+        $buyer->setLastname($faker->lastName);
+        $seller->setFirstname($faker->firstName);
+        $seller->setLastname($faker->lastName);
+        $buyer->setAddress($faker->streetAddress);
+        $seller->setAddress($faker->streetAddress);
+        $buyer->setZipCode($faker->postcode);
+        $seller->setZipCode($faker->postcode);
+        $buyer->setCity($faker->city);
+        $seller->setCity($faker->city);
+        $buyer->setCountry($faker->country);
+        $seller->setCountry($faker->country);
+        $buyer->setPhoneNumber($faker->phoneNumber);
+        $seller->setPhoneNumber($faker->phoneNumber);
+        $seller->setSiretNumber($faker->siret);
+        $seller->setVatNumber($faker->vat);
+        
+        $address = new DeliveryAddress();
+
+        $address->setFirstname($buyer->getFirstname());
+        $address->setLastname($buyer->getLastname());
+        $address->setAddress($buyer->getAddress());
+        $address->setZipCode($buyer->getZipCode());
+        $address->setCity($buyer->getCity());
+        $address->setCountry($buyer->getCountry());
+        $address->setPhoneNumber($buyer->getPhoneNumber());
+        $address->setBuyer($buyer);
+
+        $buyer->addDeliveryAddress($address);
+        $seller->addDeliveryAddress($address);
+
+        $seller->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+        $buyer->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+        $userSeller[] = $seller;
+        $userBuyer[] = $buyer;
+
+        $manager->persist($buyer);
+        $manager->persist($seller);
+        $manager->persist($address);
+        $manager->flush();
+
+
+        // On crée 10 personnes et leur adreses de livraison  
+        for ($i = 0; $i < 10; $i++) {
             $user = new User();
+            
             $address = new DeliveryAddress();
-            $user->setRoles([$faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
+            $user->setRoles(['ROLE_USER', $faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
             
             if(in_array("ROLE_SELLER", $user->getRoles())) {
                 $user->setCompanyName($faker->company." ".$faker->companySuffix);
@@ -35,29 +89,30 @@ class AppFixtures extends Fixture
             $user->setPassword(password_hash("banane", PASSWORD_DEFAULT));
 
             $user->setFirstname($faker->firstName);
-            $address->setFirstname($user->getFirstname());
-
+            
             $user->setLastname($faker->lastName);
-            $address->setLastname($user->getLastname());
-
+            
             $user->setAddress($faker->streetAddress);
-            $address->setAddress($user->getAddress());
-
+            
             $user->setZipCode($faker->postcode);
-            $address->setZipCode($user->getZipCode());
-
+            
             $user->setCity($faker->city);
-            $address->setCity($user->getCity());
-
+            
             $user->setCountry($faker->country);
-            $address->setCountry($user->getCountry());
-
+            
             $user->setPhoneNumber($faker->phoneNumber);
-            $address->setPhoneNumber($user->getPhoneNumber());
 
+            
             $user->setSiretNumber($faker->siret);
             $user->setVatNumber($faker->vat);
-
+            
+            $address->setFirstname($user->getFirstname());
+            $address->setLastname($user->getLastname());
+            $address->setAddress($user->getAddress());
+            $address->setZipCode($user->getZipCode());
+            $address->setCity($user->getCity());
+            $address->setCountry($user->getCountry());
+            $address->setPhoneNumber($user->getPhoneNumber());
             $address->setBuyer($user);
             $user->addDeliveryAddress($address);
 

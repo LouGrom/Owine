@@ -26,12 +26,17 @@ security:
                 # where to redirect after logout
                 target: homepage
 
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/board, roles: ROLE_SELLER }
+        # - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY && !IS_AUTHENTICADED_FULLY }
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
