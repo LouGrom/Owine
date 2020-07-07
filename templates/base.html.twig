@@ -28,10 +28,6 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="{{ path('homepage') }}">Accueil <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                </li>
-                
                 {# Si on est connecté #}
                 {% if app.user %}
                   {# et qu'on est un seller #}
@@ -53,9 +49,14 @@
                   <a class="nav-link" href="#">Panier</a>
                 </li>
               </ul>
+
               {% if app.user %}
                 <div class="mr-3">
                   Bonjour {{ app.user.username }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                </div>
+                {% else %}
+                <div class="mr-3">
+                  <a class="nav-link" href="{{ path('app_login') }}" class="btn btn-secondary">Connexion</a>
                 </div>
                {% endif %}
               <form class="form-inline my-2 my-lg-0">
