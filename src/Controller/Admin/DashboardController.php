@@ -39,12 +39,14 @@ class DashboardController extends AbstractDashboardController
         //return $this->render('user/test.html.twig', [
         //    'users' => $users,
         //]);
+
+        // return $this->render('user/admin.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('O Wine');
+            ->setTitle('O\'Wine admin');
     }
 
     public function configureMenuItems(): iterable
@@ -52,8 +54,7 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linktoDashboard('Dashboard', 'fa fa-home'),
     
-            MenuItem::linktoCrud('Users', 'fa fa-user', User::class)
-            ->setController(UserController::class),
+            MenuItem::linkToCrud('Users', 'fa fa-user', User::class),
 
             // MenuItem::linkToLogout('Logout', 'fa fa-exit'),
         ];

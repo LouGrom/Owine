@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/admin/user", name="admin_user", methods="GET")
-     */
+    // /**
+    //  * @Route("/admin/user", name="admin_user", methods="GET")
+    //  */
     public function admin(UserRepository $userRepository)
     {
         return $this->render('user/admin.html.twig', [
