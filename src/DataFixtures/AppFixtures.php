@@ -8,8 +8,10 @@ use App\Entity\Product;
 use App\Entity\ProductCategory;
 use App\Entity\ProductBrand;
 use App\Entity\Carrier;
+use App\Entity\Color;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
+use App\Entity\Type;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -112,22 +114,13 @@ class AppFixtures extends Fixture
             
             $user->setEmail($faker->email);
             $user->setPassword(password_hash("banane", PASSWORD_DEFAULT));
-
             $user->setFirstname($faker->firstName);
-            
             $user->setLastname($faker->lastName);
-            
             $user->setAddress($faker->streetAddress);
-            
             $user->setZipCode($faker->postcode);
-            
             $user->setCity($faker->city);
-            
             $user->setCountry($faker->country);
-            
             $user->setPhoneNumber($faker->phoneNumber);
-
-            
             $user->setSiretNumber($faker->siret);
             $user->setVatNumber($faker->vat);
             
@@ -182,6 +175,28 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
+        // On crée 4 Types
+        $type_name = ['Cuit', 'Effervescent', 'Tranquille', 'Crémeux'];
+        for($i = 0; $i < count($type_name); $i++){
+            $type = new Type();
+            $type->setName($type_name[$i]);
+
+            // Tableau des objets ProductCategory
+            $typeList[] = $type;
+            $manager->persist($type);
+        }
+
+        // On crée 5 couleurs
+        $color_name = ['Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F'];
+        for($i = 0; $i < count($color_name); $i++){
+            $color = new Color();
+            $color->setName($color_name[$i]);
+
+            // Tableau des objets ProductCategory
+            $colorList[] = $color;
+            $manager->persist($color);
+        }
+
         // On crée 50 produits
         for ($i = 0; $i < 50; $i++) {
 
@@ -189,11 +204,15 @@ class AppFixtures extends Fixture
 
             $product->setAppellation($faker->departmentName);
             $product->setArea($faker->region);
-            $product->setType($faker->randomElement(array('cuit', 'effervescent', 'tranquille', 'crémeux')));
+
+            $product->setType($faker->randomElement($typeList));
+
             $product->setCuveeDomaine("Château " . $faker->firstName());
             $product->setCapacity($faker->randomDigit);
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
-            $product->setColor($faker->randomElement(array('Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F')));
+
+            $product->setColor($faker->randomElement($colorList));
+
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
             $product->setPrice($faker->randomFloat(1));
             $product->setHsCode($faker->randomNumber(5));
