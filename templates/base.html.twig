@@ -69,8 +69,6 @@
             </div>
           </nav>
 
-          <div class="container">
-
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
@@ -80,7 +78,6 @@
             {% endfor %}
     
             {% block body %}{% endblock %}
-          </div>
 
         {% block footer %}
           {% include "_footer.html.twig"%}
