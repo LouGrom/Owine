@@ -38,7 +38,7 @@ class IndividualRegistrationFormType extends AbstractType
                     'placeholder' => 'iloveshiba@gmail.com'
                 ],
                 ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'label' => 'Mot de passe',
@@ -46,7 +46,7 @@ class IndividualRegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Azerty#123'
                 ],
-                'mapped' => false,
+                'mapped' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

@@ -128,10 +128,10 @@ class User implements UserInterface
      */
     private $receivedOrders;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
+    // /**
+    //  * @ORM\Column(type="boolean")
+    //  */
+    // private $isVerified = false;
 
     public function __construct()
     {
@@ -484,15 +484,15 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
+    // public function isVerified(): bool
+    // {
+    //     return $this->isVerified;
+    // }
 
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
+    // public function setIsVerified(bool $isVerified): self
+    // {
+    //     $this->isVerified = $isVerified;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

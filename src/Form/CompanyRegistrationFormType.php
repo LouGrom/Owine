@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -26,13 +27,13 @@ class CompanyRegistrationFormType extends AbstractType
                     'placeholder' => '1234567890001'
                 ],
                 ])
-            ->add('vat_number', NumberType::class, [
+            ->add('vat_number', TextType::class, [
                 'label' => 'Numéro de TVA',
                 'attr' => [
                     'placeholder' => 'FR123456789'
                 ],
                 ])
-            ->add('company_name', EmailType::class, [
+            ->add('company_name', TextType::class, [
                 'label' => 'Société',
                 'attr' => [
                     'placeholder' => 'Ma société'
@@ -56,7 +57,7 @@ class CompanyRegistrationFormType extends AbstractType
                     'placeholder' => 'iloveshiba@gmail.com'
                 ],
                 ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'label' => 'Mot de passe',
@@ -64,7 +65,7 @@ class CompanyRegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Azerty#123'
                 ],
-                'mapped' => false,
+                'mapped' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -108,6 +109,7 @@ class CompanyRegistrationFormType extends AbstractType
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'Valider les conditions de vente et d\'utilisation',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

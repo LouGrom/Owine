@@ -7,53 +7,13 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <h1>Inscription</h1>
+    <h1 class="text-center mt-3 mb-3">Inscription</h1>
 
-    <ul class="nav nav-pills justify-content-center mb-3">
-        <li class="active mr-3"><a data-toggle="pill" href="#buyer" class="btn btn-secondary">Entreprise</a></li>
-        <li><a data-toggle="pill" href="#seller" class="btn btn-secondary">Particulier</a></li>
-    </ul>
+    <div class="mb-3 text-center">
+        <a href="{{path('app_company_register')}}" class="btn btn-secondary">Entreprise</a>
+        <a href="{{path('app_individual_register')}}" class="btn btn-secondary">Particulier</a>
+    </div>
 
-    <div class="tab-content">
-        <div id="buyer" class="tab-pane fade in active">
-        {{ form_start(companyRegistrationForm) }}
-            {{ form_row(companyRegistrationForm.siret_number) }}
-            {{ form_row(companyRegistrationForm.vat_number) }}
-            {{ form_row(companyRegistrationForm.company_name) }}
-            {{ form_row(companyRegistrationForm.firstname) }}
-            {{ form_row(companyRegistrationForm.lastname) }}
-            {{ form_row(companyRegistrationForm.email) }}
-            {{ form_row(companyRegistrationForm.plainPassword, {
-                label: 'Password'
-            }) }}
-            {{ form_row(companyRegistrationForm.address) }}
-            {{ form_row(companyRegistrationForm.zip_code) }}
-            {{ form_row(companyRegistrationForm.city) }}
-            {{ form_row(companyRegistrationForm.country) }}
-            {{ form_row(companyRegistrationForm.phone_number) }}
-            {{ form_row(companyRegistrationForm.agreeTerms) }}
-    
-            <button type="submit" class="btn btn-success">Valider</button>
-        {{ form_end(companyRegistrationForm) }}
-        </div>
-        <div id="seller" class="tab-pane fade">
-        {{ form_start(individualRegistrationForm) }}
-            {{ form_row(individualRegistrationForm.firstname) }}
-            {{ form_row(individualRegistrationForm.lastname) }}
-            {{ form_row(individualRegistrationForm.email) }}
-            {{ form_row(individualRegistrationForm.plainPassword, {
-                label: 'Password'
-            }) }}
-            {{ form_row(individualRegistrationForm.address) }}
-            {{ form_row(individualRegistrationForm.zip_code) }}
-            {{ form_row(individualRegistrationForm.city) }}
-            {{ form_row(individualRegistrationForm.country) }}
-            {{ form_row(individualRegistrationForm.phone_number) }}
-            {{ form_row(individualRegistrationForm.agreeTerms) }}
-    
-            <button type="submit" class="btn btn-success">Valider</button>
-        {{ form_end(individualRegistrationForm) }}
-        </div>
     </div>
 
 {% endblock %}
