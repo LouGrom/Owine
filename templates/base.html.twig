@@ -31,16 +31,26 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Menu
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profil</a>
-                    <a class="dropdown-item" href="#">Produits</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Commandes</a>
-                  </div>
+                
+                {# Si on est connecté #}
+                {% if app.user %}
+                  {# et qu'on est un seller #}
+                  {% if 'ROLE_SELLER' in app.user.roles %}
+                    {# alors on voit le lien vers le tableau de bord  #}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('board') }}">Tableau de bord</a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+
+                 <li class="nav-item">
+                  <a class="nav-link" href="#">Produits</a>
+                </li>
+                 <li class="nav-item">
+                  <a class="nav-link" href="#">Commandes</a>
+                </li>
+                 <li class="nav-item">
+                  <a class="nav-link" href="#">Panier</a>
                 </li>
               </ul>
               {% if app.user %}
