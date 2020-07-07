@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Appellation</th>
+                <td>{{ product.appellation }}</td>
+            </tr>
+            <tr>
+                <th>Area</th>
+                <td>{{ product.area }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ product.type.name }}</td>
+            </tr>
+            <tr>
+                <th>CuveeDomaine</th>
+                <td>{{ product.cuveeDomaine }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ product.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Vintage</th>
+                <td>{{ product.vintage }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ product.color.name }}</td>
+            </tr>
+            <tr>
+                <th>AlcoholVolume</th>
+                <td>{{ product.alcoholVolume }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>HsCode</th>
+                <td>{{ product.hsCode }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ product.picture }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ product.status }}</td>
+            </tr>
+            <tr>
+                <th>StockQuantity</th>
+                <td>{{ product.stockQuantity }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('board') }}" class="btn btn-dark">Retour au tableau de bord</a>
+
+    <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-warning">Modifier</a>
+
+    {{ include('product/_delete_form.html.twig') }}
+{% endblock %}

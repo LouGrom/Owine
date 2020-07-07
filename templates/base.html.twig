@@ -52,7 +52,7 @@
 
               {% if app.user %}
                 <div class="mr-3">
-                  Bonjour {{ app.user.username }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
                 </div>
                 {% else %}
                 <div class="">
@@ -68,7 +68,7 @@
               </form>
             </div>
           </nav>
-
+          
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
@@ -78,7 +78,7 @@
             {% endfor %}
     
             {% block body %}{% endblock %}
-
+            
         {% block footer %}
           {% include "_footer.html.twig"%}
         {% endblock %}
