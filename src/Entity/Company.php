@@ -44,6 +44,11 @@ class Company
      */
     private $picture;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $validated;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
@@ -129,6 +134,18 @@ class Company
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getValidated(): ?int
+    {
+        return $this->validated;
+    }
+
+    public function setValidated(int $validated): self
+    {
+        $this->validated = $validated;
 
         return $this;
     }

@@ -4,7 +4,7 @@
 
 {% block body %}
 {# {{dump(products)}} #}
-<div class="container justify-content-center">
+
     <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
 
     <div class="row " >
@@ -12,7 +12,7 @@
             <div class="d-flex d-sm-block  mb-2 border-bottom pb-3 col-sm-6 col-md-4">
                 
                 <section class="col">
-                    <img class="" src="{{ product.picture }}" alt="product's picture">
+                    <img class="" src="{{ product.picture }}" alt="product's picture" style="width: 100%">
                 </section>
 
                 <section class="col">
@@ -23,7 +23,9 @@
                         <p><em>Rate of the product</em></p> 
                         <p class="ml-2"><strong>{{product.price}}€</strong></p>
                     </div>
-                    <p class="">{{product.description|length > 100 ? product.description|slice(0, 100) ~ '(...)' : product.description}}</p>
+                    <div class="d-none d-sm-block">
+                        <p>{{product.description|length > 100 ? product.description|slice(0, 100) ~ '(...)' : product.description}}</p>
+                    </div>
                     <button type="button" class="btn btn-primary"><a href="#" class="text-white">En savoir plus</a></button>
                 </section>
             
@@ -31,5 +33,5 @@
         
         {% endfor %}
     </div>
-</div>
+
 {% endblock %}

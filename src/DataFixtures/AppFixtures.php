@@ -42,6 +42,7 @@ class AppFixtures extends Fixture
         $company->setSiret($faker->siret);
         $company->setVat($faker->vat);
         $company->setPicture($faker->imageUrl(450,275,['wine']));
+        $company->setValidated(1);
         $manager->persist($company);
 
                 
@@ -126,6 +127,8 @@ class AppFixtures extends Fixture
                 $company->setName($faker->company." ".$faker->companySuffix);
                 $company->setSiret($faker->siret);
                 $company->setVat($faker->vat);
+                $company->setValidated(0);
+                $company->setPicture($faker->imageUrl(450,275,['wine']));
 
                 $manager->persist($company);
 
@@ -231,7 +234,7 @@ class AppFixtures extends Fixture
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
 
             $product->setColor($faker->randomElement($colorList));
-            $product->setPicture($faker->imageUrl(300, 280, ['wine'], true));
+            $product->setPicture($faker->imageUrl(260, 280, ['wine'], true));
 
 
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
