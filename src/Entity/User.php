@@ -128,6 +128,11 @@ class User implements UserInterface
      */
     private $receivedOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user")
+     */
+    private $carts;
+
     // /**
     //  * @ORM\Column(type="boolean")
     //  */
@@ -139,6 +144,7 @@ class User implements UserInterface
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
         $this->receivedOrders = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -495,4 +501,35 @@ class User implements UserInterface
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->contains($cart)) {
+            $this->carts->removeElement($cart);
+            // set the owning side to null (unless already changed)
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

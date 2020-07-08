@@ -50,7 +50,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $companyForm->get('password')->getData(),
+                    $companyForm->get('password')->getData()
                 )
             );
 
