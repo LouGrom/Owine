@@ -106,7 +106,7 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="ProductId")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="product")
      */
     private $orderProducts;
 

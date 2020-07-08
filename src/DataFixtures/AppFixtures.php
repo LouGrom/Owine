@@ -292,10 +292,10 @@ class AppFixtures extends Fixture
                 
                 // On ajoute le vendeur du produit à la liste des vendeurs
                 $order->addSeller($oneProduct->getSeller());
-                $order_product->setProductId($oneProduct);
+                $order_product->setProduct($oneProduct);
                 $order->setTotalQuantity($total_quantity);
                 $order->setTotalAmount($total_amount);
-                $order_product->setOrderId($order);
+                $order_product->setOrder($order);
                 
                 $manager->persist($order_product);
             }

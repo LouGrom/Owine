@@ -42,7 +42,7 @@ class Order
     private $buyer;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="OrderId")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order")
      */
     private $orderProducts;
 
