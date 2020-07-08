@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block body %}
+{# {{dump(products)}} #}
+<div class="container justify-content-center">
+    <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
+
+    <div class="row " >
+        {% for product in products %}
+            <div class="d-flex d-sm-block  mb-2 border-bottom pb-3 col-sm-6 col-md-4">
+                
+                <section class="col">
+                    <img class="" src="#" alt="product's picture">
+                </section>
+
+                <section class="col">
+                    <h3>{{product.appellation}}</h3>
+                    <strong><em>{{product.cuveeDomaine}}</em></strong>
+
+                    <div class="d-flex align-content-between">
+                        <p><em>Rate of the product</em></p> 
+                        <p class="ml-2"><strong>{{product.price}}€</strong></p>
+                    </div>
+                    <p class="">{{product.description|length > 100 ? product.description|slice(0, 100) ~ '(...)' : product.description}}</p>
+                    <button type="button" class="btn btn-primary"><a href="#" class="text-white">En savoir plus</a></button>
+                </section>
+            
+            </div>
+        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
