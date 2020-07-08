@@ -39,7 +39,7 @@ class OrderController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            $this->addFlash("La commande a bien été ajoutée");
+            $this->addFlash("warning","La commande a bien été ajoutée");
 
             return $this->redirectToRoute('board');
         }
@@ -71,7 +71,7 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash("La commande a bien été modifiée");
+            $this->addFlash("warning","La commande a bien été modifiée");
 
             return $this->redirectToRoute('board');
         }
@@ -92,7 +92,7 @@ class OrderController extends AbstractController
             $entityManager->remove($order);
             $entityManager->flush();
 
-            $this->addFlash("La commande a bien été supprimée");
+            $this->addFlash("warning","La commande a bien été supprimée");
         }
 
         return $this->redirectToRoute('board');
