@@ -12,6 +12,8 @@ use App\Entity\Color;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\Type;
+use App\Entity\Company;
+use App\Entity\Cart;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -23,16 +25,24 @@ class AppFixtures extends Fixture
         // On configure dans quelle langue nous voulons nos données
         $faker = Faker\Factory::create('fr_FR');
 
-
+        // On crée un user de chaque role 
         $seller = new User();
         $buyer = new User();
         $admin = new User();
+        $company = new Company();
         
         $seller->setRoles(['ROLE_USER', 'ROLE_SELLER']);
         $buyer->setRoles(['ROLE_USER', 'ROLE_BUYER']);
         $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        
+        // On crée une company à notre seller@mail.fr
+        $company->setName($faker->company." ".$faker->companySuffix);
+        $company->setSiret($faker->siret);
+        $company->setVat($faker->vat);
+        $manager->persist($company);
 
-        $seller->setCompanyName($faker->company." ".$faker->companySuffix);
+                
+        $seller->setCompany($company);
 
         $seller->setEmail('seller@mail.fr');
         $buyer->setEmail('buyer@mail.fr');
@@ -70,9 +80,6 @@ class AppFixtures extends Fixture
         $buyer->setPhoneNumber($faker->phoneNumber);
         $seller->setPhoneNumber($faker->phoneNumber);
         $admin->setPhoneNumber($faker->phoneNumber);
-
-        $seller->setSiretNumber($faker->siret);
-        $seller->setVatNumber($faker->vat);
         
         $address = new DeliveryAddress();
 
@@ -101,15 +108,25 @@ class AppFixtures extends Fixture
         $manager->flush();
 
 
-        // On crée 10 personnes et leur adreses de livraison  
-        for ($i = 0; $i < 10; $i++) {
+        // On crée 30 personnes et leur adreses de livraison  
+        for ($i = 0; $i < 30; $i++) {
             $user = new User();
             
             $address = new DeliveryAddress();
             $user->setRoles(['ROLE_USER', $faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
             
+            // Si l'utilisateur créé est un SELLER, on lui crée une Company
             if(in_array("ROLE_SELLER", $user->getRoles())) {
-                $user->setCompanyName($faker->company." ".$faker->companySuffix);
+
+                $company = new Company();
+        
+                $company->setName($faker->company." ".$faker->companySuffix);
+                $company->setSiret($faker->siret);
+                $company->setVat($faker->vat);
+
+                $manager->persist($company);
+
+                $user->setCompany($company);
             }
             
             $user->setEmail($faker->email);
@@ -121,8 +138,6 @@ class AppFixtures extends Fixture
             $user->setCity($faker->city);
             $user->setCountry($faker->country);
             $user->setPhoneNumber($faker->phoneNumber);
-            $user->setSiretNumber($faker->siret);
-            $user->setVatNumber($faker->vat);
             
             $address->setFirstname($user->getFirstname());
             $address->setLastname($user->getLastname());
@@ -197,8 +212,8 @@ class AppFixtures extends Fixture
             $manager->persist($color);
         }
 
-        // On crée 50 produits
-        for ($i = 0; $i < 50; $i++) {
+        // On crée 100 produits
+        for ($i = 0; $i < 100; $i++) {
 
             $product = new Product();
 
@@ -287,6 +302,19 @@ class AppFixtures extends Fixture
             
             
             $manager->persist($order);
+        }
+
+        // On crée 100 Cart
+        for ($i = 0; $i < 100; $i++) {
+
+            $cart = new Cart();
+            $oneProduct = $productList[array_rand($productList)];
+            $cart->setUser($userBuyer[array_rand($userBuyer)]);
+            $cart->setProduct($oneProduct);
+            $cart->setQuantity(random_int(1,3600));
+            $cart->setTotalAmount($oneProduct->getPrice() * $cart->getQuantity());
+
+            $manager->persist($cart);
         }
         
         
