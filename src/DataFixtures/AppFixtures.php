@@ -17,6 +17,7 @@ use App\Entity\Cart;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
+use Xvladqt\Faker\LoremFlickrProvider;
 
 class AppFixtures extends Fixture
 {
@@ -24,6 +25,7 @@ class AppFixtures extends Fixture
     {
         // On configure dans quelle langue nous voulons nos données
         $faker = Faker\Factory::create('fr_FR');
+        $faker->addProvider(new LoremFlickrProvider($faker));
 
         // On crée un user de chaque role 
         $seller = new User();
@@ -39,6 +41,7 @@ class AppFixtures extends Fixture
         $company->setName($faker->company." ".$faker->companySuffix);
         $company->setSiret($faker->siret);
         $company->setVat($faker->vat);
+        $company->setPicture($faker->imageUrl(450,275,['wine']));
         $manager->persist($company);
 
                 
@@ -169,6 +172,7 @@ class AppFixtures extends Fixture
             $brand = new ProductBrand();
             $brand->setName($brand_name[$i]);
             $brand->setSelectionFilter($i);
+            $brand->setPicture($faker->imageUrl(200,200,['logo']));
 
             // Tableau des objets ProductBrand
             $brandList[] = $brand;
@@ -227,6 +231,8 @@ class AppFixtures extends Fixture
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
 
             $product->setColor($faker->randomElement($colorList));
+            $product->setPicture($faker->imageUrl(300, 280, ['wine'], true));
+
 
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
             $product->setPrice($faker->randomFloat(2, 5, 100));
