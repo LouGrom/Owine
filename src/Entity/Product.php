@@ -79,7 +79,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $picture;
 
