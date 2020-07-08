@@ -8,8 +8,12 @@ use App\Entity\Product;
 use App\Entity\ProductCategory;
 use App\Entity\ProductBrand;
 use App\Entity\Carrier;
+use App\Entity\Color;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
+use App\Entity\Type;
+use App\Entity\Company;
+use App\Entity\Cart;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -21,33 +25,61 @@ class AppFixtures extends Fixture
         // On configure dans quelle langue nous voulons nos données
         $faker = Faker\Factory::create('fr_FR');
 
-
+        // On crée un user de chaque role 
         $seller = new User();
         $buyer = new User();
+        $admin = new User();
+        $company = new Company();
         
         $seller->setRoles(['ROLE_USER', 'ROLE_SELLER']);
         $buyer->setRoles(['ROLE_USER', 'ROLE_BUYER']);
-        $seller->setCompanyName($faker->company." ".$faker->companySuffix);
+        $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        
+        // On crée une company à notre seller@mail.fr
+        $company->setName($faker->company." ".$faker->companySuffix);
+        $company->setSiret($faker->siret);
+        $company->setVat($faker->vat);
+        $manager->persist($company);
+
+                
+        $seller->setCompany($company);
+
         $seller->setEmail('seller@mail.fr');
         $buyer->setEmail('buyer@mail.fr');
+        $admin->setEmail('admin@mail.fr');
+
         $seller->setPassword(password_hash("banane", PASSWORD_DEFAULT));
         $buyer->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+        $admin->setPassword(password_hash("banane", PASSWORD_DEFAULT));
+
         $buyer->setFirstname($faker->firstName);
         $buyer->setLastname($faker->lastName);
+
         $seller->setFirstname($faker->firstName);
         $seller->setLastname($faker->lastName);
+
+        $admin->setFirstname($faker->firstName);
+        $admin->setLastname($faker->lastName);
+
         $buyer->setAddress($faker->streetAddress);
         $seller->setAddress($faker->streetAddress);
+        $admin->setAddress($faker->streetAddress);
+
         $buyer->setZipCode($faker->postcode);
         $seller->setZipCode($faker->postcode);
+        $admin->setZipCode($faker->postcode);
+
         $buyer->setCity($faker->city);
         $seller->setCity($faker->city);
+        $admin->setCity($faker->city);
+
         $buyer->setCountry($faker->country);
         $seller->setCountry($faker->country);
+        $admin->setCountry($faker->country);
+
         $buyer->setPhoneNumber($faker->phoneNumber);
         $seller->setPhoneNumber($faker->phoneNumber);
-        $seller->setSiretNumber($faker->siret);
-        $seller->setVatNumber($faker->vat);
+        $admin->setPhoneNumber($faker->phoneNumber);
         
         $address = new DeliveryAddress();
 
@@ -62,6 +94,7 @@ class AppFixtures extends Fixture
 
         $buyer->addDeliveryAddress($address);
         $seller->addDeliveryAddress($address);
+        $admin->addDeliveryAddress($address);
 
         $seller->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
         $buyer->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
@@ -70,41 +103,41 @@ class AppFixtures extends Fixture
 
         $manager->persist($buyer);
         $manager->persist($seller);
+        $manager->persist($admin);
         $manager->persist($address);
         $manager->flush();
 
 
-        // On crée 10 personnes et leur adreses de livraison  
-        for ($i = 0; $i < 10; $i++) {
+        // On crée 30 personnes et leur adreses de livraison  
+        for ($i = 0; $i < 30; $i++) {
             $user = new User();
             
             $address = new DeliveryAddress();
             $user->setRoles(['ROLE_USER', $faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
             
+            // Si l'utilisateur créé est un SELLER, on lui crée une Company
             if(in_array("ROLE_SELLER", $user->getRoles())) {
-                $user->setCompanyName($faker->company." ".$faker->companySuffix);
+
+                $company = new Company();
+        
+                $company->setName($faker->company." ".$faker->companySuffix);
+                $company->setSiret($faker->siret);
+                $company->setVat($faker->vat);
+
+                $manager->persist($company);
+
+                $user->setCompany($company);
             }
             
             $user->setEmail($faker->email);
             $user->setPassword(password_hash("banane", PASSWORD_DEFAULT));
-
             $user->setFirstname($faker->firstName);
-            
             $user->setLastname($faker->lastName);
-            
             $user->setAddress($faker->streetAddress);
-            
             $user->setZipCode($faker->postcode);
-            
             $user->setCity($faker->city);
-            
             $user->setCountry($faker->country);
-            
             $user->setPhoneNumber($faker->phoneNumber);
-
-            
-            $user->setSiretNumber($faker->siret);
-            $user->setVatNumber($faker->vat);
             
             $address->setFirstname($user->getFirstname());
             $address->setLastname($user->getLastname());
@@ -157,20 +190,46 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
-        // On crée 50 produits
-        for ($i = 0; $i < 50; $i++) {
+        // On crée 4 Types
+        $type_name = ['Cuit', 'Effervescent', 'Tranquille', 'Crémeux'];
+        for($i = 0; $i < count($type_name); $i++){
+            $type = new Type();
+            $type->setName($type_name[$i]);
+
+            // Tableau des objets ProductCategory
+            $typeList[] = $type;
+            $manager->persist($type);
+        }
+
+        // On crée 5 couleurs
+        $color_name = ['Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F'];
+        for($i = 0; $i < count($color_name); $i++){
+            $color = new Color();
+            $color->setName($color_name[$i]);
+
+            // Tableau des objets ProductCategory
+            $colorList[] = $color;
+            $manager->persist($color);
+        }
+
+        // On crée 100 produits
+        for ($i = 0; $i < 100; $i++) {
 
             $product = new Product();
 
             $product->setAppellation($faker->departmentName);
             $product->setArea($faker->region);
-            $product->setType($faker->randomElement(array('cuit', 'effervescent', 'tranquille', 'crémeux')));
+
+            $product->setType($faker->randomElement($typeList));
+
             $product->setCuveeDomaine("Château " . $faker->firstName());
             $product->setCapacity($faker->randomDigit);
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
-            $product->setColor($faker->randomElement(array('Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F')));
+
+            $product->setColor($faker->randomElement($colorList));
+
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
-            $product->setPrice($faker->randomFloat(1));
+            $product->setPrice($faker->randomFloat(2, 5, 100));
             $product->setHsCode($faker->randomNumber(5));
             $product->setDescription($faker->paragraph(5));
             $product->setStatus($faker->numberBetween(0,1));
@@ -203,8 +262,8 @@ class AppFixtures extends Fixture
             $manager->persist($carrier);
         }
         
-        // On crée 15 commandes
-        for ($i = 0; $i < 15; $i++) {
+        // On crée 30 commandes
+        for ($i = 0; $i < 30; $i++) {
 
             $total_quantity = 0;
             $total_amount = 0;
@@ -215,6 +274,7 @@ class AppFixtures extends Fixture
             $order->setBuyer($userBuyer[array_rand($userBuyer)]);
             $order->setCarrier($carrierList[array_rand($carrierList)]);
             $order->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+            $order->setStatus(array_rand([0,1]));
             
             // Chaque commande contiendra entre 1 et 5 produits différents
             $nbr_products = random_int(1, 5);
@@ -232,16 +292,29 @@ class AppFixtures extends Fixture
                 
                 // On ajoute le vendeur du produit à la liste des vendeurs
                 $order->addSeller($oneProduct->getSeller());
-                $order_product->setProductId($oneProduct);
+                $order_product->setProduct($oneProduct);
                 $order->setTotalQuantity($total_quantity);
                 $order->setTotalAmount($total_amount);
-                $order_product->setOrderId($order);
+                $order_product->setOrder($order);
                 
                 $manager->persist($order_product);
             }
             
             
             $manager->persist($order);
+        }
+
+        // On crée 100 Cart
+        for ($i = 0; $i < 100; $i++) {
+
+            $cart = new Cart();
+            $oneProduct = $productList[array_rand($productList)];
+            $cart->setUser($userBuyer[array_rand($userBuyer)]);
+            $cart->setProduct($oneProduct);
+            $cart->setQuantity(random_int(1,3600));
+            $cart->setTotalAmount($oneProduct->getPrice() * $cart->getQuantity());
+
+            $manager->persist($cart);
         }
         
         

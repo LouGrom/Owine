@@ -42,7 +42,7 @@ class Order
     private $buyer;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="OrderId")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order")
      */
     private $orderProducts;
 
@@ -66,6 +66,11 @@ class Order
      * @ORM\JoinColumn(nullable=false)
      */
     private $carrier;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
 
     public function __construct()
     {
@@ -220,6 +225,18 @@ class Order
     public function setCarrier(?Carrier $carrier): self
     {
         $this->carrier = $carrier;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

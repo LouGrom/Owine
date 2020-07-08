@@ -6,10 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -21,6 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -31,60 +35,53 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=true)
-     */
-    private $companyName;
-
-    /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=30)
      */
     private $firstname;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=30)
      */
     private $lastname;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=100)
      */
     private $address;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=10)
      */
     private $zipCode;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=50)
      */
     private $city;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=50)
      */
     private $country;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=20)
      */
     private $phoneNumber;
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $siretNumber;
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $vatNumber;
 
     /**
      * @ORM\OneToMany(targetEntity=DeliveryAddress::class, mappedBy="buyer")
@@ -116,12 +113,28 @@ class User implements UserInterface
      */
     private $receivedOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user")
+     */
+    private $carts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="seller")
+     */
+    private $company;
+
+    // /**
+    //  * @ORM\Column(type="boolean")
+    //  */
+    // private $isVerified = false;
+
     public function __construct()
     {
         $this->deliveryAddress = new ArrayCollection();
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
         $this->receivedOrders = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,18 +213,6 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getCompanyName(): ?string
-    {
-        return $this->companyName;
-    }
-
-    public function setCompanyName(?string $companyName): self
-    {
-        $this->companyName = $companyName;
-
-        return $this;
     }
 
     public function getFirstname(): ?string
@@ -294,30 +295,6 @@ class User implements UserInterface
     public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getSiretNumber(): ?string
-    {
-        return $this->siretNumber;
-    }
-
-    public function setSiretNumber(?string $siretNumber): self
-    {
-        $this->siretNumber = $siretNumber;
-
-        return $this;
-    }
-
-    public function getVatNumber(): ?string
-    {
-        return $this->vatNumber;
-    }
-
-    public function setVatNumber(?string $vatNumber): self
-    {
-        $this->vatNumber = $vatNumber;
 
         return $this;
     }
@@ -463,6 +440,61 @@ class User implements UserInterface
             $this->receivedOrders->removeElement($receivedOrder);
             $receivedOrder->removeSeller($this);
         }
+
+        return $this;
+    }
+
+    // public function isVerified(): bool
+    // {
+    //     return $this->isVerified;
+    // }
+
+    // public function setIsVerified(bool $isVerified): self
+    // {
+    //     $this->isVerified = $isVerified;
+
+    //     return $this;
+    // }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->contains($cart)) {
+            $this->carts->removeElement($cart);
+            // set the owning side to null (unless already changed)
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }

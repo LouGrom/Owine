@@ -3,23 +3,75 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-<h1>Bienvenue sur ton tableau de bord {{ app.user.username }} </h1>
+<h1 class="text-center">Bienvenue sur ton tableau de bord {{ app.user.firstname }} </h1>
 
-<div>
-<h2>Mes produits :</h2>
-{% for product in productsList %}
-
-<li>{{ product.appellation }}</li>
-
-{% endfor %}
-
-
-<h2>Mes commandes :</h2>
-{% for order in ordersList %}
-
-<li>{{ order.trackingNumber }}</li>
-
-{% endfor %}
+<div class="d-flex justify-content-around">
+    <ul class="nav nav-pills">
+        <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Voir mes produits</a></li>
+        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Voir mes commandes</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div id="products" class="tab-pane fade in active">
+        {# TABLEAU DES PRODUITS #}
+        <a href="{{ path('product_new')}}" class="btn btn-success">Ajouter un produit</a>
+        <h2>Mes produits :</h2>
+        <div class="table-responsive">
+            <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Appellation</th>
+                <th scope="col">Type</th>
+                <th scope="col">Couleur</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Code barre</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in app.user.productsForSale %}
+                <tr>
+                <td>{{ product.appellation }}</td>
+                <td>{{ product.type.name }}</td>
+                <td>{{ product.color.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.hsCode }}</td>
+                <td>{{ product.stockQuantity }}</td>
+                <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Voir</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div id="orders" class="tab-pane fade">
+        {# TABLEAU DES COMMANDES #}
+        <h2>Mes commandes :</h2>
+        <div class="table-responsive">
+            <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Numéro de commande</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Client</th>
+                <th scope="col">Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in app.user.receivedOrders %}
+                <tr>
+                <td>{{ order.trackingNumber }}</td>
+                <td>{{ order.totalAmount }}</td>
+                <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
+                <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark">Voir</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

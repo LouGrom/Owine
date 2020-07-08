@@ -6,6 +6,8 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -21,38 +23,37 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * @Assert\Length(max=50)
      */
     private $appellation;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * @Assert\Length(max=50)
      */
     private $area;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank
+     * @Assert\Length(max=30)
      */
     private $cuveeDomaine;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
      */
     private $capacity;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank
+     * @Assert\Length(max=20)
      */
     private $vintage;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $color;
 
     /**
      * @ORM\Column(type="float")
@@ -65,12 +66,15 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=130)
+     * @Assert\NotBlank
+     * @Assert\Length(max=130)
      */
     private $hsCode;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $description;
 
@@ -102,7 +106,7 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="ProductId")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="product")
      */
     private $orderProducts;
 
@@ -120,6 +124,18 @@ class Product
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Color::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $color;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
 
     public function __construct()
     {
@@ -156,18 +172,6 @@ class Product
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getCuveeDomaine(): ?string
     {
         return $this->cuveeDomaine;
@@ -200,18 +204,6 @@ class Product
     public function setVintage(string $vintage): self
     {
         $this->vintage = $vintage;
-
-        return $this;
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(string $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
@@ -406,6 +398,30 @@ class Product
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

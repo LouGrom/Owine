@@ -52,9 +52,12 @@
 
               {% if app.user %}
                 <div class="mr-3">
-                  Bonjour {{ app.user.username }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
                 </div>
                 {% else %}
+                <div class="">
+                  <a class="nav-link" href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
+                </div>
                 <div class="mr-3">
                   <a class="nav-link" href="{{ path('app_login') }}" class="btn btn-secondary">Connexion</a>
                 </div>
@@ -65,13 +68,24 @@
               </form>
             </div>
           </nav>
-
-
-        {% block body %}{% endblock %}
-
-        {% block footer %}
-          {% include "_footer.html.twig"%}
-        {% endblock %}
+          
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+         <div class="container">
+            {% block body %}{% endblock %}
+         </div>
+            
+        <footer id="footer"> 
+          {% block footer %}
+            {% include "_footer.html.twig"%}
+          {% endblock %}
+        </footer>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

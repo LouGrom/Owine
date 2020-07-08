@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un produit</h1>
+
+     <a href="{{ path('board') }}" class="btn btn-dark">Retour au tableau de bord</a>
+
+    {{ include('product/_form.html.twig') }}
+   
+{% endblock %}
