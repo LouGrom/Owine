@@ -5,8 +5,6 @@
 {% block body %}
 <h1 class="text-center">Bienvenue sur ton tableau de bord {{ app.user.firstname }} </h1>
 
-<a href="{{ path('product_new')}}" class="btn btn-success">Ajouter un produit</a>
-
 <div class="d-flex justify-content-around">
     <ul class="nav nav-pills">
         <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Voir mes produits</a></li>
@@ -16,6 +14,7 @@
 <div class="tab-content">
     <div id="products" class="tab-pane fade in active">
         {# TABLEAU DES PRODUITS #}
+        <a href="{{ path('product_new')}}" class="btn btn-success">Ajouter un produit</a>
         <h2>Mes produits :</h2>
         <table class="table">
         <thead class="thead-dark">
@@ -26,6 +25,7 @@
             <th scope="col">Prix</th>
             <th scope="col">Code barre</th>
             <th scope="col">Stock</th>
+            <th scope="col">Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,7 @@
             <td>{{ product.price }}</td>
             <td>{{ product.hsCode }}</td>
             <td>{{ product.stockQuantity }}</td>
+            <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Voir</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -52,6 +53,7 @@
             <th scope="col">Numéro de commande</th>
             <th scope="col">Prix</th>
             <th scope="col">Client</th>
+            <th scope="col">Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -60,6 +62,7 @@
             <td>{{ order.trackingNumber }}</td>
             <td>{{ order.totalAmount }}</td>
             <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
+            <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark">Voir</a></td>
             </tr>
         {% endfor %}
         </tbody>

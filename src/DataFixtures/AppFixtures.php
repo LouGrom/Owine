@@ -214,7 +214,7 @@ class AppFixtures extends Fixture
             $product->setColor($faker->randomElement($colorList));
 
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));
-            $product->setPrice($faker->randomFloat(1));
+            $product->setPrice($faker->randomFloat(2, 5, 100));
             $product->setHsCode($faker->randomNumber(5));
             $product->setDescription($faker->paragraph(5));
             $product->setStatus($faker->numberBetween(0,1));
@@ -247,8 +247,8 @@ class AppFixtures extends Fixture
             $manager->persist($carrier);
         }
         
-        // On crée 15 commandes
-        for ($i = 0; $i < 15; $i++) {
+        // On crée 30 commandes
+        for ($i = 0; $i < 30; $i++) {
 
             $total_quantity = 0;
             $total_amount = 0;
@@ -259,6 +259,7 @@ class AppFixtures extends Fixture
             $order->setBuyer($userBuyer[array_rand($userBuyer)]);
             $order->setCarrier($carrierList[array_rand($carrierList)]);
             $order->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+            $order->setStatus(array_rand([0,1]));
             
             // Chaque commande contiendra entre 1 et 5 produits différents
             $nbr_products = random_int(1, 5);

@@ -67,6 +67,11 @@ class Order
      */
     private $carrier;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -220,6 +225,18 @@ class Order
     public function setCarrier(?Carrier $carrier): self
     {
         $this->carrier = $carrier;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
