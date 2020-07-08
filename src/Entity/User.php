@@ -42,11 +42,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=true)
-     */
-    private $companyName;
-
-    /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=30)
      */
@@ -89,16 +84,6 @@ class User implements UserInterface
     private $phoneNumber;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $siretNumber;
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $vatNumber;
-
-    /**
      * @ORM\OneToMany(targetEntity=DeliveryAddress::class, mappedBy="buyer")
      */
     private $deliveryAddress;
@@ -128,6 +113,16 @@ class User implements UserInterface
      */
     private $receivedOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user")
+     */
+    private $carts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="seller")
+     */
+    private $company;
+
     // /**
     //  * @ORM\Column(type="boolean")
     //  */
@@ -139,6 +134,7 @@ class User implements UserInterface
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
         $this->receivedOrders = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -217,18 +213,6 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getCompanyName(): ?string
-    {
-        return $this->companyName;
-    }
-
-    public function setCompanyName(?string $companyName): self
-    {
-        $this->companyName = $companyName;
-
-        return $this;
     }
 
     public function getFirstname(): ?string
@@ -311,30 +295,6 @@ class User implements UserInterface
     public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getSiretNumber(): ?string
-    {
-        return $this->siretNumber;
-    }
-
-    public function setSiretNumber(?string $siretNumber): self
-    {
-        $this->siretNumber = $siretNumber;
-
-        return $this;
-    }
-
-    public function getVatNumber(): ?string
-    {
-        return $this->vatNumber;
-    }
-
-    public function setVatNumber(?string $vatNumber): self
-    {
-        $this->vatNumber = $vatNumber;
 
         return $this;
     }
@@ -495,4 +455,47 @@ class User implements UserInterface
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->contains($cart)) {
+            $this->carts->removeElement($cart);
+            // set the owning side to null (unless already changed)
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
 }
