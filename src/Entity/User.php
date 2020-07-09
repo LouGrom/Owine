@@ -54,7 +54,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="buyer")
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
      */
     private $address;
 
