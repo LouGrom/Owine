@@ -42,6 +42,18 @@ class AppFixtures extends Fixture
         $company->setSiret($faker->siret);
         $company->setVat($faker->vat);
         $company->setPicture($faker->imageUrl(450,275,['wine']));
+        // On crée un tableau de paragraphes
+        $paragraphs = $faker->paragraphs(3);
+        $presentation = "";
+        // Puis on prend chaque paragraphe séparemment
+        foreach($paragraphs as $text)
+        {
+            // Pour les concaténer bout à bout dans $presentation
+            $presentation = $presentation . $text . "\n";
+        }
+        // On enregistre ensuite ce texte dans l'objet Company
+        $company->setPresentation($presentation);
+
         $company->setValidated(1);
         $manager->persist($company);
 
@@ -129,6 +141,17 @@ class AppFixtures extends Fixture
                 $company->setVat($faker->vat);
                 $company->setValidated(0);
                 $company->setPicture($faker->imageUrl(450,275,['wine']));
+                // On crée un tableau de paragraphes
+                $paragraphs = $faker->paragraphs(3);
+                $presentation = "";
+                // Puis on prend chaque paragraphe séparemment
+                foreach($paragraphs as $text)
+                {
+                    // Pour les concaténer bout à bout dans $presentation
+                    $presentation = $presentation . $text . "\n";
+                }
+                // On enregistre ensuite ce texte dans l'objet Company
+                $company->setPresentation($presentation);
 
                 $manager->persist($company);
 

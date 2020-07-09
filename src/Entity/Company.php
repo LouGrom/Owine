@@ -49,6 +49,11 @@ class Company
      */
     private $validated;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $presentation;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
@@ -146,6 +151,18 @@ class Company
     public function setValidated(int $validated): self
     {
         $this->validated = $validated;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }
