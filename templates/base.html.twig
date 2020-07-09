@@ -39,6 +39,10 @@
                   {% endif %}
                 {% endif %}
 
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('company_index') }}">Caveaux</a>
+                </li>
+
                  <li class="nav-item">
                   <a class="nav-link" href="{{ path('products_list') }}">Produits</a>
                 </li>
@@ -77,11 +81,11 @@
                 {% endfor %}
             {% endfor %}
             
-         <div class="container mb-5">
+         <div class="container mt-5 mb-5">
             {% block body %}{% endblock %}
          </div>
             
-        <footer id="footer"> 
+        <footer id="footer" class="footer">
           {% block footer %}
             {% include "_footer.html.twig"%}
           {% endblock %}

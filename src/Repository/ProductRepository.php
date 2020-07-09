@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,33 @@ class ProductRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findAllBySeller($id)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+
+        $builder->where("product.seller = :sellerId");
+
+        $builder->setParameter("sellerId", $id);
+
+        // on recupère la requete construite
+        $query = $builder->getQuery();
+
+        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
+        return $query->getResult();
+
+           /* ->andWhere('user.id = :val')
+            ->setParameter('sellerId', $id)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;*/
     }
 
     // /**
