@@ -16,7 +16,7 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                     {% endfor %}
                     <div class="d-flex justify-content-between">
-                        <p class="card-text">{{ company.seller[0].address.zipCode }} - {{ company.seller[0].address.city }}</p>
+                        <p class="card-text">{{ company.seller[0].address[0].zipCode }} - {{ company.seller[0].address[0].city }}</p>
                         <p>{{ company.seller[0].productsForSale[0].area }}</p>
                     </div>
                 </div>
