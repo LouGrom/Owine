@@ -59,36 +59,36 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('address', TextType::class,[
-                'label' => 'Adresse postale',
-                'attr' => [
-                    'placeholder' => '1 boulevard du Shiba'
-                ],
-            ])
-            ->add('zip_code', NumberType::class,[
-                'label' => 'Code postal',
-                'attr' => [
-                    'placeholder' => '75009'
-                ],
-            ])
-            ->add('city', TextType::class,[
-                'label' => 'Ville',
-                'attr' => [
-                    'placeholder' => 'Paris'
-                ],
-            ])
-            ->add('country', TextType::class,[
-                'label' => 'Pays',
-                'attr' => [
-                    'placeholder' => 'France'
-                ],
-            ])
-            ->add('phone_number', NumberType::class,[
-                'label' => 'Numéro de téléphone',
-                'attr' => [
-                    'placeholder' => '0102030405'
-                ],
-            ])
+            // ->add('address', TextType::class,[
+            //     'label' => 'Adresse postale',
+            //     'attr' => [
+            //         'placeholder' => '1 boulevard du Shiba'
+            //     ],
+            // ])
+            // ->add('zip_code', NumberType::class,[
+            //     'label' => 'Code postal',
+            //     'attr' => [
+            //         'placeholder' => '75009'
+            //     ],
+            // ])
+            // ->add('city', TextType::class,[
+            //     'label' => 'Ville',
+            //     'attr' => [
+            //         'placeholder' => 'Paris'
+            //     ],
+            // ])
+            // ->add('country', TextType::class,[
+            //     'label' => 'Pays',
+            //     'attr' => [
+            //         'placeholder' => 'France'
+            //     ],
+            // ])
+            // ->add('phone_number', NumberType::class,[
+            //     'label' => 'Numéro de téléphone',
+            //     'attr' => [
+            //         'placeholder' => '0102030405'
+            //     ],
+            // ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Valider les conditions de vente et d\'utilisation',
                 'mapped' => false,

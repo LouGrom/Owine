@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DeliveryAddressRepository;
+use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DeliveryAddressRepository::class)
+ * @ORM\Entity(repositoryClass=AddressRepository::class)
  */
-class DeliveryAddress
+class Address
 {
     /**
      * @ORM\Id()
@@ -30,7 +30,7 @@ class DeliveryAddress
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $address;
+    private $street;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -53,10 +53,10 @@ class DeliveryAddress
     private $phoneNumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="deliveryAddress")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $buyer;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -67,6 +67,11 @@ class DeliveryAddress
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $type = [];
 
     public function getId(): ?int
     {
@@ -97,14 +102,14 @@ class DeliveryAddress
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getStreet(): ?string
     {
-        return $this->address;
+        return $this->street;
     }
 
-    public function setAddress(string $address): self
+    public function setStreet(string $street): self
     {
-        $this->address = $address;
+        $this->street = $street;
 
         return $this;
     }
@@ -157,14 +162,14 @@ class DeliveryAddress
         return $this;
     }
 
-    public function getBuyer(): ?User
+    public function getUser(): ?User
     {
-        return $this->buyer;
+        return $this->user;
     }
 
-    public function setBuyer(?User $buyer): self
+    public function setUser(?User $user): self
     {
-        $this->buyer = $buyer;
+        $this->user = $user;
 
         return $this;
     }
@@ -189,6 +194,18 @@ class DeliveryAddress
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getType(): ?array
+    {
+        return $this->type;
+    }
+
+    public function setType(array $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
