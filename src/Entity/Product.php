@@ -347,7 +347,7 @@ class Product
     {
         if (!$this->orderProducts->contains($orderProduct)) {
             $this->orderProducts[] = $orderProduct;
-            $orderProduct->setProductId($this);
+            $orderProduct->setProduct($this);
         }
 
         return $this;
@@ -358,8 +358,8 @@ class Product
         if ($this->orderProducts->contains($orderProduct)) {
             $this->orderProducts->removeElement($orderProduct);
             // set the owning side to null (unless already changed)
-            if ($orderProduct->getProductId() === $this) {
-                $orderProduct->setProductId(null);
+            if ($orderProduct->getProduct() === $this) {
+                $orderProduct->setProduct(null);
             }
         }
 

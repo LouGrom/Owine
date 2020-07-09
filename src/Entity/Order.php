@@ -42,7 +42,7 @@ class Order
     private $buyer;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order", orphanRemoval=true)
      */
     private $orderProducts;
 
@@ -143,7 +143,7 @@ class Order
     {
         if (!$this->orderProducts->contains($orderProduct)) {
             $this->orderProducts[] = $orderProduct;
-            $orderProduct->setOrderId($this);
+            $orderProduct->setOrder($this);
         }
 
         return $this;
@@ -154,8 +154,8 @@ class Order
         if ($this->orderProducts->contains($orderProduct)) {
             $this->orderProducts->removeElement($orderProduct);
             // set the owning side to null (unless already changed)
-            if ($orderProduct->getOrderId() === $this) {
-                $orderProduct->setOrderId(null);
+            if ($orderProduct->getOrder() === $this) {
+                $orderProduct->setOrder(null);
             }
         }
 
