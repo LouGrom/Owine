@@ -9,11 +9,10 @@
 
     <h1 class="text-center mt-3 mb-3">Inscription</h1>
 
-    <div class="mb-3 text-center">
-        <a href="{{path('app_company_register')}}" class="btn btn-secondary">Entreprise</a>
-        <a href="{{path('app_individual_register')}}" class="btn btn-secondary">Particulier</a>
-    </div>
-
-    </div>
+            {{ form_start(registrationForm) }}
+                {{ form_widget(registrationForm) }}
+    
+                <button type="submit" class="btn btn-success">Valider</button>
+            {{ form_end(registrationForm) }}
 
 {% endblock %}

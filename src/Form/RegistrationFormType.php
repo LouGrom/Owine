@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,29 +15,11 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CompanyRegistrationFormType extends AbstractType
+class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('siret_number', NumberType::class, [
-                'label' => 'Numéro de SIRET',
-                'attr' => [
-                    'placeholder' => '1234567890001'
-                ],
-                ])
-            ->add('vat_number', TextType::class, [
-                'label' => 'Numéro de TVA',
-                'attr' => [
-                    'placeholder' => 'FR123456789'
-                ],
-                ])
-            ->add('company_name', TextType::class, [
-                'label' => 'Société',
-                'attr' => [
-                    'placeholder' => 'Ma société'
-                ],
-                ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
