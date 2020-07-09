@@ -35,7 +35,11 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Votre mot de passe doit être long d'au moins {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -55,6 +59,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
+     * 
      */
     private $address;
 
