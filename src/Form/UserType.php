@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Address;
 use App\Form\AddressType;
 use App\Form\CompanyType;
 use Symfony\Component\Form\AbstractType;
@@ -58,6 +59,7 @@ class UserType extends AbstractType
             'mapped' => true,
             ])
         ->add('address', CollectionType::class, [
+            'by_reference' => false,
             'entry_type' => AddressType::class,
             'entry_options' => ['label' => false],
             'allow_add' => true,

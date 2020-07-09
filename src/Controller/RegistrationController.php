@@ -33,13 +33,14 @@ class RegistrationController extends AbstractController
         $user = new User();
 
         $address = new Address();
+        $address->setType(['DELIVERY_ADDRESS']);
         $user->getAddress()->add($address);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
        
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form);
+            //dd($form);
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(

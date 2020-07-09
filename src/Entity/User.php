@@ -256,6 +256,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function setAddress(Address $address): self
+    {
+        $this->address[] = $address;
+
+        return $this;
+    }
+
     public function removeAddress(Address $address): self
     {
         if ($this->address->contains($address)) {
