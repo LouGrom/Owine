@@ -11,7 +11,7 @@
           {% for product in products %}
         <div class="col mb-4">
             <div class="card h-100">
-                <a href="#"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+                <a href="{{ path('product_show', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
                 <div class="card-body">
                    <div class="d-flex justify-content-between">
                         <h5 class="card-title text-center"><a href="#">{{product.appellation}}</a></h5>
