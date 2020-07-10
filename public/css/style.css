@@ -1,11 +1,40 @@
-html {
-    height: 100%;
-}
-
 body {
-    background-color: white;
+    background-color: #F4EBDD;
     overflow: auto;
+    font-family: 'CooperHewitt-Bold', arial;
 }
 
+.navbar {
+    background-color: #352025;
+}
 
+.nav-link, .navbar-brand{
+    color: #F4EBDD;
+}
+
+.nav-item a:hover{
+    color: #897A73;
+}
+
+.card {
+    background-color: #F4EBDD;
+    border: 1px #6A2F31 solid;
+}
+
+.card-title a {
+    color: #6A2F31;;
+}
+
+#login-name{
+    color: #F4EBDD;
+}
+
+.btn {
+    background-color: #897A73;
+    color: #352025;
+}
+
+.picto {
+    color: #6A2F31;;
+}
 

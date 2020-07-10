@@ -10,15 +10,19 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- pub CSS -->
-        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="{{ asset('css/font-awesome/css/font-awesome.min.css')}}">
+        <!-- Font Cooper Hewitt-->
+        <link href="https://fr.allfont.net/allfont.css?fonts=cooperhewitt-bold" rel="stylesheet" type="text/css" />
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/owine.png') }}" height="30" class="d-inline-block align-top">O'wine</a>
+        <nav class="navbar navbar-expand-lg">
+            
+            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/logoOwineBottleOutlineBeige.png') }}" height="30" class="d-inline-block align-top mr-3">O'wine</a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,11 +59,11 @@
               </ul>
 
               {% if app.user %}
-                <div class="mr-3">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                <div class="mr-3" id="login-name">
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn">Déconnexion</a>
                 </div>
                 {% else %}
-                <div class="">
+                <div>
                   <a class="nav-link" href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
                 </div>
                 <div class="mr-3">
