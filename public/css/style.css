@@ -5,11 +5,6 @@ body {
     color: #4E423F;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'CooperHewitt-Bold', arial;
-    font-weight: bold;
-}
-
 .navbar {
     background-color: #352025;
 }
@@ -20,6 +15,14 @@ h1, h2, h3, h4 {
 
 .nav-item a:hover{
     color: #897A73;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(244,235,221, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+.navbar-toggler {
+    border-color: #F4EBDD;
 }
 
 .card {
@@ -40,7 +43,37 @@ h1, h2, h3, h4 {
     color: #352025;
 }
 
+.btn:hover{
+    background-color: #6A2F31;
+    color: #F4EBDD;
+}
+
+.btn:focus{
+    background-color: #6A2F31;
+    color: #F4EBDD;
+}
+
+.title-picto {
+    color: #352025;
+    font-size: 1.5em;
+}
+
+.title-picto:hover {
+    color: #6A2F31;
+    text-decoration: none;
+}
+
 .picto {
-    fill: #352025;;
+    color: #352025;
+    font-size: 10em;
+}
+
+.picto:hover{
+    color: #6A2F31;
+}
+
+.thead {
+    background-color: #6A2F31 ;
+    color: #F4EBDD;
 }
 

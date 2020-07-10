@@ -257,7 +257,7 @@ class AppFixtures extends Fixture
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
 
             $product->setColor($faker->randomElement($colorList));
-            $product->setPicture($faker->imageUrl(260, 280, ['wine'], true));
+            $product->setPicture($faker->imageUrl(450, 275, ['wine'], true));
 
 
             $product->setAlcoholVolume($faker->randomFloat(1, 5, 50));

@@ -21,28 +21,32 @@
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-0">                
-                <a href="#"><img src="{{ asset('images/profile.svg')}}" class="card-img-top picto" alt="icon profile"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Profil de l'entreprise</h5>
+                <div class="card-body text-center">
+                    <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="#">Mon profil</a>
+                    </h5>
                 </div>
             </div>
         </div>
         <div class="col-8 col-md-3 mb-4">
-
-            <div class="card h-100 border-0">
-                <a href="{{ path('board',{'id': app.user.company.id}) }}"><img src="{{ asset('images/board.svg')}}" class="card-img-top picto" alt="icon board"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Dashboard</h5>
+            <div class="card h-100 border-0"> 
+                <div class="card-body text-center">
+                    <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('board',{'id': app.user.company.id}) }}">Mon dashboard</a>
+                    </h5>
                 </div>
             </div>
 
         </div>
         <div class="col-8 col-md-3 mb-4">
-
             <div class="card h-100 border-0">
-                <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><img src="{{ asset('images/shop.svg')}}" class="card-img-top picto" alt="icon shop"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Ma boutique</h5>
+                <div class="card-body text-center">
+                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto mb-4"></i></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.id)}) }}">Ma boutique</a>
+                    </h5>
                 </div>
             </div>
 
