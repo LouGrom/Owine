@@ -49,9 +49,16 @@
                  <li class="nav-item">
                   <a class="nav-link" href="#">Commandes</a>
                 </li>
+                {# Si on est connecté #}
+                {% if app.user %}
+                  {# et qu'on est un seller #}
+                  {% if 'ROLE_BUYER' in app.user.roles %}
+                    {# alors on voit le lien vers le tableau de bord  #}
                  <li class="nav-item">
-                  <a class="nav-link" href="#">Panier</a>
+                  <a class="nav-link" href="{{ path('cart_buyer',{'id': (app.user.id)}) }}">Panier</a>
                 </li>
+                {% endif %}
+              {% endif %}
               </ul>
 
               {% if app.user %}
