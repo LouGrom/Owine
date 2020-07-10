@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom du produit</th>
+                <td>{{ product.appellation }}</td>
+            </tr>
+            <tr>
+                <th>Provenance</th>
+                <td>{{ product.area }}</td>
+            </tr>
+            <tr>
+                <th>Type du vin</th>
+                <td>{{ product.type.name }}</td>
+            </tr>
+            <tr>
+                <th>Cuvée Domaine</th>
+                <td>{{ product.cuveeDomaine }}</td>
+            </tr>
+            <tr>
+                <th>Volume en ml</th>
+                <td>{{ product.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ product.vintage }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ product.color.name }}</td>
+            </tr>
+            <tr>
+                <th>% d'alcool</th>
+                <td>{{ product.alcoholVolume }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Code barre</th>
+                <td>{{ product.hsCode }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ product.picture }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ product.status }}</td>
+            </tr>
+            <tr>
+                <th>Quantité en stock</th>
+                <td>{{ product.stockQuantity }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

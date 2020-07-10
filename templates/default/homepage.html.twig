@@ -15,9 +15,8 @@
 {% endif %}
 
 
-{% if app.user %}
+{% if app.user and 'ROLE_SELLER' in app.user.roles %}
   {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}-
-  {% if 'ROLE_SELLER' in app.user.roles %}
     {# alors on voit la homepage personnalisée pour le vendeur #}
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
@@ -49,7 +48,6 @@
 
         </div>
     </div>
-    {% endif %}
 
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
