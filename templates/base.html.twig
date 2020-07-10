@@ -60,19 +60,19 @@
 
               {% if app.user %}
                 <div class="mr-3" id="login-name">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn">Déconnexion</a>
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark">Déconnexion</a>
                 </div>
                 {% else %}
-                <div>
-                  <a class="nav-link" href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
+                <div class="mr-3">
+                  <a href="{{ path('app_register') }}" class="btn btn-dark">Inscription</a>
                 </div>
                 <div class="mr-3">
-                  <a class="nav-link" href="{{ path('app_login') }}" class="btn btn-secondary">Connexion</a>
+                  <a href="{{ path('app_login') }}" class="btn btn-dark">Connexion</a>
                 </div>
                {% endif %}
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
-                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Rechercher</button>
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
               </form>
             </div>
           </nav>

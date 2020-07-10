@@ -1,7 +1,8 @@
 body {
     background-color: #F4EBDD;
     overflow: auto;
-    font-family: 'CooperHewitt-Bold', arial;
+    font-family: 'CooperHewitt-Light', arial;
+    color: #4E423F;
 }
 
 .navbar {
@@ -35,6 +36,6 @@ body {
 }
 
 .picto {
-    color: #6A2F31;;
+    fill: #352025;;
 }
 
