@@ -1,8 +1,13 @@
 body {
     background-color: #F4EBDD;
     overflow: auto;
-    font-family: 'CooperHewitt-Light', arial;
+    font-family: 'CooperHewitt-Book', arial;
     color: #4E423F;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'CooperHewitt-Bold', arial;
+    font-weight: bold;
 }
 
 .navbar {

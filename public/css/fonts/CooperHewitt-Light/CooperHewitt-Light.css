@@ -1,14 +1,14 @@
 
 @font-face {
   font-family: 'CooperHewitt-Light';
-  src: url('CooperHewitt-Light.eot') format('embedded-opentype');
+  src: url('/public/css/fonts/CooperHewitt-Light/CooperHewitt-Light.eot') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'CooperHewitt-Light';
-  src:  url('CooperHewitt-Light.otf')  format('opentype'),
+  src:  url('/public/css/fonts/CooperHewitt-Light/CooperHewitt-Light.otf')  format('opentype'),
 	     url(data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAG2EAA8AAAAA/CgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAABtaAAAABwA
 AAAcZdSzOEdERUYAAGBYAAAAXQAAAHQUnxICR1BPUwAAZWAAAAgFAAAZasbNln1HU1VCAABguAAA
 BKUAAAgyb22DmE9TLzIAAAHQAAAAUwAAAGDC4bHFY21hcAAABdQAAAOKAAAE/vK9n2lnYXNwAABg
