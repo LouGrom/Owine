@@ -21,7 +21,7 @@
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-0">                
-                <a href="#"><img src="{{ asset('images/profile.svg')}}" class="card-img-top" alt="icon profile"></a>
+                <a href="#"><img src="{{ asset('images/profile.svg')}}" class="card-img-top picto" alt="icon profile"></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">Profil de l'entreprise</h5>
                 </div>
@@ -30,7 +30,7 @@
         <div class="col-8 col-md-3 mb-4">
 
             <div class="card h-100 border-0">
-                <a href="{{ path('board',{'id': app.user.company.id}) }}"><img src="{{ asset('images/board.svg')}}" class="card-img-top" alt="icon board"></a>
+                <a href="{{ path('board',{'id': app.user.company.id}) }}"><img src="{{ asset('images/board.svg')}}" class="card-img-top picto" alt="icon board"></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">Dashboard</h5>
                 </div>
@@ -40,7 +40,7 @@
         <div class="col-8 col-md-3 mb-4">
 
             <div class="card h-100 border-0">
-                <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><img src="{{ asset('images/shop.svg')}}" class="card-img-top" alt="icon shop"></a>
+                <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><img src="{{ asset('images/shop.svg')}}" class="card-img-top picto" alt="icon shop"></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">Ma boutique</h5>
                 </div>
@@ -51,25 +51,9 @@
 
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
-    <div class="row row-cols-1 row-cols-md-3">
-        {% for company in companies %}
-        <div class="col mb-4">
-            <div class="card h-100">
-                <a href="{{ path('company_show',{'id': company.id}) }}"><img src="{{ company.picture }}" class="card-img-top" alt="..."></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center"><a href="{{ path('company_show',{'id': company.id}) }}">{{ company.name }}</a></h5>
-                    {% for i in 0..random(4) %}
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    {% endfor %}
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">{{ company.seller[0].zipcode }} - {{ company.seller[0].city }}</p>
-                        <p>{{ company.seller[0].productsForSale[0].area }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+ <section>
+ Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus nostrum nulla voluptates culpa illo, repellendus aspernatur eum ab enim similique adipisci quam doloremque! Veniam pariatur consectetur tempore dolore libero odit?
+ </section>
 
 {% endif %}
 {% endblock %}
