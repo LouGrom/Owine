@@ -7,15 +7,17 @@
 
 <div class="d-flex justify-content-around">
     <ul class="nav nav-pills">
-        <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Voir mes produits</a></li>
-        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Voir mes commandes</a></li>
+        <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Mes produits <i class="fa fa-wine-bottle"></i></a></li>
+        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Mes commandes <i class="far fa-credit-card"></i></i></a></li>
     </ul>
 </div>
 <div class="tab-content">
     <div id="products" class="tab-pane fade in active">
         {# TABLEAU DES PRODUITS #}
-        <a href="{{ path('product_new')}}" class="btn btn-dark mb-4">Ajouter un produit</a>
-        <h2>Mes produits :</h2>
+        <div class="d-flex mt-4">
+            <h2>Mes produits :</h2>
+            <a href="{{ path('product_new')}}" class="btn btn-dark mb-4 ml-3"><i class="fa fa-plus" aria-hidden="true"></i> <span class="d-none d-md-inline">Ajouter un p</span><span class="d-md-none">P</span>roduit </a>
+        </div>
         <div class="table-responsive">
             <table class="table">
             <thead class="thead-dark">
@@ -38,7 +40,7 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.hsCode }}</td>
                 <td>{{ product.stockQuantity }}</td>
-                <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Voir</a></td>
+                <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -65,7 +67,7 @@
                 <td>{{ order.trackingNumber }}</td>
                 <td>{{ order.totalAmount }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
-                <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark">Voir</a></td>
+                <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>
