@@ -9,6 +9,17 @@ strong {
     font-family: 'CooperHewitt-Medium', arial;
 }
 
+.navbar-brand {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+}
+
+.navbar-brand:hover {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+    color: #897A73;
+}
+
 .navbar {
     background-color: #6e081f;
 }
