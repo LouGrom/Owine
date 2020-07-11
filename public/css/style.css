@@ -1,16 +1,31 @@
 body {
-    background-color: #F4EBDD;
+    background-color: #FAF6F0;
     overflow: auto;
     font-family: 'CooperHewitt-Book', arial;
-    color: #4E423F;
+    color: #352025;
+}
+
+strong {
+    font-family: 'CooperHewitt-Medium', arial;
+}
+
+.navbar-brand {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+}
+
+.navbar-brand:hover {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+    color: #897A73;
 }
 
 .navbar {
-    background-color: #352025;
+    background-color: #6e081f;
 }
 
 .nav-link, .navbar-brand{
-    color: #F4EBDD;
+    color: #FAF6F0;
 }
 
 .nav-item a:hover{
@@ -22,35 +37,43 @@ body {
   }
   
 .navbar-toggler {
-    border-color: #F4EBDD;
+    border-color: #FAF6F0;
+}
+
+.homepage a {
+    color: #6e081f;
+}
+
+.homepage a:hover {
+    color: #897A73;
 }
 
 .card {
     background-color: #F4EBDD;
-    border: 1px #6A2F31 solid;
+    border: 1px #6e081f solid;
 }
 
 .card-title a {
-    color: #6A2F31;;
+    color: #6e081f;;
 }
 
 #login-name{
-    color: #F4EBDD;
+    color: #FAF6F0;
 }
 
 .btn {
-    background-color: #897A73;
+    background-color: #FAF6F0;
     color: #352025;
 }
 
 .btn:hover{
-    background-color: #6A2F31;
-    color: #F4EBDD;
+    background-color: #352025;
+    color: #FAF6F0;
 }
 
 .btn:focus{
-    background-color: #6A2F31;
-    color: #F4EBDD;
+    background-color: #6e081f;
+    color: #FAF6F0;
 }
 
 .title-picto {
@@ -59,7 +82,7 @@ body {
 }
 
 .title-picto:hover {
-    color: #6A2F31;
+    color: #6e081f;
     text-decoration: none;
 }
 
@@ -69,11 +92,11 @@ body {
 }
 
 .picto:hover{
-    color: #6A2F31;
+    color: #6e081f;
 }
 
 .thead {
-    background-color: #6A2F31 ;
-    color: #F4EBDD;
+    background-color: #6e081f ;
+    color: #FAF6F0;
 }
 
