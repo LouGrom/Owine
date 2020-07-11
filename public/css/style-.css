@@ -1,8 +1,8 @@
 body {
-    background-color: #ffffff;
+    background-color: #F4EBDD;
     overflow: auto;
     font-family: 'CooperHewitt-Book', arial;
-    color: #352025;
+    color: #4E423F;
 }
 
 strong {
@@ -10,7 +10,7 @@ strong {
 }
 
 .navbar {
-    background-color: #6e081f;
+    background-color: #352025;
 }
 
 .nav-link, .navbar-brand{
@@ -29,14 +29,6 @@ strong {
     border-color: #F4EBDD;
 }
 
-.homepage a {
-    color: #6e081f;
-}
-
-.homepage a:hover {
-    color: #897A73;
-}
-
 .card {
     background-color: #F4EBDD;
     border: 1px #6A2F31 solid;
@@ -51,12 +43,12 @@ strong {
 }
 
 .btn {
-    background-color: #F4EBDD;
+    background-color: #897A73;
     color: #352025;
 }
 
 .btn:hover{
-    background-color: #352025;
+    background-color: #6A2F31;
     color: #F4EBDD;
 }
 

@@ -5,12 +5,12 @@
 {% block body %}
 
 {% if app.user %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine {{ app.user.firstname }}! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue {{ app.user.firstname }}!</h1>
     </div>
     {% else %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine ! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue sur O'wine !</h1>
     </div>
 {% endif %}
 
@@ -55,9 +55,42 @@
 
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
- <section>
- Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus nostrum nulla voluptates culpa illo, repellendus aspernatur eum ab enim similique adipisci quam doloremque! Veniam pariatur consectetur tempore dolore libero odit?
- </section>
+    <div class="card mt-2 mb-2 border-0 homepage" style="background-color:#ffffff;">
+        <div class="row no-gutters my-auto">
+            <div class="col-md-6">
+                <img src="{{ asset('images/mobile.jpg') }}" class="card-img" alt="...">
+            </div>
+            <div class="col-md-6 my-auto">
+                <div class="card-body">
+                    <p class="card-text text-center" style="font-size: 1.4em;">En visite dans une région viticole vous avez dégusté les produits d'un domaine ou d'un caveau</p>
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('images/degustation.jpg') }}" alt="">
+                    </div>
+                    <p class="text-center" style="font-size: 1.4em;">Vous souhaitez acheter quelques bouteilles pour vous les faire livrer directement chez vous</p>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-wine-bottle"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-box-open"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-plane"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-globe-americas"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-shipping-fast"></i></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 my-auto">
+                <div class="card-body">
+                    <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_index') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
+                    <a href="{{ path('company_index') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
+                </div>
+            </div>
+            <div class="col-md-6 my-auto">
+                <div class="card-body">
+                    <p class="text-center" style="font-size: 1.4em;">ou le <a href="{{ path('products_list') }}" style="color: #6e081f;">catalogue des produits</a> en vente sur notre application.</p>
+                    <a href="{{ path('products_list') }}"><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-shopping-cart"></i></p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endif %}
 {% endblock %}
