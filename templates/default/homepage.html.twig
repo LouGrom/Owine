@@ -20,7 +20,7 @@
     {# alors on voit la homepage personnalisée pour le vendeur #}
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
-            <div class="card h-100 border-0">                
+            <div class="card h-100 border-1">                
                 <div class="card-body text-center">
                     <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
                     <h5>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-8 col-md-3 mb-4">
-            <div class="card h-100 border-0"> 
+            <div class="card h-100 border-1"> 
                 <div class="card-body text-center">
                     <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto mb-4"></i></a>
                     <h5>
@@ -41,7 +41,7 @@
 
         </div>
         <div class="col-8 col-md-3 mb-4">
-            <div class="card h-100 border-0">
+            <div class="card h-100 border-1">
                 <div class="card-body text-center">
                     <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto mb-4"></i></i></a>
                     <h5>
@@ -55,7 +55,7 @@
 
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
-    <div class="card mt-2 mb-2 border-0 homepage" style="background-color:#ffffff;">
+    <div class="card mt-2 mb-2 border-0 homepage" style="">
         <div class="row no-gutters my-auto">
             <div class="col-md-6">
                 <img src="{{ asset('images/mobile.jpg') }}" class="card-img" alt="...">

@@ -1,5 +1,5 @@
 body {
-    background-color: #ffffff;
+    background-color: #FAF6F0;
     overflow: auto;
     font-family: 'CooperHewitt-Book', arial;
     color: #352025;
@@ -14,7 +14,7 @@ strong {
 }
 
 .nav-link, .navbar-brand{
-    color: #F4EBDD;
+    color: #FAF6F0;
 }
 
 .nav-item a:hover{
@@ -26,7 +26,7 @@ strong {
   }
   
 .navbar-toggler {
-    border-color: #F4EBDD;
+    border-color: #FAF6F0;
 }
 
 .homepage a {
@@ -39,30 +39,30 @@ strong {
 
 .card {
     background-color: #F4EBDD;
-    border: 1px #6A2F31 solid;
+    border: 1px #6e081f solid;
 }
 
 .card-title a {
-    color: #6A2F31;;
+    color: #6e081f;;
 }
 
 #login-name{
-    color: #F4EBDD;
+    color: #FAF6F0;
 }
 
 .btn {
-    background-color: #F4EBDD;
+    background-color: #FAF6F0;
     color: #352025;
 }
 
 .btn:hover{
     background-color: #352025;
-    color: #F4EBDD;
+    color: #FAF6F0;
 }
 
 .btn:focus{
-    background-color: #6A2F31;
-    color: #F4EBDD;
+    background-color: #6e081f;
+    color: #FAF6F0;
 }
 
 .title-picto {
@@ -71,7 +71,7 @@ strong {
 }
 
 .title-picto:hover {
-    color: #6A2F31;
+    color: #6e081f;
     text-decoration: none;
 }
 
@@ -81,11 +81,11 @@ strong {
 }
 
 .picto:hover{
-    color: #6A2F31;
+    color: #6e081f;
 }
 
 .thead {
-    background-color: #6A2F31 ;
-    color: #F4EBDD;
+    background-color: #6e081f ;
+    color: #FAF6F0;
 }
 
