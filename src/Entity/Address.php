@@ -28,21 +28,25 @@ class Address
     private $lastname;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $street;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=10)
      */
     private $zipCode;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $city;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $country;

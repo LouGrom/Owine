@@ -13,6 +13,13 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
+
+        <!-- ###+ algolia/search-bundle ### -->
+        <!-- Create a free account on www.algolia.com -->
+        <!-- and get your credentials from the API Keys tab. -->
+        <env name="ALGOLIA_APP_ID" value="..."/>
+        <env name="ALGOLIA_API_KEY" value="..."/>
+        <!-- ###- algolia/search-bundle ### -->
     </php>
 
     <testsuites>
