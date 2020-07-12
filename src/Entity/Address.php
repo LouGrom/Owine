@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -212,5 +215,22 @@ class Address
         $this->type = $type;
 
         return $this;
+    }
+
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation des API
+    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
+    {
+        return [
+            'street' => $this->getStreet(),
+            'zipCode' => $this->getZipCode(),
+            'city' => $this->getCity(),
+            'country' => $this->getCountry(),
+
+            // Reuse the $serializer
+            'street' => $serializer->normalize($this->getStreet(), $format, $context),
+            'zipCode' => $serializer->normalize($this->getZipCode(), $format, $context),
+            'city' => $serializer->normalize($this->getCity(), $format, $context),
+            'country' => $serializer->normalize($this->getCountry(), $format, $context),
+        ];
     }
 }
