@@ -217,7 +217,7 @@ class Address
         return $this;
     }
 
-    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation des API
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
     public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
     {
         return [
