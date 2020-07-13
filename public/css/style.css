@@ -5,6 +5,10 @@ body {
     color: #352025;
 }
 
+.container {
+    min-height: 80vh;
+}
+
 strong {
     font-family: 'CooperHewitt-Medium', arial;
 }
