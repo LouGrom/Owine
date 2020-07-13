@@ -76,15 +76,14 @@ class Address
     private $updatedAt;
 
     /**
-<<<<<<< HEAD:src/Entity/Address.php
      * @ORM\Column(type="array")
      */
     private $type = [];
-=======
+
+    /** 
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $province;
->>>>>>> master:src/Entity/DeliveryAddress.php
 
     public function getId(): ?int
     {
@@ -211,7 +210,6 @@ class Address
         return $this;
     }
 
-<<<<<<< HEAD:src/Entity/Address.php
     public function getType(): ?array
     {
         return $this->type;
@@ -240,7 +238,6 @@ class Address
             'country' => $serializer->normalize($this->getCountry(), $format, $context),
         ];
     }
-=======
     public function getProvince(): ?string
     {
         return $this->province;
@@ -252,5 +249,4 @@ class Address
 
         return $this;
     }
->>>>>>> master:src/Entity/DeliveryAddress.php
 }
