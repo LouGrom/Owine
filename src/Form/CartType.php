@@ -25,7 +25,7 @@ class CartType extends AbstractType
             ->add('product', EntityType::class, [
                 'label' => 'Produit',
                 'class' => Product::class,
-                'choice_label' => 'appellation'
+                'choice_label' => 'appellation.name'
             ]);
         
     }
