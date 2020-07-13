@@ -54,6 +54,11 @@ class Company
      */
     private $presentation;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rate;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
@@ -163,6 +168,18 @@ class Company
     public function setPresentation(?string $presentation): self
     {
         $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?float $rate): self
+    {
+        $this->rate = $rate;
 
         return $this;
     }

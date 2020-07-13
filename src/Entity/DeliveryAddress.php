@@ -68,6 +68,11 @@ class DeliveryAddress
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $province;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -189,6 +194,18 @@ class DeliveryAddress
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getProvince(): ?string
+    {
+        return $this->province;
+    }
+
+    public function setProvince(?string $province): self
+    {
+        $this->province = $province;
 
         return $this;
     }
