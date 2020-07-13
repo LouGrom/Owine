@@ -10,3 +10,4 @@ easy_admin:
                 fields: ['id', 'firstName', 'lastName', 'phone', 'email','createdAt']
                 filters: ['country', 'role', 'createdAt']
                 max_results: 30
+   

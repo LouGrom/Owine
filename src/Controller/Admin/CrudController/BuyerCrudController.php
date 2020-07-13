@@ -12,7 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
 
-class UserCrudController extends AbstractCrudController
+class BuyerCrudController extends AbstractCrudController
 {
     
 
@@ -37,18 +37,20 @@ class UserCrudController extends AbstractCrudController
      
     // }
 
-    // public function configureFields(string $pageName): iterable
-    // {
-        
-    //     return [
-            
+    public function configureFields(string $pageName): iterable
+    {
+        return [
 
-    //         IntegerField::new('id'),
-    //         ArrayField::new('roles')            
-    //     ];
-    
-        
-    // }
+            ArrayField::new('roles')
+            // ...but callables also receives the entire entity instance as the second argument
+            ->formatValue(function ($value) 
+            {
+                // dump($value->toString());
+                return $value->toString() == 'ROLE_USER, ROLE_BUYER' ? $value : "";
+            })
+
+        ];
+    }
 
 
 
