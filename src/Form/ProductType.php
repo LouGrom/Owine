@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Appellation;
 use App\Entity\Color;
 use App\Entity\User;
 use App\Entity\Product;
@@ -33,7 +34,11 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('appellation', TextType::class, ["label"=>"Nom du produit"])
+            ->add('appellation', EntityType::class, [
+                "label"=>"Nom du produit",
+                "class"=>Appellation::class,
+                "choice_label"=>'name'
+            ])
             ->add('area', TextType::class, ["label"=>"Zone"])
             ->add('type', EntityType::class, [
                 'label'=> 'Type de vin',
