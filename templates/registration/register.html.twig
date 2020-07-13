@@ -10,9 +10,29 @@
     <h1 class="text-center mt-3 mb-3">Inscription</h1>
 
     <div class="mb-3 text-center">
-        <a href="{{path('app_company_register')}}" class="btn btn-dark">Entreprise</a>
-        <a href="{{path('app_individual_register')}}" class="btn btn-dark">Particulier</a>
+        <p>Tout d'abord, nous devons savoir quel type de personne vous êtes :</p>
     </div>
+    <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
+        <div class="col-8 col-md-3 mb-4">
+            <div class="card h-100 border-1">                
+                <div class="card-body text-center">
+                    <a href="{{path('app_company_register')}}"><i class="fas fa-wine-glass picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{path('app_company_register')}}">Vendeur</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 col-md-3 mb-4">
+            <div class="card h-100 border-1">                
+                <div class="card-body text-center">
+                    <a href="{{path('app_individual_register')}}"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{path('app_individual_register')}}">Particulier</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
 
     </div>
 

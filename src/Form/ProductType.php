@@ -35,7 +35,7 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('appellation', EntityType::class, [
-                "label"=>"Nom du produit",
+                "label"=>"Appellation",
                 "class"=>Appellation::class,
                 "choice_label"=>'name'
             ])
