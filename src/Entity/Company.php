@@ -176,17 +176,6 @@ class Company
         return $this;
     }
 
-<<<<<<< HEAD
-    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
-    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
-    {
-        return [
-            'Company Name' => $this->getName(),
-
-            // Reuse the $serializer
-            'Company Name' => $serializer->normalize($this->getName(), $format, $context),
-        ];
-=======
     public function getRate(): ?float
     {
         return $this->rate;
@@ -197,6 +186,16 @@ class Company
         $this->rate = $rate;
 
         return $this;
->>>>>>> master
     }
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
+    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
+    {
+        return [
+            'Company Name' => $this->getName(),
+
+            // Reuse the $serializer
+            'Company Name' => $serializer->normalize($this->getName(), $format, $context),
+        ];
+    }
+
 }

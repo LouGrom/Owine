@@ -29,17 +29,6 @@ class Product
      * @Assert\NotBlank
      * @Assert\Length(max=50)
      */
-<<<<<<< HEAD
-    private $appellation;
-
-    /**
-     * @Groups({"searchable"})
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Assert\Length(max=50)
-     */
-=======
->>>>>>> master
     private $area;
 
     /**
@@ -432,7 +421,6 @@ class Product
         return $this;
     }
 
-<<<<<<< HEAD
     // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
     public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
     {
@@ -446,7 +434,8 @@ class Product
             'area' => $serializer->normalize($this->getArea(), $format, $context),
             'cuveeDomaine' => $serializer->normalize($this->getCuveeDomaine(), $format, $context),
         ];
-=======
+    }
+    
     public function getRate(): ?float
     {
         return $this->rate;
@@ -474,6 +463,5 @@ class Product
         }
 
         return $this;
->>>>>>> master
     }
 }
