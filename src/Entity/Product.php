@@ -136,7 +136,7 @@ class Product
     private $rate;
 
     /**
-     * @ORM\OneToOne(targetEntity=Appellation::class, mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Appellation::class, inversedBy="products")
      */
     private $appellation;
 
@@ -434,15 +434,11 @@ class Product
         return $this->appellation;
     }
 
-    public function setAppellation(Appellation $appellation): self
+    public function setAppellation(?Appellation $appellation): self
     {
         $this->appellation = $appellation;
 
-        // set the owning side of the relation if necessary
-        if ($appellation->getProduct() !== $this) {
-            $appellation->setProduct($this);
-        }
-
         return $this;
     }
+
 }
