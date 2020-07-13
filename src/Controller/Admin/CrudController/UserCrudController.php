@@ -12,14 +12,16 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
-    /*
-    public function configureFields(string $pageName): iterable
+    public function findAllByUser($validate)
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
-    }
-    */
+        $builder = $this->createQueryBuilder('sellers');
+
+        $builder->where("cart.user = :userId");
+
+        $builder->setParameter("userId", $id);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+}
 }
