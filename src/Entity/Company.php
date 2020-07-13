@@ -58,6 +58,11 @@ class Company
      */
     private $presentation;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rate;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
@@ -171,6 +176,7 @@ class Company
         return $this;
     }
 
+<<<<<<< HEAD
     // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
     public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
     {
@@ -180,5 +186,17 @@ class Company
             // Reuse the $serializer
             'Company Name' => $serializer->normalize($this->getName(), $format, $context),
         ];
+=======
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?float $rate): self
+    {
+        $this->rate = $rate;
+
+        return $this;
+>>>>>>> master
     }
 }

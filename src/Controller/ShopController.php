@@ -37,5 +37,13 @@ class ShopController extends AbstractController
         ]);
     }
 
-
+    /**
+     * @Route("/{id}", name="product_show", methods={"GET"})
+     */
+    public function show(Product $product): Response
+    {
+        return $this->render('shop/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
 }

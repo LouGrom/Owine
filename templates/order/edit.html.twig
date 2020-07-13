@@ -5,9 +5,10 @@
 {% block body %}
     <h1>Modifier une commande</h1>
 
+    <a href="{{ path('board') }}" class="btn btn-dark mb-4">Retour au tableau de bord</a>
+
     {{ include('order/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('board') }}" class="btn btn-dark">Retour au tableau de bord</a>
-
     {{ include('order/_delete_form.html.twig') }}
+    
 {% endblock %}

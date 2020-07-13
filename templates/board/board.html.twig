@@ -7,24 +7,26 @@
 
 <div class="d-flex justify-content-around">
     <ul class="nav nav-pills">
-        <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Voir mes produits</a></li>
-        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Voir mes commandes</a></li>
+        <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn">Mes produits <i class="fa fa-wine-bottle"></i></a></li>
+        <li class="active"><a href="#orders" data-toggle="pill" class="btn">Mes commandes <i class="far fa-credit-card"></i></i></a></li>
     </ul>
 </div>
 <div class="tab-content">
     <div id="products" class="tab-pane fade in active">
         {# TABLEAU DES PRODUITS #}
-        <a href="{{ path('product_new')}}" class="btn btn-success">Ajouter un produit</a>
-        <h2>Mes produits :</h2>
+        <div class="d-flex mt-4">
+            <h2>Mes produits :</h2>
+            <a href="{{ path('product_new')}}" class="btn btn-dark mb-4 ml-3"><i class="fa fa-plus" aria-hidden="true"></i> <span class="d-none d-md-inline">Ajouter un p</span><span class="d-md-none">P</span>roduit </a>
+        </div>
         <div class="table-responsive">
             <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead">
                 <tr>
                 <th scope="col">Appellation</th>
                 <th scope="col">Type</th>
                 <th scope="col">Couleur</th>
                 <th scope="col">Prix</th>
-                <th scope="col">Code barre</th>
+                <th scope="col">Code douanier</th>
                 <th scope="col">Stock</th>
                 <th scope="col">Détails</th>
                 </tr>
@@ -32,13 +34,13 @@
             <tbody>
             {% for product in app.user.productsForSale %}
                 <tr>
-                <td>{{ product.appellation }}</td>
+                <td>{{ product.appellation.name }}</td>
                 <td>{{ product.type.name }}</td>
                 <td>{{ product.color.name }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.hsCode }}</td>
                 <td>{{ product.stockQuantity }}</td>
-                <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Voir</a></td>
+                <td><a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -51,7 +53,7 @@
         <h2>Mes commandes :</h2>
         <div class="table-responsive">
             <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead">
                 <tr>
                 <th scope="col">Numéro de commande</th>
                 <th scope="col">Prix</th>
@@ -65,7 +67,7 @@
                 <td>{{ order.trackingNumber }}</td>
                 <td>{{ order.totalAmount }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
-                <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark">Voir</a></td>
+                <td><a href="{{ path('order_show', {'id': order.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>

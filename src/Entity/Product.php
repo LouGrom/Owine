@@ -29,6 +29,7 @@ class Product
      * @Assert\NotBlank
      * @Assert\Length(max=50)
      */
+<<<<<<< HEAD
     private $appellation;
 
     /**
@@ -37,6 +38,8 @@ class Product
      * @Assert\NotBlank
      * @Assert\Length(max=50)
      */
+=======
+>>>>>>> master
     private $area;
 
     /**
@@ -142,6 +145,16 @@ class Product
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rate;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Appellation::class, mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $appellation;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -151,18 +164,6 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAppellation(): ?string
-    {
-        return $this->appellation;
-    }
-
-    public function setAppellation(string $appellation): self
-    {
-        $this->appellation = $appellation;
-
-        return $this;
     }
 
     public function getArea(): ?string
@@ -431,6 +432,7 @@ class Product
         return $this;
     }
 
+<<<<<<< HEAD
     // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
     public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
     {
@@ -444,5 +446,34 @@ class Product
             'area' => $serializer->normalize($this->getArea(), $format, $context),
             'cuveeDomaine' => $serializer->normalize($this->getCuveeDomaine(), $format, $context),
         ];
+=======
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?float $rate): self
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getAppellation(): ?Appellation
+    {
+        return $this->appellation;
+    }
+
+    public function setAppellation(Appellation $appellation): self
+    {
+        $this->appellation = $appellation;
+
+        // set the owning side of the relation if necessary
+        if ($appellation->getProduct() !== $this) {
+            $appellation->setProduct($this);
+        }
+
+        return $this;
+>>>>>>> master
     }
 }

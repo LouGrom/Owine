@@ -5,75 +5,97 @@
 {% block body %}
 
 {% if app.user %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine {{ app.user.firstname }}! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue {{ app.user.firstname }}!</h1>
     </div>
     {% else %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine ! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue sur O'wine !</h1>
     </div>
 {% endif %}
 
 
-{% if app.user %}
+{% if app.user and 'ROLE_SELLER' in app.user.roles %}
   {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}-
-  {% if 'ROLE_SELLER' in app.user.roles %}
     {# alors on voit la homepage personnalisée pour le vendeur #}
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
-            <div class="card h-100 border-0">                
-                <a href="#"><img src="{{ asset('images/profile.svg')}}" class="card-img-top" alt="icon profile"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Profil de l'entreprise</h5>
+            <div class="card h-100 border-1">                
+                <div class="card-body text-center">
+                    <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="#">Mon profil</a>
+                    </h5>
                 </div>
             </div>
         </div>
         <div class="col-8 col-md-3 mb-4">
-
-            <div class="card h-100 border-0">
-                <a href="{{ path('board',{'id': app.user.company.id}) }}"><img src="{{ asset('images/board.svg')}}" class="card-img-top" alt="icon board"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Dashboard</h5>
+            <div class="card h-100 border-1"> 
+                <div class="card-body text-center">
+                    <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('board',{'id': app.user.company.id}) }}">Mon dashboard</a>
+                    </h5>
                 </div>
             </div>
 
         </div>
         <div class="col-8 col-md-3 mb-4">
-
-            <div class="card h-100 border-0">
-                <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><img src="{{ asset('images/shop.svg')}}" class="card-img-top" alt="icon shop"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Ma boutique</h5>
+            <div class="card h-100 border-1">
+                <div class="card-body text-center">
+                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto mb-4"></i></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.id)}) }}">Ma boutique</a>
+                    </h5>
                 </div>
             </div>
 
         </div>
     </div>
-    {% endif %}
 
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
-    <div class="row row-cols-1 row-cols-md-3">
-        {% for company in companies %}
-        <div class="col mb-4">
-            <div class="card h-100">
-                <a href="{{ path('company_show',{'id': company.id}) }}"><img src="{{ company.picture }}" class="card-img-top" alt="..."></a>
+    <div class="card mt-2 mb-1 border-0 homepage" style="background-color: #FAF6F0;">
+        <div class="row no-gutters my-auto">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-center">
+                    <img src="{{ asset('images/mobile.png') }}" style="width: 83%;" class="card-img" alt="...">
+                </div>
+            </div>
+            <div class="col-md-6 my-auto">
                 <div class="card-body">
-                    <h5 class="card-title text-center"><a href="{{ path('company_show',{'id': company.id}) }}">{{ company.name }}</a></h5>
-                    {% for i in 0..random(4) %}
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    {% endfor %}
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">{{ company.seller[0].address[0].zipCode }} - {{ company.seller[0].address[0].city }}</p>
-                        <p>{{ company.seller[0].productsForSale[0].area }}</p>
+                    <p class="card-text text-center" style="font-size: 1.4em;">En visite dans une région viticole vous avez dégusté les produits d'un domaine ou d'un caveau</p>
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('images/degustation.png') }}" style="width: 55%;" alt="">
+                    </div>
+                    <p class="text-center" style="font-size: 1.4em;">Vous souhaitez acheter quelques bouteilles pour vous les faire livrer directement chez vous</p>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-wine-bottle"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-box-open"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-plane"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-globe-americas"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-shipping-fast"></i></p>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 my-auto">
+                <div class="card-body">
+                    <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_index') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
+                    <a href="{{ path('company_index') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
+                </div>
+            </div>
+            <div class="col-md-6 my-auto">
+                <div class="card-body">
+                    <p class="text-center" style="font-size: 1.4em;">ou le <a href="{{ path('products_list') }}" style="color: #6e081f;">catalogue des produits</a> en vente sur notre application.</p>
+                    <a href="{{ path('products_list') }}"><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-shopping-cart"></i></p></a>
+                </div>
+            </div>
         </div>
-        {% endfor %}
     </div>
 
+
 {% endif %}
+
 {% endblock %}
 
 
@@ -120,3 +142,5 @@
             </div>
                 
         </div> #}
+    
+

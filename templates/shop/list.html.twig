@@ -7,30 +7,26 @@
 
     <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
 
-    <div class="row " >
-        {% for product in products %}
-            <div class="d-flex d-sm-block  mb-2 border-bottom pb-3 col-sm-6 col-md-4">
-                
-                <section class="col">
-                    <img class="" src="{{ product.picture }}" alt="product's picture" style="width: 100%">
-                </section>
-
-                <section class="col">
-                    <h3>{{product.appellation}}</h3>
-                    <strong><em>{{product.cuveeDomaine}}</em></strong>
-
-                    <div class="d-flex align-content-between">
-                        <p><em>Rate of the product</em></p> 
-                        <p class="ml-2"><strong>{{product.price}}€</strong></p>
+    <div class="row row-cols-1 row-cols-md-3">
+          {% for product in products %}
+        <div class="col mb-4">
+            <div class="card h-100">
+                <a href="{{ path('product_show', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                   <div class="d-flex justify-content-between">
+                        <h5 class="card-title text-center"><a href="{{ path('product_show', {'id': product.id}) }}">{{product.appellation.name }}</a></h5>
+                        <p>{{product.price}}€</p>
                     </div>
-                    <div class="d-none d-sm-block">
-                        <p>{{product.description|length > 100 ? product.description|slice(0, 100) ~ '(...)' : product.description}}</p>
-                    </div>
-                    <button type="button" class="btn btn-primary"><a href="#" class="text-white">En savoir plus</a></button>
-                </section>
-            
+                    {% for i in 0..random(4) %}
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    {% endfor %}
+                    <p class="card-text">{{product.cuveeDomaine}}</p>
+                    <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
+                    <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a></td>
+                    <a href="#" class="btn btn-dark">Ajouter <i class="fa fa-shopping-cart"></i></a></td>
+                </div>
             </div>
-        
+        </div>
         {% endfor %}
     </div>
 

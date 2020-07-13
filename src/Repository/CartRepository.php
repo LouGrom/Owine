@@ -19,6 +19,25 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
+    /**
+     * @return Cart[] Returns an array of Product objects
+     */
+    public function findAllByBuyer($id)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('cart');
+
+        $builder->where("cart.user = :userId");
+
+        $builder->setParameter("userId", $id);
+
+        // on recupère la requete construite
+        $query = $builder->getQuery();
+
+        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Cart[] Returns an array of Cart objects
     //  */

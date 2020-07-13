@@ -72,6 +72,11 @@ class Order
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reference;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -237,6 +242,18 @@ class Order
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }

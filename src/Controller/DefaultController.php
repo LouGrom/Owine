@@ -35,4 +35,12 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/legal_mentions.html.twig');
     }
+
+    /**
+     * @route("/404"), name="error_404")
+     */
+    public function error404()
+    {
+        return $this->render('default/error_404.html.twig');
+    }
 }

@@ -3,9 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\Color;
+use App\Entity\Order;
 use App\Entity\Company;
 use App\Entity\Product;
 use App\Entity\Broadcast;
+use App\Entity\ProductBrand;
+use App\Entity\ProductCategory;
 use App\Controller\UserController;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,14 +44,149 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        
+       
+        
+        
         return [
-            MenuItem::linktoDashboard('Dashboard', 'fa fa-home'),
-    
-            MenuItem::linkToCrud('Users', 'fa fa-user', User::class),
-            MenuItem::linkToCrud('Company', 'fa fa-building', Company::class),
-            MenuItem::linkToCrud('Product', 'fa fa-glass', Product::class),
+            // Point de menu pour revenir sur la page d'accueil du dashboard
+            MenuItem::linktoDashboard('Home','fa fa-home'),
+            
+            
+            // Point de menu concernant les Users
+            // Matérialise une section, utilité: oragnisation visuelle
+            MenuItem::section('Users', 'fa fa-users'),
 
+            MenuItem::linkToCrud('All Users', '' , User::class)
+            ->setAction('index'),
+            MenuItem::linkToCrud('Buyers', '' , User::class),
+            MenuItem::linkToCrud('Sellers', '', Company::class),
+
+            MenuItem::subMenu('Actions')->setSubItems([
+            
+            MenuItem::linkToCrud('Detail User', '' , User::class)
+            ->setAction('detail'),
+            MenuItem::linkToCrud('Edit User', '' , User::class)
+            ->setAction('edit'),
+            MenuItem::linkToCrud('Delete User', '' , User::class)
+            ->setAction('delete'),
+            MenuItem::linkToCrud('Add User', '' , User::class)
+            ->setAction('new'),
+            ]),   
+            
+            // // points menu concernant les Products
+            // MenuItem::section('Product', 'fa fa-glass'),
+
+            // MenuItem::linkToCrud('All Products', '' , Product::class),
+
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Product', '' , Product::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Product', '' , Product::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Product', '' , Product::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Product', '' , Product::class)
+            //     ->setAction('new'),
+            //     ]), 
+            
+        
+
+
+            // // points menu concernant les Product Categories
+            // MenuItem::section('Category', 'fa fa-tags'),
+
+            // MenuItem::linkToCrud('All Categories', '', ProductCategory::class),
+           
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Category', '' , ProductCategory::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Category', '' , ProductCategory::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Category', '' , ProductCategory::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Category', '' , ProductCategory::class)
+            //     ->setAction('new'),
+            //     ]), 
+           
+            // // points menu concernant les Product Colors
+            // MenuItem::section('Color Product', 'fa fa-tint'),
+
+            // MenuItem::linkToCrud('All Colors', '', Color::class),
+           
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Color', '' , Color::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Color', '' , Color::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Color', '' , Color::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Color', '' , Color::class)
+            //     ->setAction('new'),
+            //     ]), 
+            
+            // // points menu concernant les Orders 
+            // MenuItem::section('Order', 'fa fa-handshake-o'),
+
+            // MenuItem::linkToCrud('All Orders', '', Order::class),
+           
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Order', '' , Order::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Order', '' , Order::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Order', '' , Order::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Order', '' , Order::class)
+            //     ->setAction('new'),
+            //     ]),
+
+          
+
+            // // points menu concernant les Colors Product
+            // MenuItem::section('Color Product', 'fa fa-tint'),
+
+            // MenuItem::linkToCrud('All Colors', '', Color::class),
+           
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Color', '' , Color::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Color', '' , Color::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Color', '' , Color::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Color', '' , Color::class)
+            //     ->setAction('new'),
+            //     ]),
+
+            // // points menu concernant les Colors Product
+            // MenuItem::section('Color Product', 'fa fa-tint'),
+
+            // MenuItem::linkToCrud('All Colors', '', Color::class),
+           
+            // MenuItem::subMenu('Actions')->setSubItems([
+            
+            //     MenuItem::linkToCrud('Detail Color', '' , Color::class)
+            //     ->setAction('detail'),
+            //     MenuItem::linkToCrud('Edit Color', '' , Color::class)
+            //     ->setAction('edit'),
+            //     MenuItem::linkToCrud('Delete Color', '' , Color::class)
+            //     ->setAction('delete'),
+            //     MenuItem::linkToCrud('Add Color', '' , Color::class)
+            //     ->setAction('new'),
+            //     ]),
+
+                       
+            // point de menu pour la deconnexion
+            MenuItem::section('', ''),
             MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
+            
+           
         ];
 
     }
