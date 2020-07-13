@@ -11,7 +11,7 @@
           {% for product in products %}
         <div class="col mb-4">
             <div class="card h-100">
-                <a href="{{ path('product_show', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+                <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
                 <div class="card-body">
                    <div class="d-flex justify-content-between">
                         <h5 class="card-title text-center"><a href="{{ path('product_show', {'id': product.id}) }}">{{product.appellation.name }}</a></h5>
@@ -22,7 +22,7 @@
                     {% endfor %}
                     <p class="card-text">{{product.cuveeDomaine}}</p>
                     <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
-                    <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a></td>
+                    <a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a></td>
                     <a href="#" class="btn btn-dark">Ajouter <i class="fa fa-shopping-cart"></i></a></td>
                 </div>
             </div>
