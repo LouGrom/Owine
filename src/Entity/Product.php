@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,13 +24,26 @@ class Product
     private $id;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
      * @Assert\Length(max=50)
      */
+<<<<<<< HEAD
+    private $appellation;
+
+    /**
+     * @Groups({"searchable"})
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * @Assert\Length(max=50)
+     */
+=======
+>>>>>>> master
     private $area;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank
      * @Assert\Length(max=30)
@@ -417,6 +432,21 @@ class Product
         return $this;
     }
 
+<<<<<<< HEAD
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
+    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
+    {
+        return [
+            'appellation' => $this->getAppellation(),
+            'area' => $this->getArea(),
+            'cuveeDomaine' => $this->getCuveeDomaine(),
+
+            // Reuse the $serializer
+            'appellation' => $serializer->normalize($this->getAppellation(), $format, $context),
+            'area' => $serializer->normalize($this->getArea(), $format, $context),
+            'cuveeDomaine' => $serializer->normalize($this->getCuveeDomaine(), $format, $context),
+        ];
+=======
     public function getRate(): ?float
     {
         return $this->rate;
@@ -444,5 +474,6 @@ class Product
         }
 
         return $this;
+>>>>>>> master
     }
 }

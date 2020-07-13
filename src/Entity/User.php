@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Cette adresse mail est déjà utilisée.")
  */
 class User implements UserInterface
 {
@@ -35,7 +35,11 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Votre mot de passe doit être long d'au moins {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -54,39 +58,10 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=100)
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user", cascade={"persist"})
+     * 
      */
     private $address;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=10)
-     */
-    private $zipCode;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=50)
-     */
-    private $city;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=50)
-     */
-    private $country;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=20)
-     */
-    private $phoneNumber;
-
-    /**
-     * @ORM\OneToMany(targetEntity=DeliveryAddress::class, mappedBy="buyer")
-     */
-    private $deliveryAddress;
 
     /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="buyer")
@@ -130,7 +105,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->deliveryAddress = new ArrayCollection();
+        $this->address = new ArrayCollection();
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
         $this->receivedOrders = new ArrayCollection();
@@ -239,66 +214,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getZipCode(): ?string
-    {
-        return $this->zipCode;
-    }
-
-    public function setZipCode(string $zipCode): self
-    {
-        $this->zipCode = $zipCode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -324,30 +239,37 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|DeliveryAddress[]
+     * @return Collection|Address[]
      */
-    public function getDeliveryAddress(): Collection
+    public function getAddress(): Collection
     {
-        return $this->deliveryAddress;
+        return $this->address;
     }
 
-    public function addDeliveryAddress(DeliveryAddress $deliveryAddress): self
+    public function addAddress(Address $address): self
     {
-        if (!$this->deliveryAddress->contains($deliveryAddress)) {
-            $this->deliveryAddress[] = $deliveryAddress;
-            $deliveryAddress->setBuyer($this);
+        if (!$this->address->contains($address)) {
+            $this->address[] = $address;
+            $address->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeDeliveryAddress(DeliveryAddress $deliveryAddress): self
+    public function setAddress(Address $address): self
     {
-        if ($this->deliveryAddress->contains($deliveryAddress)) {
-            $this->deliveryAddress->removeElement($deliveryAddress);
+        $this->address[] = $address;
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): self
+    {
+        if ($this->address->contains($address)) {
+            $this->address->removeElement($address);
             // set the owning side to null (unless already changed)
-            if ($deliveryAddress->getBuyer() === $this) {
-                $deliveryAddress->setBuyer(null);
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
             }
         }
 

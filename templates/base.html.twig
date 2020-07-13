@@ -4,8 +4,15 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<<<<<<< HEAD
+        <!-- Google signin -->
+        <meta name="google-signin-client_id" content="319237412811-0fupe0lolqpd80nm3e8s7qtvha0tjobl.apps.googleusercontent.com">
+
+        <title>{% block title %}🍷 Welcome to O'wine!{% endblock %}</title>
+=======
     
         <title>{% block title %}O'wine{% endblock %}</title>
+>>>>>>> master
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -94,7 +101,7 @@
                 {% endfor %}
             {% endfor %}
             
-         <div class="container mt-5 mb-5">
+         <div class="container mt-5 mb-5 pb-5">
             {% block body %}{% endblock %}
          </div>
             
@@ -103,7 +110,21 @@
             {% include "_footer.html.twig"%}
           {% endblock %}
         </footer>
-        <!-- Optional JavaScript -->
+       
+        {% block javascripts %}
+         <!-- Optional JavaScript -->
+        <script src="{{ asset('js/places.js') }}"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="{{ asset('js/google.js')}}"></script>
+        <!-- Algolia Places-->
+        <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+        <script>
+          var placesAutocomplete = places({
+            appId: 'plZJ79P6OE4H',
+            apiKey: 'c28a669b8b82c531a30f8cf0ca708ca0',
+            container: document.querySelector('#address-input')
+          });
+        </script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -114,7 +135,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
-
-        {% block javascripts %}{% endblock %}
+            
+        {% endblock %}
     </body>
 </html>

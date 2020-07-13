@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\DeliveryAddressRepository;
+use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * @ORM\Entity(repositoryClass=DeliveryAddressRepository::class)
+ * @ORM\Entity(repositoryClass=AddressRepository::class)
  */
-class DeliveryAddress
+class Address
 {
     /**
      * @ORM\Id()
@@ -28,21 +31,25 @@ class DeliveryAddress
     private $lastname;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
-    private $address;
+    private $street;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=10)
      */
     private $zipCode;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $city;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $country;
@@ -53,10 +60,10 @@ class DeliveryAddress
     private $phoneNumber;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="deliveryAddress")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $buyer;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -69,9 +76,15 @@ class DeliveryAddress
     private $updatedAt;
 
     /**
+<<<<<<< HEAD:src/Entity/Address.php
+     * @ORM\Column(type="array")
+     */
+    private $type = [];
+=======
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $province;
+>>>>>>> master:src/Entity/DeliveryAddress.php
 
     public function getId(): ?int
     {
@@ -102,14 +115,14 @@ class DeliveryAddress
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getStreet(): ?string
     {
-        return $this->address;
+        return $this->street;
     }
 
-    public function setAddress(string $address): self
+    public function setStreet(string $street): self
     {
-        $this->address = $address;
+        $this->street = $street;
 
         return $this;
     }
@@ -162,14 +175,14 @@ class DeliveryAddress
         return $this;
     }
 
-    public function getBuyer(): ?User
+    public function getUser(): ?User
     {
-        return $this->buyer;
+        return $this->user;
     }
 
-    public function setBuyer(?User $buyer): self
+    public function setUser(?User $user): self
     {
-        $this->buyer = $buyer;
+        $this->user = $user;
 
         return $this;
     }
@@ -198,6 +211,36 @@ class DeliveryAddress
         return $this;
     }
 
+<<<<<<< HEAD:src/Entity/Address.php
+    public function getType(): ?array
+    {
+        return $this->type;
+    }
+
+    public function setType(array $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
+    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
+    {
+        return [
+            'street' => $this->getStreet(),
+            'zipCode' => $this->getZipCode(),
+            'city' => $this->getCity(),
+            'country' => $this->getCountry(),
+
+            // Reuse the $serializer
+            'street' => $serializer->normalize($this->getStreet(), $format, $context),
+            'zipCode' => $serializer->normalize($this->getZipCode(), $format, $context),
+            'city' => $serializer->normalize($this->getCity(), $format, $context),
+            'country' => $serializer->normalize($this->getCountry(), $format, $context),
+        ];
+    }
+=======
     public function getProvince(): ?string
     {
         return $this->province;
@@ -209,4 +252,5 @@ class DeliveryAddress
 
         return $this;
     }
+>>>>>>> master:src/Entity/DeliveryAddress.php
 }

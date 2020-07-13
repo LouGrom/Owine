@@ -6,6 +6,9 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
@@ -20,6 +23,7 @@ class Company
     private $id;
 
     /**
+     * @Groups({"searchable"})
      * @ORM\Column(type="string", length=50)
      */
     private $name;
@@ -172,6 +176,17 @@ class Company
         return $this;
     }
 
+<<<<<<< HEAD
+    // Méthode permettant de transformer les objets address en format JSON afin de pouvoir exploiter les données saisies dans le cadre de l'utilisation de l'API d'Algolia pour faire des recherches sur les données de l'application
+    public function normalize(NormalizerInterface $serializer, $format = null, array $context = []): array
+    {
+        return [
+            'Company Name' => $this->getName(),
+
+            // Reuse the $serializer
+            'Company Name' => $serializer->normalize($this->getName(), $format, $context),
+        ];
+=======
     public function getRate(): ?float
     {
         return $this->rate;
@@ -182,5 +197,6 @@ class Company
         $this->rate = $rate;
 
         return $this;
+>>>>>>> master
     }
 }

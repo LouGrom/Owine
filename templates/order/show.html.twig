@@ -30,14 +30,14 @@
 
             <tr>
                 <th>Destinataire</th>
-                <td>{{ order.buyer.deliveryAddress[0].firstname }} {{ order.buyer.deliveryAddress[0].lastname }}</td>
+                <td>{{ order.buyer.address[0].firstname }} {{ order.buyer.address[0].lastname }}</td>
             </tr>
             <tr>
                 <th>Addresse de livraison</th>
                 <td>
-                    {{ order.buyer.deliveryAddress[0].address }}<br/>
-                    {{ order.buyer.deliveryAddress[0].zipCode }} {{ order.buyer.deliveryAddress[0].city }}<br/>
-                    {{ order.buyer.deliveryAddress[0].country }}
+                    {{ order.buyer.address[0].address }}<br/>
+                    {{ order.buyer.address[0].zipCode }} {{ order.buyer.address[0].city }}<br/>
+                    {{ order.buyer.address[0].country }}
                 </td>
             </tr>
         </tbody>

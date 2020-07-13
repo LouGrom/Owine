@@ -9,11 +9,25 @@
 
     <h1 class="text-center mt-3 mb-3">Inscription</h1>
 
-    <div class="mb-3 text-center">
-        <a href="{{path('app_company_register')}}" class="btn btn-dark">Entreprise</a>
-        <a href="{{path('app_individual_register')}}" class="btn btn-dark">Particulier</a>
-    </div>
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <div class="d-flex justify-content-center mt-5 mb-5">
+                    <div class="pr-5">
+                        <input type="radio" name="roles" value="ROLE_BUYER" id="buyer">
+                        <label for="buyer">Particulier</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="roles" value="ROLE_SELLER" id="seller">
+                        <label for="seller">Entreprise</label>
+                    </div>
+                </div>
+                {{ form_row(form.firstname) }}
+                {{ form_row(form.lastname) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password.first) }}
+                {{ form_row(form.password.second) }}
 
-    </div>
+                <button type="submit" class="btn btn-success">Valider</button>
+            {{ form_end(form) }}
 
 {% endblock %}

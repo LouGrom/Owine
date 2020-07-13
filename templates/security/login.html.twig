@@ -8,7 +8,7 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Connecte toi</h1>
+    <h2 class="h3 mb-3 font-weight-normal">Connectez-vous</h2>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
     <label for="inputPassword">Mot de passe</label>
@@ -29,8 +29,16 @@
         </div>
     #}
 
-    <button class="btn btn-dark mt-4" type="submit">
+    <p><a href="{{ path('app_register') }}">Pas encore inscrit ?</a></p>
+
+    <button class="btn btn-lg btn-primary" type="submit">
         Connexion
     </button>
+
+    <!-- <p>ou alors (y a aussi Google parce qu'on est cool) :
+
+    </p>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a> -->
 </form>
 {% endblock %}
