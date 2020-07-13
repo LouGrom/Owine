@@ -32,7 +32,7 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
-                <td>{{ product.appellation }}</td>
+                <td>{{ product.appellation.name }}</td>
                 <td>{{ product.area }}</td>
                 <td>{{ product.type }}</td>
                 <td>{{ product.cuveeDomaine }}</td>

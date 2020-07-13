@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Appellation;
 use App\Entity\User;
 use App\Entity\DeliveryAddress;
 use App\Entity\Product;
@@ -242,13 +243,24 @@ class AppFixtures extends Fixture
             $manager->persist($color);
         }
 
+          // On crée les appellations
+          $appellation_name = ['Alsace Edelzwicker', 'Alsace Gewurztraminer', 'Alsace Sylvaner', 'Alsace Grand Cru', 'Alsace Pinot noir'];
+          for($i = 0; $i < count($appellation_name); $i++){
+              $appellation = new Appellation();
+              $appellation->setName($appellation_name[$i]);
+  
+              // Tableau des objets appellation
+              $appellationList[] = $appellation;
+              $manager->persist($appellation);
+          }
+
         // On crée 100 produits
         for ($i = 0; $i < 100; $i++) {
 
             $product = new Product();
 
-            $product->setAppellation($faker->departmentName);
             $product->setArea($faker->region);
+            $product->setAppellation($faker->randomElement($appellationList));
 
             $product->setType($faker->randomElement($typeList));
 
@@ -302,6 +314,7 @@ class AppFixtures extends Fixture
 
             $order = new Order();
 
+            $order->setReference($faker->bothify('##?###??##?#?'));
             $order->setTrackingNumber($faker->bothify('##?###??##?#?'));
             $order->setBuyer($userBuyer[array_rand($userBuyer)]);
             $order->setCarrier($carrierList[array_rand($carrierList)]);

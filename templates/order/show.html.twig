@@ -64,7 +64,7 @@
             {% for orderProduct in order.orderProducts %}
                 <tr>
                     <th scope="row">{{ orderProduct.product.id }}</th>
-                    <td>{{ orderProduct.product.appellation }}</td>
+                    <td>{{ orderProduct.product.appellation.name }}</td>
                     <td>{{ orderProduct.product.color.name }}</td>
                     <td>{{ orderProduct.product.type.name }}</td>
                     <td>{{ orderProduct.product.capacity }}</td>

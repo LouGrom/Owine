@@ -34,7 +34,7 @@
             <tbody>
             {% for product in app.user.productsForSale %}
                 <tr>
-                <td>{{ product.appellation }}</td>
+                <td>{{ product.appellation.name }}</td>
                 <td>{{ product.type.name }}</td>
                 <td>{{ product.color.name }}</td>
                 <td>{{ product.price }}</td>
