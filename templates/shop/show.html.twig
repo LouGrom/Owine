@@ -3,36 +3,35 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mb-5">{{ product.appellation.name }}</h1>
-
     <a href="{{ path('product_list_shop') }}" class="btn btn-dark ml-4">Retour à la liste des produits</a>
+    <h2 class="mt-4 ml-3">{{ product.appellation.name }}</h2>
+        <div class="d-sm-flex">
+            <div class="col-sm-6 ml-lg-3">
+                <img src="{{ product.picture }}" class="mb-3 rounded mw-100"><br>
+                {% for i in 0..random(4) %}
+                <i class="fa fa-star" aria-hidden="true"></i>
+                {% endfor %} - Voir les avis
+                <p class="mt-2"><strong>Stock restant :</strong> {{ product.stockQuantity }}</p>
+            </div>
+            <div>
+                <p class="h4">{{ product.brand.name }}<br>
+                {{ product.vintage }}</p>
+                <p>{{ product.area }} <strong>-</strong> Vin {{ product.color.name }}</p>
+                <hr>
 
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <img src="{{ product.picture }}" class="mb-3 mr-3 rounded float-left mw-100">
-                <div class="card-text">
-                    <p><strong>Provenance :</strong> {{ product.area }}</p>
-                    <p><strong>Type du vin :</strong> {{ product.type.name }}</p>
-                    <p><strong>Cuvée Domaine :</strong> {{ product.cuveeDomaine }}</p>
-                    <p><strong>Volume :</strong> {{ product.capacity }} ml </p>
-                    <p><strong>Date :</strong> {{ product.vintage }}</p>
-                    <p><strong>Couleur :</strong> {{ product.color.name }}</p>
-                    <p><strong>Alcool :</strong> {{ product.alcoholVolume }}%</p>
-                </div>
+                <p><strong>Type :</strong> <span class="badge badge-secondary badge-product">{{ product.type.name }}</span><br>
+                <strong>Cuvée Domaine :</strong> {{ product.cuveeDomaine }}</p>
+                <p><span class="h3">{{ product.price }} €</span><br>
+                <span class="small">{{ product.capacity }} ml - {{ (product.price / product.capacity * 1000)|round(2) }}€ / L</span></p>
+                <p>{{ product.alcoholVolume }}% d'alcool</p>
             </div>
         </div>
+    <div class="d-inline-block">
     </div>
-
-    <div class="card-body">
-        {% for i in 0..random(4) %}
-        <i class="fa fa-star" aria-hidden="true"></i>
-        {% endfor %}
-        <p><strong>Prix :</strong> {{ product.price }} euros</p>
-        <p><strong>Description :</strong> {{ product.description }}</p>
-        <p><strong>Code douanier :</strong> {{ product.hsCode }}</p>
-        <p><strong>Status :</strong> {{ product.status }}</p>
-        <p><strong>Quantité en stock :</strong> {{ product.stockQuantity }}</p>
-    </div>
-   
+    <div class="d-md-flex align-items-center">
+        <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
+        {% if app.user and 'ROLE_BUYER' in app.user.roles %}
+            <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#">Ajouter au panier</a>
+        {% endif %}
+   </div>
 {% endblock %}

@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    min-height: 80vh;
+    min-height: 85vh;
 }
 
 strong {
@@ -104,3 +104,14 @@ strong {
     color: #FAF6F0;
 }
 
+/*  -------------------------------- Shop --------------------------------- */
+
+.badge-product {
+    background-color: #352025;
+    color: #FAF6F0;
+}
+
+.shop__add-cart-btn {
+    background-color: #6e081f;
+    color: #FAF6F0;
+}

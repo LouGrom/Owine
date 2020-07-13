@@ -266,7 +266,7 @@ class AppFixtures extends Fixture
             $product->setType($faker->randomElement($typeList));
 
             $product->setCuveeDomaine("Château " . $faker->firstName());
-            $product->setCapacity($faker->randomDigit);
+            $product->setCapacity($faker->randomElement([500, 750, 1000, 1500]));
             $product->setVintage($faker->numberBetween($min=2000, $max=2020));
 
             $product->setColor($faker->randomElement($colorList));
