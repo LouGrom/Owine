@@ -20,6 +20,12 @@
         <env name="ALGOLIA_APP_ID" value="..."/>
         <env name="ALGOLIA_API_KEY" value="..."/>
         <!-- ###- algolia/search-bundle ### -->
+
+        <!-- ###+ google/apiclient ### -->
+        <env name="GOOGLE_API_KEY" value=""/>
+        <env name="GOOGLE_CLIENT_ID" value=""/>
+        <env name="GOOGLE_CLIENT_SECRET" value=""/>
+        <!-- ###- google/apiclient ### -->
     </php>
 
     <testsuites>

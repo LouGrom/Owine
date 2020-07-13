@@ -21,12 +21,11 @@
                         <label for="seller">Entreprise</label>
                     </div>
                 </div>
-                {{ form_row(form.email) }}
-                {{ form_row(form.password) }}
                 {{ form_row(form.firstname) }}
                 {{ form_row(form.lastname) }}
-                {{ form_row(form.address) }}
-                {{ form_row(form.company) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password.first) }}
+                {{ form_row(form.password.second) }}
 
                 <button type="submit" class="btn btn-success">Valider</button>
             {{ form_end(form) }}

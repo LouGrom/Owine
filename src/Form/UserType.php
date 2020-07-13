@@ -7,14 +7,21 @@ use App\Entity\Address;
 use App\Form\AddressType;
 use App\Form\CompanyType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
@@ -48,24 +55,14 @@ class UserType extends AbstractType
                 'placeholder' => 'iloveshiba@gmail.com'
             ],
             ])
-        ->add('password', PasswordType::class, [
-            // instead of being set onto the object directly,
-            // this is read and encoded in the controller
-            'label' => 'Mot de passe',
-            'help' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffres, un caractère spécial et doit faire au moins 8 caractères',
-            'attr' => [
-                'placeholder' => 'Azerty#123'
-            ],
-            'mapped' => true,
-            ])
-        ->add('address', CollectionType::class, [
-            'by_reference' => false,
-            'entry_type' => AddressType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-        ])
-        ->add('company', CompanyType::class)
-        ;
+        ->add('password', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'invalid_message' => 'Les deux mots de passe doivent correspondre',
+            'options' => ['attr' => ['class' => 'password-field']],
+            'required' => true,
+            'first_options'  => ['label' => 'Mot de passe'],
+            'second_options' => ['label' => 'Répétez votre mot de passe'],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

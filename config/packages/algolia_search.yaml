@@ -8,12 +8,10 @@ algolia_search:
       class: App\Entity\Product
       enable_serializer_groups: true
 
-    indices:
     - name: companies
       class: App\Entity\Company
       enable_serializer_groups: true
 
-    indices:
     - name: adresses
       class: App\Entity\Addres
       enable_serializer_groups: true
