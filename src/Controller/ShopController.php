@@ -17,7 +17,7 @@ class ShopController extends AbstractController
 {
 
     /**
-     * @Route("/", name="products_list")
+     * @Route("/", name="product_list_shop")
      */
     public function list(ProductRepository $productRepository)
     {
@@ -38,7 +38,7 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_show", methods={"GET"})
+     * @Route("/{id}", name="product_show_shop", methods={"GET"})
      */
     public function show(Product $product): Response
     {

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Votre panier</h1>
 
-    <a class="btn btn-dark mb-3" href="{{ path('products_list') }}">Retour</a>
+    <a class="btn btn-dark mb-3" href="{{ path('cart_buyer',{'id': app.user.id}) }}">Retour</a>
 
     <table class="table">
         <tbody>

@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\CompanyRegistrationFormType;
-use App\Form\IndividualRegistrationFormType;
+use App\Entity\Company;
+use App\Form\CompanyType;
+use App\Form\UserType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -31,116 +32,71 @@ class RegistrationController extends AbstractController
      */
     public function register()
     {
-
         return $this->render('registration/register.html.twig');
     }    
+
 
 
     /**
      * @Route("/register/company", name="app_company_register")
      */
-    public function companyRegister(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function companyRegister(Request $request): Response
     {
         $user = new User();
-        $companyForm = $this->createForm(CompanyRegistrationFormType::class, $user);
-        $companyForm->handleRequest($request);
-       
-        if ($companyForm->isSubmitted() && $companyForm->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $companyForm->get('password')->getData()
-                )
-            );
+        $company = new Company();
+        // Initialisation des valeurs par défaut
+        $user->setRoles(['ROLE_USER','ROLE_SELLER']);
+        $company->setValidated(0);
 
-            
+        $form = $this->createForm(UserType::class, $user);
+        $formCompany = $this->createForm(CompanyType::class, $company);
+        $form->handleRequest($request);
+        $formCompany->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // On encode le mot de passe
+            $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
+            // Puis on attribue l'entreprise à l'utilisateur créé
+            $user->setCompany($company);
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($company);
             $entityManager->persist($user);
             $entityManager->flush();
-            
-            dump($user);
-            // generate a signed url and email it to the user
-            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('owine-excalibur@gmail.com', 'Owine'))
-            //         ->to($user->getEmail())
-            //         ->subject('Please Confirm your Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
-            // );
-            // do anything else you need here, like send an email
 
-            // return $guardHandler->authenticateUserAndHandleSuccess(
-            //     $user,
-            //     $request,
-            //     $authenticator,
-            //     'main' // firewall name in security.yaml
-            // );
-
-            $this->addFlash("success", "Votre demande d'inscription est en cours de validation");
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('registration/company_register.html.twig', [
-            'companyRegistrationForm' => $companyForm->createView(),
+        return $this->render('registration/user.html.twig', [
+            'company' => $company,
+            'form' => $form->createView(),
+            'formCompany' => $formCompany->createView(),
         ]);
     }
 
     /**
-     * @Route("/register/individual", name="app_individual_register")
+     * @Route("/register/customer", name="app_individual_register")
      */
-    public function individualRegister(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function individualRegister(Request $request): Response
     {
         $user = new User();
-        $individualForm = $this->createForm(IndividualRegistrationFormType::class, $user);
-        $individualForm->handleRequest($request);
-       
-        if ($individualForm->isSubmitted() && $individualForm->isValid()) {
-            // encode the plain password
-            // $user->setPassword(
-            //     $passwordEncoder->encodePassword(
-            //         $user,
-            //         $individualForm->get('password')->getData(),
-            //     )
-            // );
-            // On a besoin d'hasher le mot de passe avant de le stocker en base de données
-            // On récupère donc le mot de passe dans $user
-            $password = $user->getPassword();
-           
-            // On va hasher le mot de passe
-            $encodedPassword = $passwordEncoder->encodePassword($user, $password);
-            // Puis on replace le mot de passe hashé dans $user
-            $user->setPassword($encodedPassword);
-              
+        $user->setRoles(['ROLE_USER','ROLE_BUYER']);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            dump($user);
-            
-            // generate a signed url and email it to the user
-            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('owine-excalibur@gmail.com', 'Owine'))
-            //         ->to($user->getEmail())
-            //         ->subject('Please Confirm your Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
-            // );
-            // do anything else you need here, like send an email
 
-
-            // return $guardHandler->authenticateUserAndHandleSuccess(
-            //     $user,
-            //     $request,
-            //     $authenticator,
-            //     'main' // firewall name in security.yaml
-            // );
-
-            $this->addFlash("success", "Votre demande d'inscription est en cours de validation");
-            return $this->redirectToRoute('homepage', ['id' => $user->getId()]);
+            return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('registration/individual_register.html.twig', [
-            'individualRegistrationForm' => $individualForm->createView(),
+        return $this->render('registration/user.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
         ]);
     }
 

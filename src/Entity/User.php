@@ -54,41 +54,6 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=100)
-     */
-    private $address;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=10)
-     */
-    private $zipCode;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=50)
-     */
-    private $city;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=50)
-     */
-    private $country;
-
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=20)
-     */
-    private $phoneNumber;
-
-    /**
-     * @ORM\OneToMany(targetEntity=DeliveryAddress::class, mappedBy="buyer")
-     */
-    private $deliveryAddress;
-
-    /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="buyer")
      */
     private $sentOrder;
@@ -123,6 +88,11 @@ class User implements UserInterface
      */
     private $company;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
+     */
+    private $addresses;
+
     // /**
     //  * @ORM\Column(type="boolean")
     //  */
@@ -130,11 +100,11 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->deliveryAddress = new ArrayCollection();
         $this->sentOrder = new ArrayCollection();
         $this->productsForSale = new ArrayCollection();
         $this->receivedOrders = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,37 +294,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|DeliveryAddress[]
-     */
-    public function getDeliveryAddress(): Collection
-    {
-        return $this->deliveryAddress;
-    }
-
-    public function addDeliveryAddress(DeliveryAddress $deliveryAddress): self
-    {
-        if (!$this->deliveryAddress->contains($deliveryAddress)) {
-            $this->deliveryAddress[] = $deliveryAddress;
-            $deliveryAddress->setBuyer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDeliveryAddress(DeliveryAddress $deliveryAddress): self
-    {
-        if ($this->deliveryAddress->contains($deliveryAddress)) {
-            $this->deliveryAddress->removeElement($deliveryAddress);
-            // set the owning side to null (unless already changed)
-            if ($deliveryAddress->getBuyer() === $this) {
-                $deliveryAddress->setBuyer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Order[]
      */
     public function getSentOrder(): Collection
@@ -495,6 +434,37 @@ class User implements UserInterface
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Address[]
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
+
+    public function addAddress(Address $address): self
+    {
+        if (!$this->addresses->contains($address)) {
+            $this->addresses[] = $address;
+            $address->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): self
+    {
+        if ($this->addresses->contains($address)) {
+            $this->addresses->removeElement($address);
+            // set the owning side to null (unless already changed)
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
+            }
+        }
 
         return $this;
     }

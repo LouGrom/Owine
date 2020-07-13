@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Appellation;
 use App\Entity\User;
-use App\Entity\DeliveryAddress;
+use App\Entity\Address;
 use App\Entity\Product;
 use App\Entity\ProductCategory;
 use App\Entity\ProductBrand;
@@ -33,6 +33,10 @@ class AppFixtures extends Fixture
         $buyer = new User();
         $admin = new User();
         $company = new Company();
+        $buyerAddress = new Address();
+        $sellerAddress = new Address();
+        $adminAddress = new Address();
+        
         
         $seller->setRoles(['ROLE_USER', 'ROLE_SELLER']);
         $buyer->setRoles(['ROLE_USER', 'ROLE_BUYER']);
@@ -78,50 +82,48 @@ class AppFixtures extends Fixture
         $admin->setFirstname($faker->firstName);
         $admin->setLastname($faker->lastName);
 
-        $buyer->setAddress($faker->streetAddress);
-        $seller->setAddress($faker->streetAddress);
-        $admin->setAddress($faker->streetAddress);
+        $buyerAddress->setFirstname($buyer->getFirstname());
+        $buyerAddress->setLastname($buyer->getLastname());
+        $buyerAddress->setZipCode($faker->postcode);
+        $buyerAddress->setCity($faker->city);
+        $buyerAddress->setCountry($faker->country);
+        $buyerAddress->setPhoneNumber($faker->phoneNumber);
+        $buyerAddress->setStreet($faker->streetAddress);
+        $buyerAddress->setType(['DELIVERY_ADDRESS', 'BILLING_ADDRESS']);
+        $buyer->addAddress($buyerAddress);
 
-        $buyer->setZipCode($faker->postcode);
-        $seller->setZipCode($faker->postcode);
-        $admin->setZipCode($faker->postcode);
+        $sellerAddress->setFirstname($seller->getFirstname());
+        $sellerAddress->setLastname($seller->getLastname());
+        $sellerAddress->setZipCode($faker->postcode);
+        $sellerAddress->setCity($faker->city);
+        $sellerAddress->setCountry($faker->country);
+        $sellerAddress->setPhoneNumber($faker->phoneNumber);
+        $sellerAddress->setStreet($faker->streetAddress);
+        $sellerAddress->setType(['COMPANY_ADDRESS']);
+        $seller->addAddress($sellerAddress);
 
-        $buyer->setCity($faker->city);
-        $seller->setCity($faker->city);
-        $admin->setCity($faker->city);
-
-        $buyer->setCountry($faker->country);
-        $seller->setCountry($faker->country);
-        $admin->setCountry($faker->country);
-
-        $buyer->setPhoneNumber($faker->phoneNumber);
-        $seller->setPhoneNumber($faker->phoneNumber);
-        $admin->setPhoneNumber($faker->phoneNumber);
-        
-        $address = new DeliveryAddress();
-
-        $address->setFirstname($buyer->getFirstname());
-        $address->setLastname($buyer->getLastname());
-        $address->setAddress($buyer->getAddress());
-        $address->setZipCode($buyer->getZipCode());
-        $address->setCity($buyer->getCity());
-        $address->setCountry($buyer->getCountry());
-        $address->setPhoneNumber($buyer->getPhoneNumber());
-        $address->setBuyer($buyer);
-
-        $buyer->addDeliveryAddress($address);
-        $seller->addDeliveryAddress($address);
-        $admin->addDeliveryAddress($address);
+        $adminAddress->setFirstname($admin->getFirstname());
+        $adminAddress->setLastname($admin->getLastname());
+        $adminAddress->setZipCode($faker->postcode);
+        $adminAddress->setCity($faker->city);
+        $adminAddress->setCountry($faker->country);
+        $adminAddress->setPhoneNumber($faker->phoneNumber);
+        $adminAddress->setStreet($faker->streetAddress);
+        $admin->addAddress($adminAddress);
 
         $seller->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
         $buyer->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
+        $admin->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
         $userSeller[] = $seller;
         $userBuyer[] = $buyer;
 
         $manager->persist($buyer);
         $manager->persist($seller);
         $manager->persist($admin);
-        $manager->persist($address);
+        $manager->persist($buyerAddress);
+        $manager->persist($sellerAddress);
+        $manager->persist($adminAddress);
+        
         $manager->flush();
 
 
@@ -129,11 +131,13 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 30; $i++) {
             $user = new User();
             
-            $address = new DeliveryAddress();
+            $address = new Address();
             $user->setRoles(['ROLE_USER', $faker->randomElement(array('ROLE_BUYER', 'ROLE_SELLER'))]);
             
             // Si l'utilisateur créé est un SELLER, on lui crée une Company
             if(in_array("ROLE_SELLER", $user->getRoles())) {
+
+                $address->setType(['COMPANY_ADDRESS']);
 
                 $company = new Company();
         
@@ -157,27 +161,24 @@ class AppFixtures extends Fixture
                 $manager->persist($company);
 
                 $user->setCompany($company);
+            } else {
+                $address->setType(['DELIVERY_ADDRESS','BILLING_ADDRESS']);
             }
             
             $user->setEmail($faker->email);
             $user->setPassword(password_hash("banane", PASSWORD_DEFAULT));
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
-            $user->setAddress($faker->streetAddress);
-            $user->setZipCode($faker->postcode);
-            $user->setCity($faker->city);
-            $user->setCountry($faker->country);
-            $user->setPhoneNumber($faker->phoneNumber);
-            
+
             $address->setFirstname($user->getFirstname());
             $address->setLastname($user->getLastname());
-            $address->setAddress($user->getAddress());
-            $address->setZipCode($user->getZipCode());
-            $address->setCity($user->getCity());
-            $address->setCountry($user->getCountry());
-            $address->setPhoneNumber($user->getPhoneNumber());
-            $address->setBuyer($user);
-            $user->addDeliveryAddress($address);
+            $address->setZipCode($faker->postcode);
+            $address->setCity($faker->city);
+            $address->setCountry($faker->country);
+            $address->setPhoneNumber($faker->phoneNumber);
+            $address->setStreet($faker->streetAddress);
+
+            $user->addAddress($address);
 
             $user->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
 
