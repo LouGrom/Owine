@@ -53,7 +53,7 @@ class ProductType extends AbstractType
                 "label" => "Prix à l'unité",
                 "currency" => "EUR"
             ])
-            ->add('hsCode', TextType::class, ["label"=>"Code barre"])
+            ->add('hsCode', TextType::class, ["label"=>"Code douanier"])
             ->add('description', TextareaType::class, ["label"=>"Description"])
             ->add('picture')
             ->add('status', ChoiceType::class, [
