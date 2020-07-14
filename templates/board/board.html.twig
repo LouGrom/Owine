@@ -55,7 +55,8 @@
             <table class="table">
             <thead class="thead">
                 <tr>
-                <th scope="col">Numéro de commande</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Code barre</th>
                 <th scope="col">Prix</th>
                 <th scope="col">Client</th>
                 <th scope="col">Détails</th>
@@ -64,6 +65,7 @@
             <tbody>
             {% for order in app.user.receivedOrders %}
                 <tr>
+                <td>{{ order.reference }}</td>
                 <td>{{ order.trackingNumber }}</td>
                 <td>{{ order.totalAmount }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
