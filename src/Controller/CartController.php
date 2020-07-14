@@ -97,6 +97,8 @@ class CartController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            $this->addFlash("success","Le panier a bien été ajouté");
+
             return $this->redirectToRoute('cart_index');
         }
 
@@ -127,6 +129,8 @@ class CartController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash("success","Le panier a bien été modifié");
+
             return $this->redirectToRoute('cart_index');
         }
 
@@ -145,6 +149,8 @@ class CartController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($cart);
             $entityManager->flush();
+
+            $this->addFlash("success","Le panier a bien été supprimé");
         }
 
         return $this->redirectToRoute('cart_index');

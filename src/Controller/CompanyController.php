@@ -39,6 +39,8 @@ class CompanyController extends AbstractController
             $entityManager->persist($company);
             $entityManager->flush();
 
+            $this->addFlash("success","La boutique a bien été ajoutée");
+
             return $this->redirectToRoute('company_index');
         }
 
@@ -69,6 +71,8 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash("success","La boutique a bien été modifiée");
+
             return $this->redirectToRoute('company_index');
         }
 
@@ -87,6 +91,8 @@ class CompanyController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($company);
             $entityManager->flush();
+
+            $this->addFlash("success","La boutique a bien été supprimée");
         }
 
         return $this->redirectToRoute('company_index');

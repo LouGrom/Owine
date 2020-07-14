@@ -27,7 +27,15 @@
             </div>     
         </div>
           <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
+
+            <div class="d-flex">
+                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-dark mr-3">Modifier</a>
+
+                {{ include('product/_delete_form.html.twig') }}
+            </div>
     </div>
+
+
 
     
    
