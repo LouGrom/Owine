@@ -48,8 +48,10 @@ class CartController extends AbstractController
 
         // On vérifie qu'un cart n'existe pas déjà entre l'utilisateur et le produit.
         $result = $cartRepository->findExistingCart($userId, $productId);
-        // Si un cart existe déjà, alors on récupère le premier (et normalement unique) résultat
-        if(isset($result[0])) {
+
+        // Si un cart existe déjà et que le produit est en vente
+        // Alors on récupère le premier (et normalement unique) résultat
+        if(isset($result[0]) && $product->getStatus() != 0) {
 
             $cart = $result[0];
             // On ajoute 1 à la quantité
@@ -60,8 +62,8 @@ class CartController extends AbstractController
 
             // Si il n'existe pas, on en créé un nouveau
             $cart->setUser($this->getUser());
-            // On vérifie au préalable que le produit existe bel et bien en BDD
-            if(!empty($product)) {
+            // On vérifie au préalable que le produit existe bel et bien en BDD et qu'il est en vente
+            if(!empty($product) && $product->getStatus() != 0) {
 
                 $cart->setProduct($product);
             } else {
