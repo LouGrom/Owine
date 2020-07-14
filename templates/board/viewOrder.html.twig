@@ -3,7 +3,7 @@
 {% block title %}Commande{% endblock %}
 
 {% block body %}
-    <h2>Commande n° {{ order.trackingNumber }}</h2>
+    <h2>Commande n° {{ order.reference }}</h2>
 
     <a href="{{ path('board') }}" class="btn btn-dark mb-4">Retour au tableau de bord</a>
 
@@ -12,6 +12,10 @@
             <tr>
                 <th>Date de la commande</th>
                 <td>{{ order.createdAt ? order.createdAt|date('d/m/Y') : '' }}</td>
+            </tr>
+             <tr>
+                <th>Code barre</th>
+                <td>{{ order.trackingNumber }}</td>
             </tr>
             <tr>
                 <th>Client</th>
@@ -50,6 +54,7 @@
             <thead class="thead">
                 <tr>
                     <th scope="col">Référence</th>
+                    <th scope="col">Code barre</th>
                     <th scope="col">Appellation</th>
                     <th scope="col">Couleur</th>
                     <th scope="col">Type</th>
@@ -63,7 +68,8 @@
             <tbody>
             {% for orderProduct in order.orderProducts %}
                 <tr>
-                    <th scope="row">{{ orderProduct.product.id }}</th>
+                    <th scope="row">{{ orderProduct.order.reference }}</th>
+                    <td>{{ orderProduct.order.trackingNumber }}</td>
                     <td>{{ orderProduct.product.appellation.name }}</td>
                     <td>{{ orderProduct.product.color.name }}</td>
                     <td>{{ orderProduct.product.type.name }}</td>
@@ -81,6 +87,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td style="font-weight:bold">Sous-total</td>
                     <td>{{ order.totalQuantity }}</td>
                     <td>{{ order.totalAmount }} €</td>
@@ -92,13 +99,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
                     {# !TODO à dynamiser plus tard  #}
-                    <td>30 €</td>
+                    <td>30.00 €</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
