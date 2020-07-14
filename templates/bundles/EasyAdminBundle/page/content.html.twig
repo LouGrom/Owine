@@ -1,0 +1,210 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+
+<div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
+
+				<div class="content">
+					<section class="content-header">
+						<div class="d-flex flex-row justify-content-between align-content-center w-100">
+							<div class="content-header-title">
+								<h1 class="title">
+									Company
+								</h1>
+							</div>
+
+							<div class="page-actions">
+								<a class=" action-new btn btn-primary" href="http://127.0.0.1:8000/admin?crudAction=new&amp;crudId=fc0b374&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">Add Company</a>
+
+							</div>
+						</div>
+					</section>
+
+					<section id="main" class="content-body">
+						<div class="datagrid-header-tools">
+							<div class="datagrid-search">
+								<div class="form-action form-action-search">
+									<form method="get">
+
+										<input type="hidden" name="crudAction" value="index">
+										<input type="hidden" name="crudId" value="fc0b374">
+										<input type="hidden" name="menuIndex" value="0">
+										<input type="hidden" name="submenuIndex" value="-1">
+										<input type="hidden" name="referrer" value="">
+										<input type="hidden" name="page" value="1">
+
+										<div class="form-group">
+											<div class="form-widget">
+												<input class="form-control" type="search" name="query" value="" placeholder="Search">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<div class="datagrid-filters"></div>
+						</div>
+
+						<div class="content-panel">
+							<div class="content-panel-body with-rounded-top with-min-h-250 without-padding ">
+								<table class="table datagrid with-rounded-top ">
+									<thead>
+										<tr>
+
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bid%5D=DESC&amp;submenuIndex=-1">
+													ID
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bname%5D=DESC&amp;submenuIndex=-1">
+													Name
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bsiret%5D=DESC&amp;submenuIndex=-1">
+													Siret
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bvat%5D=DESC&amp;submenuIndex=-1">
+													Vat
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bpicture%5D=DESC&amp;submenuIndex=-1">
+													Picture
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th class="  text-" dir="ltr">
+												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bvalidated%5D=DESC&amp;submenuIndex=-1">
+													Validated
+													<i class="fa fa-fw fa-sort"></i>
+												</a>
+											</th>
+
+											<th dir="ltr">
+												<span class="sr-only">Actions</span>
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										{# {{ dump(companies) }} #}
+										{% for company in companies %}
+											{# {{ dump(company) }} #}
+											{% if company.validated == 0 %}
+												<tr data-id="{{ company.id }}">
+													<td class=" text- " dir="ltr">
+														{{ company.id }}
+													</td>
+													<td class=" text- " dir="ltr">
+														<span title="{{ company.name }}">
+															{{ company.name }}
+														</span>
+													</td>
+													<td class=" text- " dir="ltr">
+														<span title="{{ company.siret }}">
+															{{ company.siret }}
+														</span>
+													</td>
+													<td class=" text- " dir="ltr">
+														<span title="{{ company.vat }}">
+															{{ company.vat }}
+														</span>
+													</td>
+													<td class=" text- " dir="ltr">
+														<span title="{{ company.picture }}">
+															{{ company.picture }}
+														</span>
+													</td>
+													<td class=" text- " dir="ltr">
+														{{ company.validated }}
+													</td>
+													<td class="actions">
+														<a class=" action-edit" href="http://127.0.0.1:8000/admin?crudAction=edit&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+															Edit
+														</a>
+														<a class=" action-delete text-danger" href="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+															Delete
+														</a>
+													</td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+
+							<div class="content-panel-footer without-padding without-border">
+
+								<div class="list-pagination">
+									<div class="list-pagination-counter">
+										<strong>{{ companies|length }}</strong>
+										results
+									</div>
+
+									<nav class="pager list-pagination-paginator first-page ">
+										<ul class="pagination">
+											<li class="page-item disabled">
+												<a class="page-link" href="#">
+													<i class="fa fa-angle-left mx-1"></i>
+													<span class="btn-label">Previous</span>
+												</a>
+											</li>
+
+											<li class="page-item ">
+												<a class="page-link" href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=2&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+													<span class="btn-label">Next</span>
+													<i class="fa fa-angle-right mx-1"></i>
+												</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+							</div>
+						</div>
+
+						<form action="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudId=fc0b374&amp;entityId=__entityId_placeholder__&amp;menuIndex=0&amp;submenuIndex=-1" method="post" id="delete-form" style="display: none">
+							<input type="hidden" name="token" value="2Iq1oJY9gTHd30XufoTdhAu9wdiSmeHvWZ2jny_bn2Q">
+						</form>
+
+						<div id="modal-delete" class="modal fade">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<h4>Do you really want to delete this item?</h4>
+										<p>There is no undo for this operation.</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" data-dismiss="modal" class="btn btn-secondary">
+											<span class="btn-label">Cancel</span>
+										</button>
+
+										<button type="button" data-dismiss="modal" class="btn btn-danger" id="modal-delete-button" formtarget="delete-form">
+											<span class="btn-label">Delete</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+                <script src="/bundles/easyadmin/homepage-custom.js"></script>
+{% endblock %}

@@ -35,7 +35,7 @@ class DashboardController extends AbstractDashboardController
     public function __construct(CompanyRepository $companyRepository)
     {
         $this->company = $companyRepository->findAll();
-        dump($this->company);
+        // dump($this->company);
     }
     /**
      * @Route("/admin", name="admin", methods={"GET"})
@@ -45,7 +45,7 @@ class DashboardController extends AbstractDashboardController
         
         // $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
         // return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
-        return $this->render('admin/dashboard.html.twig', [
+        return $this->render('bundles/EasyAdminBundle/page/content.html.twig', [
             'companies' => $this->company
         ]);
     }
