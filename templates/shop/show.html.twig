@@ -31,7 +31,7 @@
     <div class="d-md-flex align-items-center">
         <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
         {% if app.user and 'ROLE_BUYER' in app.user.roles %}
-            <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#">Ajouter au panier</a>
+            <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="{{ path('add_cart',{'productId': product.id}) }}">Ajouter au panier</a>
         {% endif %}
    </div>
 {% endblock %}
