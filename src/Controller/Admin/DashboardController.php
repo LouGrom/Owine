@@ -15,38 +15,45 @@ use App\Repository\UserRepository;
 use App\Repository\CompanyRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use App\Controller\Admin\CrudController\HomeCrudController;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use App\Controller\Admin\CrudController\BuyerCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
+use App\Controller\Admin\CrudController\SellerCrudController;
 use App\Controller\Admin\CrudController\CompanyCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 
 
 
 class DashboardController extends AbstractDashboardController
 {
-    private $company;
+    private $companies;
 
     public function __construct(CompanyRepository $companyRepository)
     {
-        $this->company = $companyRepository->findAll();
-        // dump($this->company);
+        $this->companies = $companyRepository->findBy(['validated'=>0]);
+        
     }
+
     /**
-     * @Route("/admin", name="admin", methods={"GET"})
+     * @Route("/admin", name="admin")
      */
-     public function index(): Response
+    public function index(): Response
     {
         
         // $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
         // return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
-        return $this->render('bundles/EasyAdminBundle/page/content.html.twig', [
-            'companies' => $this->company
+        return $this->render('bundles/EasyAdminBundle/home/content.html.twig', [
+            'companies' => $this->companies
         ]);
     }
     
@@ -66,6 +73,21 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('O\'Wine admin');
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+        ->add(BooleanFilter::new('validated'));
+    }
+
+    // public function configureActions(Actions $actions): Actions
+    // {
+    //     return $actions
+    //         // ...
+    //         ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            
+    //     ;
+    // }
+
     public function configureMenuItems(): iterable
     {
         
@@ -78,11 +100,14 @@ class DashboardController extends AbstractDashboardController
             
             
             // Point de menu concernant les Users
-            
-            MenuItem::linkToCrud('User', 'fa fa-users', User::class),
+            MenuItem::section('User', 'fa fa-users'),
+            MenuItem::linkToCrud('All Users', '', User::class),
            
             MenuItem::linkToCrud('Buyers', '' , User::class)
             ->setController(BuyerCrudController::class),
+
+            MenuItem::linkToCrud('Sellers', '' , User::class)
+            ->setController(SellerCrudController::class),
             
 
             // MenuItem::subMenu('Actions')->setSubItems([
@@ -95,7 +120,10 @@ class DashboardController extends AbstractDashboardController
             // ->setAction('delete'),
             // MenuItem::linkToCrud('Add User', 'fa fa-plus-circle' , User::class)
             // ->setAction('new'),
-            // ]),  
+            // ]), 
+             
+            // Point de menu invisible sur le front mais servant a créer un espace
+            MenuItem::section('', ''),
 
             // Point de menu concernant les Companies
             

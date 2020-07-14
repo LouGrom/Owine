@@ -2,10 +2,8 @@
 
 namespace App\Controller\Admin\CrudController;
 
-
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
@@ -15,13 +13,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
 
-class BuyerCrudController extends AbstractCrudController
+class SellerCrudController extends AbstractCrudController
 {
     private $users;
 
     public function __construct(UserRepository $userRepository)
     {
-        $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_BUYER']);
+        $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_SELLER']);
         
     }
 
@@ -31,15 +29,6 @@ class BuyerCrudController extends AbstractCrudController
 
     }
 
-    // public function index(): Response
-    // {
-        
-    //     // $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
-    //     // return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
-    //     return $this->render('bundles/EasyAdminBundle/user/content.html.twig', [
-    //         'users' => $this->users
-    //     ]);
-    // }
     
     public function configureFilters(Filters $filters): Filters
     {
@@ -63,7 +52,7 @@ class BuyerCrudController extends AbstractCrudController
             ->formatValue(function ($value) 
             {
                 // dump($value->toString());
-                return $value->toString() == 'ROLE_USER, ROLE_BUYER' ? $value : "";
+                return $value->toString() == 'ROLE_USER, ROLE_SELLER' ? $value : "";
             })
 
         ];

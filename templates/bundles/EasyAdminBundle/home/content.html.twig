@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
 
 				<div class="content">
 					<section class="content-header">
@@ -20,7 +19,7 @@
 						</div>
 					</section>
 
-					<section id="main" class="content-body">
+					<section id="main" class="content-body p-0">
 						<div class="datagrid-header-tools">
 							<div class="datagrid-search">
 								<div class="form-action form-action-search">
@@ -81,13 +80,6 @@
 											</th>
 
 											<th class="  text-" dir="ltr">
-												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bpicture%5D=DESC&amp;submenuIndex=-1">
-													Picture
-													<i class="fa fa-fw fa-sort"></i>
-												</a>
-											</th>
-
-											<th class="  text-" dir="ltr">
 												<a href="http://127.0.0.1:8000/admin?crudAction=index&amp;crudId=fc0b374&amp;menuIndex=0&amp;page=1&amp;referrer=/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;sort%5Bvalidated%5D=DESC&amp;submenuIndex=-1">
 													Validated
 													<i class="fa fa-fw fa-sort"></i>
@@ -101,48 +93,41 @@
 									</thead>
 
 									<tbody>
-
-										{# {{ dump(companies) }} #}
 										{% for company in companies %}
-											{# {{ dump(company) }} #}
-											{% if company.validated == 0 %}
-												<tr data-id="{{ company.id }}">
-													<td class=" text- " dir="ltr">
-														{{ company.id }}
-													</td>
-													<td class=" text- " dir="ltr">
-														<span title="{{ company.name }}">
-															{{ company.name }}
-														</span>
-													</td>
-													<td class=" text- " dir="ltr">
-														<span title="{{ company.siret }}">
-															{{ company.siret }}
-														</span>
-													</td>
-													<td class=" text- " dir="ltr">
-														<span title="{{ company.vat }}">
-															{{ company.vat }}
-														</span>
-													</td>
-													<td class=" text- " dir="ltr">
-														<span title="{{ company.picture }}">
-															{{ company.picture }}
-														</span>
-													</td>
-													<td class=" text- " dir="ltr">
-														{{ company.validated }}
-													</td>
-													<td class="actions">
-														<a class=" action-edit" href="http://127.0.0.1:8000/admin?crudAction=edit&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
-															Edit
-														</a>
-														<a class=" action-delete text-danger" href="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
-															Delete
-														</a>
-													</td>
-												</tr>
-											{% endif %}
+											<tr data-id="{{ company.id }}">
+												<td class=" text- " dir="ltr">
+													{{ company.id }}
+												</td>
+												<td class=" text- " dir="ltr">
+													<span title="{{ company.name }}">
+														{{ company.name }}
+													</span>
+												</td>
+												<td class=" text- " dir="ltr">
+													<span title="{{ company.siret }}">
+														{{ company.siret }}
+													</span>
+												</td>
+												<td class=" text- " dir="ltr">
+													<span title="{{ company.vat }}">
+														{{ company.vat }}
+													</span>
+												</td>
+												<td class=" text- text-center" dir="ltr">
+													{{ company.validated }}
+												</td>
+												<td class="actions">
+													<a class=" action-detail" href="http://127.0.0.1:8000/admin?crudAction=detail&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+														Show
+													</a>
+													<a class=" action-edit" href="http://127.0.0.1:8000/admin?crudAction=edit&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+														Edit
+													</a>
+													<a class=" action-delete text-danger" href="http://127.0.0.1:8000/admin?crudAction=delete&amp;crudId=fc0b374&amp;entityId={{ company.id }}&amp;menuIndex=0&amp;referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudId%3Dfc0b374%26menuIndex%3D0%26submenuIndex%3D-1&amp;submenuIndex=-1">
+														Delete
+													</a>
+												</td>
+											</tr>
 										{% endfor %}
 
 									</tbody>
@@ -204,7 +189,6 @@
 						</div>
 					</section>
 				</div>
-
-				<div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
-                <script src="/bundles/easyadmin/homepage-custom.js"></script>
+				
+                <script src="/bundles/easyadmin/template-custom.js"></script>
 {% endblock %}

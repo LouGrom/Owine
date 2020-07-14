@@ -47,11 +47,7 @@ class HomeCrudController extends AbstractCrudController
 
     // }
 
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-        ->add(BooleanFilter::new('validated'));
-    }
+    
 
 
     // public function configureFields(string $pageName): iterable
