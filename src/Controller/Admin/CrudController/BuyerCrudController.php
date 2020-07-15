@@ -4,12 +4,19 @@ namespace App\Controller\Admin\CrudController;
 
 
 use App\Entity\User;
+use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use App\Controller\Admin\CrudController\HomeCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
@@ -31,16 +38,14 @@ class BuyerCrudController extends AbstractCrudController
 
     }
 
-    // public function index(): Response
+    // public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     // {
         
-    //     // $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
-    //     // return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
-    //     return $this->render('bundles/EasyAdminBundle/user/content.html.twig', [
-    //         'users' => $this->users
-    //     ]);
+        
+    //     dd($this->queryBuilder);
+    //     return $queryBuilder;
     // }
-    
+
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
