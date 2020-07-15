@@ -5,6 +5,8 @@
 {% block body %}
     <h2>Commande n° {{ order.trackingNumber }}</h2>
 
+    <a href="{{ path('board') }}" class="btn btn-dark mb-4">Retour au tableau de bord</a>
+
     <table class="table">
         <tbody>
             <tr>
@@ -45,7 +47,7 @@
 
     <div class="table-responsive">
         <table class="table table-striped">
-            <thead>
+            <thead class="thead">
                 <tr>
                     <th scope="col">Référence</th>
                     <th scope="col">Appellation</th>
@@ -62,7 +64,7 @@
             {% for orderProduct in order.orderProducts %}
                 <tr>
                     <th scope="row">{{ orderProduct.product.id }}</th>
-                    <td>{{ orderProduct.product.appellation }}</td>
+                    <td>{{ orderProduct.product.appellation.name }}</td>
                     <td>{{ orderProduct.product.color.name }}</td>
                     <td>{{ orderProduct.product.type.name }}</td>
                     <td>{{ orderProduct.product.capacity }}</td>
@@ -112,9 +114,9 @@
         </table>
     </div>
 
-    <a href="{{ path('board') }}" class="btn btn-dark">Retour au tableau de bord</a>
+    <div class="d-flex">
+        <a href="{{ path('order_edit', {'id': order.id}) }}" class="btn btn-dark mr-3">Modifier</a>
 
-    <a href="{{ path('order_edit', {'id': order.id}) }}" class="btn btn-warning">Modifier</a>
-
-    {{ include('order/_delete_form.html.twig') }}
+        {{ include('order/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

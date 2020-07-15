@@ -5,20 +5,30 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-        <title>{% block title %}🍷 Welcome to O'wine!{% endblock %}</title>
+        <title>{% block title %}O'wine{% endblock %}</title>
+        <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.ico')}}"/>
+
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- pub CSS -->
-        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
         <!-- FontAwesome -->
-        <link rel="stylesheet" href="{{ asset('css/font-awesome/css/font-awesome.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome/css/all.css')}}">
+        <!-- Font Cooper Hewitt-->
+        <link href="https://fr.allfont.net/cache/css/cooperhewitt-light.css" rel="stylesheet" type="text/css" />
+        <link href="https://fr.allfont.net/cache/css/cooperhewitt-book.css" rel="stylesheet" type="text/css" />
+        <!-- Font Quattrocento -->
+        <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/owine.png') }}" height="30" class="d-inline-block align-top">O'wine</a>
+        <nav class="navbar navbar-expand-lg">
+            
+            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/logoOwineBurgundry.png') }}" height="30" class="d-inline-block align-top mr-1">O'wine</a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,32 +49,41 @@
                   {% endif %}
                 {% endif %}
 
-                 <li class="nav-item">
-                  <a class="nav-link" href="{{ path('products_list') }}">Produits</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('company_index') }}">Caveaux</a>
                 </li>
+
                  <li class="nav-item">
-                  <a class="nav-link" href="#">Commandes</a>
+                  <a class="nav-link" href="{{ path('product_list_shop') }}">Produits</a>
                 </li>
+                
+                {# Si on est connecté #}
+                {% if app.user %}
+                  {# et qu'on est un seller #}
+                  {% if 'ROLE_BUYER' in app.user.roles %}
+                    {# alors on voit le lien vers le tableau de bord  #}
                  <li class="nav-item">
-                  <a class="nav-link" href="#">Panier</a>
+                  <a class="nav-link" href="{{ path('cart_buyer',{'id': (app.user.id)}) }}">Panier</a>
                 </li>
+                {% endif %}
+              {% endif %}
               </ul>
 
               {% if app.user %}
-                <div class="mr-3">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+                <div class="mr-3" id="login-name">
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark">Déconnexion</a>
                 </div>
                 {% else %}
-                <div class="">
-                  <a class="nav-link" href="{{ path('app_register') }}" class="btn btn-secondary">Inscription</a>
+                <div class="mr-3">
+                  <a href="{{ path('app_register') }}" class="btn btn-dark">Inscription</a>
                 </div>
                 <div class="mr-3">
-                  <a class="nav-link" href="{{ path('app_login') }}" class="btn btn-secondary">Connexion</a>
+                  <a href="{{ path('app_login') }}" class="btn btn-dark">Connexion</a>
                 </div>
                {% endif %}
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
-                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Rechercher</button>
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
               </form>
             </div>
           </nav>
@@ -77,11 +96,11 @@
                 {% endfor %}
             {% endfor %}
             
-         <div class="container mb-5">
+         <div class="container mt-5 mb-3">
             {% block body %}{% endblock %}
          </div>
             
-        <footer id="footer"> 
+        <footer id="footer" class="footer">
           {% block footer %}
             {% include "_footer.html.twig"%}
           {% endblock %}

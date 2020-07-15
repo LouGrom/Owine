@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription Particuliers{% endblock %}
+
+{% block body %}
+
+    <h2 class="mt-3 mb-3">Parlez-nous d'abord de vous !</h2>
+        {{ form_start(form) }}
+        <div class="col-9 m-auto">
+            {{ form_widget(form) }}
+            
+            {% if company is defined %}
+        </div>
+            <h2 class="mt-5 mb-3">Maintenant, quelques informations sur votre société.</h2>
+        <div class="col-9 m-auto">
+                {{ form_widget(formCompany) }}
+               
+            {% endif %}
+            <button type="submit" class="btn btn-dark">Valider</button>
+        </div>
+        {{ form_end(form) }}
+{% endblock %}

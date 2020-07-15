@@ -26,13 +26,6 @@ class Product
      * @Assert\NotBlank
      * @Assert\Length(max=50)
      */
-    private $appellation;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Assert\Length(max=50)
-     */
     private $area;
 
     /**
@@ -137,6 +130,16 @@ class Product
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Appellation::class, inversedBy="products")
+     */
+    private $appellation;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -146,18 +149,6 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAppellation(): ?string
-    {
-        return $this->appellation;
-    }
-
-    public function setAppellation(string $appellation): self
-    {
-        $this->appellation = $appellation;
-
-        return $this;
     }
 
     public function getArea(): ?string
@@ -347,7 +338,7 @@ class Product
     {
         if (!$this->orderProducts->contains($orderProduct)) {
             $this->orderProducts[] = $orderProduct;
-            $orderProduct->setProductId($this);
+            $orderProduct->setProduct($this);
         }
 
         return $this;
@@ -358,8 +349,8 @@ class Product
         if ($this->orderProducts->contains($orderProduct)) {
             $this->orderProducts->removeElement($orderProduct);
             // set the owning side to null (unless already changed)
-            if ($orderProduct->getProductId() === $this) {
-                $orderProduct->setProductId(null);
+            if ($orderProduct->getProduct() === $this) {
+                $orderProduct->setProduct(null);
             }
         }
 
@@ -425,4 +416,29 @@ class Product
 
         return $this;
     }
+
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?float $rate): self
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getAppellation(): ?Appellation
+    {
+        return $this->appellation;
+    }
+
+    public function setAppellation(?Appellation $appellation): self
+    {
+        $this->appellation = $appellation;
+
+        return $this;
+    }
+
 }

@@ -42,7 +42,7 @@ class Order
     private $buyer;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order")
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order", orphanRemoval=true)
      */
     private $orderProducts;
 
@@ -71,6 +71,11 @@ class Order
      * @ORM\Column(type="integer")
      */
     private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reference;
 
     public function __construct()
     {
@@ -143,7 +148,7 @@ class Order
     {
         if (!$this->orderProducts->contains($orderProduct)) {
             $this->orderProducts[] = $orderProduct;
-            $orderProduct->setOrderId($this);
+            $orderProduct->setOrder($this);
         }
 
         return $this;
@@ -154,8 +159,8 @@ class Order
         if ($this->orderProducts->contains($orderProduct)) {
             $this->orderProducts->removeElement($orderProduct);
             // set the owning side to null (unless already changed)
-            if ($orderProduct->getOrderId() === $this) {
-                $orderProduct->setOrderId(null);
+            if ($orderProduct->getOrder() === $this) {
+                $orderProduct->setOrder(null);
             }
         }
 
@@ -237,6 +242,18 @@ class Order
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription Entreprise{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center mt-3 mb-3">Inscription Entreprise</h1>
+
+    <div class="tab-content">
+        <div id="buyer">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+    
+            <button type="submit" class="btn btn-dark">Valider</button>
+        {{ form_end(form) }}
+        </div>
+     
+    </div>
+
+{% endblock %}

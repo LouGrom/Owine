@@ -1,11 +1,117 @@
-html {
-    height: 100%;
-}
-
 body {
-    background-color: white;
+    background-color: #FAF6F0;
     overflow: auto;
+    font-family: 'CooperHewitt-Book', arial;
+    color: #352025;
 }
 
+.container {
+    min-height: 85vh;
+}
 
+strong {
+    font-family: 'CooperHewitt-Medium', arial;
+}
 
+.navbar-brand {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+}
+
+.navbar-brand:hover {
+    font-family: 'Quattrocento', serif;
+    font-size: 1.3em;
+    color: #897A73;
+}
+
+.navbar {
+    background-color: #6e081f;
+}
+
+.nav-link, .navbar-brand{
+    color: #FAF6F0;
+}
+
+.nav-item a:hover{
+    color: #897A73;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(244,235,221, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+.navbar-toggler {
+    border-color: #FAF6F0;
+}
+
+.homepage a {
+    color: #6e081f;
+}
+
+.homepage a:hover {
+    color: #897A73;
+}
+
+.card {
+    background-color: #F4EBDD;
+    border: 1px #6e081f solid;
+}
+
+.card-title a {
+    color: #6e081f;;
+}
+
+#login-name{
+    color: #FAF6F0;
+}
+
+.btn {
+    background-color: #FAF6F0;
+    color: #352025;
+}
+
+.btn:hover{
+    background-color: #352025;
+    color: #FAF6F0;
+}
+
+.btn:focus{
+    background-color: #6e081f;
+    color: #FAF6F0;
+}
+
+.title-picto {
+    color: #352025;
+    font-size: 1.5em;
+}
+
+.title-picto:hover {
+    color: #6e081f;
+    text-decoration: none;
+}
+
+.picto {
+    color: #352025;
+    font-size: 10em;
+}
+
+.picto:hover{
+    color: #6e081f;
+}
+
+.thead {
+    background-color: #6e081f ;
+    color: #FAF6F0;
+}
+
+/*  -------------------------------- Shop --------------------------------- */
+
+.badge-product {
+    background-color: #352025;
+    color: #FAF6F0;
+}
+
+.shop__add-cart-btn {
+    background-color: #6e081f;
+    color: #FAF6F0;
+}

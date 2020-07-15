@@ -27,8 +27,8 @@
                 <td>{{ order.createdAt ? order.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ order.updatedAt ? order.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('order_show', {'id': order.id}) }}">Détail</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">Modifier</a>
+                    <a class="btn btn-dark" href="{{ path('order_show', {'id': order.id}) }}">Détail</a>
+                    <a class="btn btn-dark" href="{{ path('order_edit', {'id': order.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('order_new') }}">Ajouter</a>
+    <a class="btn btn-dark" href="{{ path('order_new') }}">Ajouter</a>
 {% endblock %}

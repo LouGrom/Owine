@@ -7,10 +7,13 @@ use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/board")
+ */
 class BoardController extends AbstractController
 {
     /**
-     * @Route("/board", name="board")
+     * @Route("/", name="board")
      */
     public function board()
     {

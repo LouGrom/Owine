@@ -5,219 +5,142 @@
 {% block body %}
 
 {% if app.user %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine {{ app.user.firstname }}! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue {{ app.user.firstname }}!</h1>
     </div>
     {% else %}
-    <div class="text-center mt-5 mb-5">
-        <h1>🍷 Welcome to O'wine ! 🍷</h1>
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center" style="font-size: 3em;">Bienvenue sur O'wine !</h1>
     </div>
 {% endif %}
 
 
-{% if app.user %}
-  {# et qu'on est un seller #}
-  {% if 'ROLE_SELLER' in app.user.roles %}
+{% if app.user and 'ROLE_SELLER' in app.user.roles %}
+  {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}-
     {# alors on voit la homepage personnalisée pour le vendeur #}
-    <div class="row row-cols-1 row-cols-md-3 d-flex align-items-stretch">
-        <div class="col mb-4">
-            <div class="card h-100 border-0">                
-                <a href="#"><img src="{{ asset('images/profile.png')}}" class="card-img-top" alt="..." style="height: 350px;"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Profil de l'entreprise</h5>
+    <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
+        <div class="col-8 col-md-3 mb-4">
+            <div class="card h-100 border-1">                
+                <div class="card-body text-center">
+                    <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="#">Mon profil</a>
+                    </h5>
                 </div>
             </div>
         </div>
-        <div class="col mb-4">
-
-            <div class="card h-100 border-0">
-                <a href="{{ path('board') }}"><img src="{{ asset('images/dashboard-black.png')}}" class="card-img-top" alt="..." style="height: 350px;"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Dashboard</h5>
-                </div>
-            </div>
-
-        </div>
-        <div class="col mb-4">
-
-            <div class="card h-100 border-0">
-                <a href="#"><img src="{{ asset('images/shop.png')}}" class="card-img-top" alt="..." style="height: 350px;"></a>
-                <div class="card-body">
-                    <h5 class="card-title text-center">Ma boutique</h5>
+        <div class="col-8 col-md-3 mb-4">
+            <div class="card h-100 border-1"> 
+                <div class="card-body text-center">
+                    <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto mb-4"></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('board',{'id': app.user.company.id}) }}">Mon dashboard</a>
+                    </h5>
                 </div>
             </div>
 
         </div>
-      </div>
-  {% endif %}
-
-    {# et qu'on est un buyer #}
-    {% if 'ROLE_BUYER' in app.user.roles %}
-    {# alors on voit la homepage personnalisée pour le venderu #}
-        <div class="card mb-3 m-auto">
-            <div class="row no-gutters">
-                <div class="col-md-12">
-                    <div class="card-body">
-                        <h2 class="card-title text-center">Shop name</h5>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img  src="{{ asset('images/winery.jpg')}}" class="mb-3 rounded float-left mw-100" />
-                                <p class="card-text">
-                                J'ai ben d'la misère avec les colons en bedaine. 
-                                Toryeu que c'est cheap cette esti de cochonnerie-là. Il va manger un esti de char de marde tu vas vouère. 
-                                Baptême de crisse de cibole de viande à chien, j'en ai plein mon casse d'être toute décalissé de la vie, 
-                                avec le windshier de mon char toute déviargé par l'autre esti de cave. 
-                                Je lui ai garôché une estie de garnotte en plein dans sa crisse de face de crosseur, il en menait pas large je te jure. 
-                                Les crottes de fromage, bien sqouick sqouick dans yeule, c'est ça le bonheur.
-                                </p>
-
-                                <p>
-                                Arrête de faire la baboune tabaslack, a va fondre la slutch. Quessé tu veux j'te dise sacrament, fouille-moé bout d'viarge, je le sais-tu moé. 
-                                Je crisse mon camp d'icite anyway, je déguedine au plus sacrant, ça sent la cibole de marde. Toryeu que c'est cheap cette esti de cochonnerie-là. 
-                                Ferme-toé un peu le mâche-patate là, va prendre une marche ou quelque chose. Il m'a même pas redonné mon ptit change, ya essayé de me crosser le câlice.
-                                </p>
-                            </div>
-                        </div>
-                    </div> 
+        <div class="col-8 col-md-3 mb-4">
+            <div class="card h-100 border-1">
+                <div class="card-body text-center">
+                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto mb-4"></i></i></a>
+                    <h5>
+                    <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.id)}) }}">Ma boutique</a>
+                    </h5>
                 </div>
             </div>
+
         </div>
+    </div>
 
-        <div class="mb-3 m-auto">
-            <div class="d-flex justify-content-center align-items-end">
-            <h2 class="text-center mt-3 mb-3">Sélection de produits</h2><i class="fas fa-wine-bottle mt-3 mb-3 ml-2 fa-5x" aria-hidden="true"></i>
-        </div>
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-            <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">Produit 1</h5>
-                <div class="d-flex justify-content-between">
-                    <p class="card-text">Note</p>
-                    <p class="card-text">Prix</p>
-                </div>
+{% else %}
+    {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
+    <div class="card mt-2 mb-1 border-0 homepage" style="background-color: #FAF6F0;">
+        <div class="row no-gutters my-auto">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-center">
+                    <img src="{{ asset('images/mobile.png') }}" style="width: 83%;" class="card-img" alt="...">
                 </div>
             </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="col-md-6 my-auto">
                 <div class="card-body">
-                    <h5 class="card-title">Produit 2</h5>
-                    <div class="d-flex justify-content-between">
-                    <p class="card-text">Note</p>
-                    <p class="card-text">Prix</p>
+                    <p class="card-text text-center" style="font-size: 1.4em;">En visite dans une région viticole vous avez dégusté les produits d'un domaine ou d'un caveau</p>
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('images/degustation.png') }}" style="width: 55%;" alt="">
+                    </div>
+                    <p class="text-center" style="font-size: 1.4em;">Vous souhaitez acheter quelques bouteilles pour vous les faire livrer directement chez vous</p>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-wine-bottle"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-box-open"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-plane"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-globe-americas"></i></p>
+                        <p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-shipping-fast"></i></p>
                     </div>
                 </div>
-                </div>
             </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="col-md-6 my-auto">
                 <div class="card-body">
-                    <h5 class="card-title">Produit 3</h5>
-                    <div class="d-flex justify-content-between">
-                    <p class="card-text">Note</p>
-                    <p class="card-text">Prix</p>
-                    </div>
-                </div>
+                    <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_index') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
+                    <a href="{{ path('company_index') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
                 </div>
             </div>
-            <div class="col mb-4">
-                <div class="card h-100">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="col-md-6 my-auto">
                 <div class="card-body">
-                    <h5 class="card-title">Produit 4</h5>
-                    <div class="d-flex justify-content-between">
-                    <p class="card-text">Note</p>
-                    <p class="card-text">Prix</p>
-                    </div>
+                    <p class="text-center" style="font-size: 1.4em;">ou le <a href="{{ path('product_list_shop') }}" style="color: #6e081f;">catalogue des produits</a> en vente sur notre application.</p>
+                    <p class="text-center mr-3" style="font-size: 3em;"><a href="{{ path('product_list_shop') }}"><i class="fas fa-shopping-cart"></i></a></p>
                 </div>
-                </div>
-            </div>
-        </div>
-        </div>
-
-    {% endif %}
-
-    {% else %}
-
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-4">
-        <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-            <h5 class="card-title">Shop name</h5>
-            <p class="card-text">Location</p>
-            </div>
-        </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card h-100">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body d-flex justify-content-between">
-                <h5 class="card-title">Shop name</h5>
-                <p class="card-text">Location</p>
-            </div>
             </div>
         </div>
     </div>
+
 
 {% endif %}
 
 {% endblock %}
+
+
+    {# ----------------------------------------------------------- et qu'on est un buyer -------------------------------------------- #}
+    {# {% if 'ROLE_BUYER' in app.user.roles %}
+    {# alors on voit la homepage personnalisée pour le buyer #}
+       {# <div class="card mb-3 m-auto">
+            <div class="row no-gutters">
+                <div class="col-md-12">
+                    {% for company in companies %}
+                    <div class="card-body">
+                        <h2 class="card-title text-center">{{ company.name }}</h2>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="{{ company.picture }}" class="mb-3 mr-3 rounded float-left mw-100" />
+                                <p class="card-text">
+                                {{ company.presentation }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div> #}
+
+        {# <div class="mb-3 m-auto">
+            <div class="d-flex justify-content-center align-items-end">
+                <h2 class="text-center mt-3 mb-3">Sélection de produits</h2><i class="fas fa-wine-bottle mt-3 mb-3 ml-2 fa-5x" aria-hidden="true"></i>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Produit 1</h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">Note</p>
+                                <p class="card-text">Prix</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+        </div> #}
+    
+
