@@ -59,9 +59,33 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                </div>
+                </div>          
+
+            <h4>Colisage :</h4>
+                <table class="table text-center">
+                    <thead class="thead">
+                        <tr>
+                            <th>Nombre de bouteilles</th>
+                            <th>Hauteur (en cm)</th>
+                            <th>longueur (en cm)</th>{# Zalf ? #}
+                            <th>Largeur (en cm)</th>{# :o #}
+                            <th>Poids (en kg)</th>
+                        </tr>
+                    </thead>
+                    {% for package in app.user.company.packages %}
+                        <tr>
+                            <td>{{ package.bottleQuantity }}</td>
+                            <td>{{ package.height }}</td>
+                            <td>{{ package.length }}</td>
+                            <td>{{ package.width }}</td>
+                            <td>{{ package.weight }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
                 <button type="submit" class="btn btn-dark">Valider</button>
             </div>
+
             {% endif %}
         </div>
         {{ form_end(userForm) }}
