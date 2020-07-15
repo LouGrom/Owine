@@ -16,37 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompanyController extends AbstractController
 {
     /**
-     * @Route("/", name="company_index", methods={"GET"})
+     * @Route("/", name="company_list", methods={"GET"})
      */
     public function index(CompanyRepository $companyRepository): Response
     {
-        return $this->render('company/index.html.twig', [
+        return $this->render('company/list.html.twig', [
             'companies' => $companyRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="company_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $company = new Company();
-        $form = $this->createForm(CompanyType::class, $company);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($company);
-            $entityManager->flush();
-
-            $this->addFlash("success","La boutique a bien été ajoutée");
-
-            return $this->redirectToRoute('company_index');
-        }
-
-        return $this->render('company/new.html.twig', [
-            'company' => $company,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -57,28 +32,6 @@ class CompanyController extends AbstractController
     {
         return $this->render('company/show.html.twig', [
             'company' => $company,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Company $company): Response
-    {
-        $form = $this->createForm(CompanyType::class, $company);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash("success","La boutique a bien été modifiée");
-
-            return $this->redirectToRoute('company_index');
-        }
-
-        return $this->render('company/edit.html.twig', [
-            'company' => $company,
-            'form' => $form->createView(),
         ]);
     }
 
