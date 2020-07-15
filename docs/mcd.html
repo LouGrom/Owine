@@ -1,0 +1,204 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>CARRIER</span> (
+    <span class='primary'>name</span>,
+    <span class='normal'>mode</span>
+  )
+</div>
+<div>
+  <span class='relation'>COMPANY</span> (
+    <span class='primary'>name</span>,
+    <span class='normal'>SIRET</span>,
+    <span class='normal'>VAT</span>,
+    <span class='normal'>presentation</span>,
+    <span class='normal'>rate</span>,
+    <span class='foreign'>selected</span>,
+    <span class='foreign'>zone</span>
+  )
+</div>
+<!--
+<div>
+  <span class='relation'>COLOR</span> (
+    <span class='primary'>name</span>
+  )
+</div>
+-->
+<!--
+<div>
+  <span class='relation'>TYPE</span> (
+    <span class='primary'>name</span>
+  )
+</div>
+-->
+<div>
+  <span class='relation'>ORDER</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>role.1</span>,
+    <span class='primary'>reference</span>,
+    <span class='normal'>total_quantity</span>,
+    <span class='normal'>total_amount</span>,
+    <span class='normal'>tracking_number</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>,
+    <span class='foreign'>name</span>,
+    <span class='normal'>role seller</span>,
+    <span class='normal'>role buyer</span>
+  )
+</div>
+<div>
+  <span class='relation'>CONTAINS</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>role.1</span>,
+    <span class='foreign primary'>reference</span>,
+    <span class='foreign primary'>order_id</span>
+  )
+</div>
+<div>
+  <span class='relation'>ORDER_PRODUCT</span> (
+    <span class='primary'>order_id</span>,
+    <span class='normal'>product_id</span>,
+    <span class='normal'>quantity</span>
+  )
+</div>
+<div>
+  <span class='relation'>IS ORDERED</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>name.1</span>,
+    <span class='foreign primary'>name.2</span>,
+    <span class='foreign primary'>name.3</span>,
+    <span class='foreign primary'>area</span>,
+    <span class='foreign primary'>order_id</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>name.1</span>,
+    <span class='foreign primary'>name.2</span>,
+    <span class='foreign primary'>name.3</span>,
+    <span class='primary'>area</span>,
+    <span class='normal'>cuvée/domaine</span>,
+    <span class='normal'>capacity</span>,
+    <span class='normal'>vintage</span>,
+    <span class='normal'>alcohol volume</span>,
+    <span class='normal'>price</span>,
+    <span class='normal'>hs code</span>,
+    <span class='normal'>description</span>,
+    <span class='normal'>picture</span>,
+    <span class='normal'>status</span>,
+    <span class='normal'>stock_quantity</span>,
+    <span class='normal'>rate</span>,
+    <span class='normal'>created at</span>,
+    <span class='normal'>updated at</span>,
+    <span class='normal'>role seller</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_BRAND</span> (
+    <span class='primary'>name</span>,
+    <span class='normal'>picture</span>,
+    <span class='normal'>selection_filter</span>
+  )
+</div>
+<div>
+  <span class='relation'>PACKAGE</span> (
+    <span class='primary'>selected</span>,
+    <span class='normal'>boxSize</span>,
+    <span class='normal'>height</span>,
+    <span class='normal'>length</span>,
+    <span class='normal'>width</span>,
+    <span class='normal'>weight</span>
+  )
+</div>
+<div>
+  <span class='relation'>CONTAINED IN</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>name.1</span>,
+    <span class='foreign primary'>name.2</span>,
+    <span class='foreign primary'>name.3</span>,
+    <span class='foreign primary'>area</span>,
+    <span class='foreign primary'>quantity</span>
+  )
+</div>
+<div>
+  <span class='relation'>BELONGS TO</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>name.1</span>,
+    <span class='foreign primary'>name.2</span>,
+    <span class='foreign primary'>name.3</span>,
+    <span class='foreign primary'>area</span>,
+    <span class='foreign primary'>name.4</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_CATEGORY</span> (
+    <span class='primary'>name</span>,
+    <span class='normal'>selection_filter</span>
+  )
+</div>
+<!--
+<div>
+  <span class='relation'>APPELLATION</span> (
+    <span class='primary'>name</span>
+  )
+</div>
+-->
+<div>
+  <span class='relation'>ADDRESS</span> (
+    <span class='foreign primary'>role</span>,
+    <span class='primary'>type</span>,
+    <span class='normal'>firstname</span>,
+    <span class='normal'>lastname</span>,
+    <span class='normal'>street</span>,
+    <span class='normal'>zip_code</span>,
+    <span class='normal'>city</span>,
+    <span class='normal'>province</span>,
+    <span class='normal'>country</span>,
+    <span class='normal'>phone_number</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>
+  )
+</div>
+<div>
+  <span class='relation'>USER</span> (
+    <span class='primary'>role</span>,
+    <span class='normal'>firstname</span>,
+    <span class='normal'>lastname</span>,
+    <span class='normal'>email</span>,
+    <span class='normal'>password</span>,
+    <span class='normal'>created_at</span>,
+    <span class='normal'>updated_at</span>,
+    <span class='foreign'>name</span>,
+    <span class='foreign'>quantity</span>
+  )
+</div>
+<div>
+  <span class='relation'>CART</span> (
+    <span class='primary'>quantity</span>,
+    <span class='normal'>total_amount</span>
+  )
+</div>
+<div>
+  <span class='relation'>DESTINATION</span> (
+    <span class='primary'>zone</span>,
+    <span class='normal'>country</span>
+  )
+</div>
+</div>
+</body>
+</html>
