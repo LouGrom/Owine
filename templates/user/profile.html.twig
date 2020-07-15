@@ -6,53 +6,44 @@
 <div class="col-9 m-auto"></div>
 
     <h2 class="mt-3 mb-3 text-center">Profil</h2>
-    <h3>Vos informations personnelles</h3>
-    <p>Prénom : {{ app.user.firstname }}</p>    
-    <p>Nom : {{ app.user.lastname }}</p>
-    <p>Mot de passe : *secret*</p>
-    <p>Adresse : {{ app.user.addresses[0].street }}</p>
-    <p>Code postal : {{ app.user.addresses[0].zipCode }}</p>
-    <p>Ville : {{ app.user.addresses[0].city }}</p>
-    <p>Pays : {{ app.user.addresses[0].country }}</p>
-    <a href="{{ path('user_edit',{'id': app.user.id}) }}" class="btn btn-dark">Modifier</a>
+        <h3>Vos informations personnelles</h3>
 
+        <div class="col-9 ml-auto mr-auto mb-3">
+            <p>Prénom : {{ app.user.firstname }}</p>    
+            <p>Nom : {{ app.user.lastname }}</p>
+            <p>Mot de passe : *secret*</p>
+            <p>Adresse : {{ app.user.addresses[0].street }}</p>
+            <p>Code postal : {{ app.user.addresses[0].zipCode }}</p>
+            <p>Ville : {{ app.user.addresses[0].city }}</p>
+            <p>Pays : {{ app.user.addresses[0].country }}</p>
+            <a href="{{ path('user_edit',{'id': app.user.id}) }}" class="btn btn-dark">Modifier</a>
+        </div>
             
     {% if 'ROLE_SELLER' in app.user.roles %}
         <h3 class="mt-5 mb-3">Vos préférences d'expédition</h3>
-        <h4>Destinations :</h4>
 
-        <div>
-        <p class="h5">National</p>
-        {% for destination in app.user.company.destinations %}
-            {% if destination.zone == 'National' %}
-            <input type="checkbox" id="{{ destination.country }}" name="{{ destination.country }}" checked>
-            <label for="{{ destination.country }}">{{ destination.country }}</label>
-            <br>
-            {% endif %}
-        {% endfor %}
-        </div>
+            <div class="col-9 m-auto mb-4">
 
-        <div>
-        <p class="h5">Europe</p>
-        {% for destination in app.user.company.destinations %}
-            {% if destination.zone == 'Europe' %}
-            <input type="checkbox" id="{{ destination.country }}" name="{{ destination.country }}" checked>
-            <label for="{{ destination.country }}">{{ destination.country }}</label>
-            {% endif %}
-        {% endfor %}
-        </div>
-
-        <div>
-        <p class="h5">Monde</p>
-        {% for destination in app.user.company.destinations %}
-            {% if destination.zone == 'World' %}
-            <input type="checkbox" id="{{ destination.country }}" name="{{ destination.country }}" checked>
-            <label for="{{ destination.country }}">{{ destination.country }}</label>
-                {% endif %}
-        {% endfor %}
-        </div>
+                <h4>Destinations :</h4>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th>Zone</th>
+                                <th>Pays</th>
+                                <th>ISO</th>
+                            </tr>
+                        </thead>
+                        {% for destination in app.user.company.destinations %}
+                            <tr>
+                                <td>{{ destination.zone }}</td>
+                                <td>{{ destination.country }}</td>
+                                <td>{{ destination.iso }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    
     {% endif %}
     <a href="{{ path('user_edit',{'id': app.user.id}) }}" class="btn btn-dark">Modifier</a>
-
-</div>
+            </div>
+</div>      
 {% endblock %}

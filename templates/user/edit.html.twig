@@ -11,14 +11,13 @@
             {{ form_widget(userForm) }}
         </div>
 
-        <h3>Votre addresse</h3>
+        <h3>Votre adresse</h3>
         <div class="col-9 ml-auto mr-auto mb-3">
             {{ form_widget(addressForm) }}
         </div>
         
-        <h3 class="mt-3 mb-3">Vos préférences d'expédition</h3>
-
         {% if 'ROLE_SELLER' in app.user.roles %}
+        <h3 class="mt-3 mb-3">Vos préférences d'expédition</h3>
             
             <div class="col-9 m-auto mb-4">
                 <h4 class="mb-3">Destinations</h4>
