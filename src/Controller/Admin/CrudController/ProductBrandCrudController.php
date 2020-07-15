@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin\CrudController;
 
-use App\Entity\Product;
+use App\Entity\ProductBrand;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -11,11 +11,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class ProductCrudController extends AbstractCrudController
+class ProductBrandCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Product::class;
+        return ProductBrand::class;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -26,7 +26,7 @@ class ProductCrudController extends AbstractCrudController
             
         ;
     }
-    
+
     /*
     public function configureFields(string $pageName): iterable
     {
