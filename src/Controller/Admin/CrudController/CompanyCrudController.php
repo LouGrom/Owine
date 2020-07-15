@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -19,13 +20,13 @@ class CompanyCrudController extends AbstractCrudController
         return Company::class;
     }
 
-    // public function configureFilters(Filters $filters): Filters
-    // {
-    //     return $filters
-    //     ->add('validated')
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+        ->add('validated')
         
-    // ;
-    // }
+    ;
+    }
 
 
     
@@ -37,6 +38,7 @@ class CompanyCrudController extends AbstractCrudController
             TextField::new('siret'),
             TextField::new('vat'),
             TextField::new('picture')->hideOnIndex(),
+            IntegerField::new('validated'),
             TextEditorField::new('presentation')->hideOnIndex(),
         ];
     }
