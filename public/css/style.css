@@ -115,3 +115,19 @@ strong {
     background-color: #6e081f;
     color: #FAF6F0;
 }
+
+.glyphicon{
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-thumbs-up:before{
+    content:"\f164";
+}
+.glyphicon-pencil:before{
+    content:"\f044";
+    font-family: "FontAwesome";
+}

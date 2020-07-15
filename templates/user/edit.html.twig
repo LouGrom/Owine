@@ -60,30 +60,37 @@
                         {% endfor %}
                     </div>
                 </div>          
+                <button type="submit" class="btn btn-dark">Valider</button>
+
 
             <h4>Colisage :</h4>
-                <table class="table text-center">
+            <div class="table-content">
+                <table class="table table-striped text-center" id="table-list">
                     <thead class="thead">
                         <tr>
                             <th>Nombre de bouteilles</th>
                             <th>Hauteur (en cm)</th>
-                            <th>longueur (en cm)</th>{# Zalf ? #}
-                            <th>Largeur (en cm)</th>{# :o #}
+                            <th>longueur (en cm)</th>
+                            <th>Largeur (en cm)</th>
                             <th>Poids (en kg)</th>
                         </tr>
                     </thead>
+                    <tbody>
                     {% for package in app.user.company.packages %}
                         <tr>
-                            <td>{{ package.bottleQuantity }}</td>
-                            <td>{{ package.height }}</td>
-                            <td>{{ package.length }}</td>
-                            <td>{{ package.width }}</td>
-                            <td>{{ package.weight }}</td>
+                            <td data-field="bottleQuantity" data-editable="true">{{ package.bottleQuantity }}</td>
+                            <td data-field="height" data-editable="true">{{ package.height }}</td>
+                            <td data-field="length" data-editable="true">{{ package.length }}</td>
+                            <td data-field="width" data-editable="true">{{ package.width }}</td>
+                            <td data-field="weight" data-editable="true">{{ package.weight }}</td>
                         </tr>
                     {% endfor %}
+                    </tbody>
                 </table>
 
-                <button type="submit" class="btn btn-dark">Valider</button>
+                <button class="btn btn-info" id="add"><span class="glyphicon glyphicon-plus-sign"></span>Ajouter un nouveau format de carton</button>
+            </div>
+                
             </div>
 
             {% endif %}
