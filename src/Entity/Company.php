@@ -59,9 +59,21 @@ class Company
      */
     private $rate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Destination::class, mappedBy="company")
+     */
+    private $destinations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Package::class, mappedBy="company", orphanRemoval=true)
+     */
+    private $packages;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
+        $this->destinations = new ArrayCollection();
+        $this->packages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +192,65 @@ class Company
     public function setRate(?float $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Destination[]
+     */
+    public function getDestinations(): Collection
+    {
+        return $this->destinations;
+    }
+
+    public function addDestination(Destination $destination): self
+    {
+        if (!$this->destinations->contains($destination)) {
+            $this->destinations[] = $destination;
+            $destination->addCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestination(Destination $destination): self
+    {
+        if ($this->destinations->contains($destination)) {
+            $this->destinations->removeElement($destination);
+            $destination->removeCompany($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Package[]
+     */
+    public function getPackages(): Collection
+    {
+        return $this->packages;
+    }
+
+    public function addPackage(Package $package): self
+    {
+        if (!$this->packages->contains($package)) {
+            $this->packages[] = $package;
+            $package->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removePackage(Package $package): self
+    {
+        if ($this->packages->contains($package)) {
+            $this->packages->removeElement($package);
+            // set the owning side to null (unless already changed)
+            if ($package->getCompany() === $this) {
+                $package->setCompany(null);
+            }
+        }
 
         return $this;
     }
