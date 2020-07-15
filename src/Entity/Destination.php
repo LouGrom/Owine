@@ -34,6 +34,11 @@ class Destination
      */
     private $company;
 
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $iso;
+
     public function __construct()
     {
         $this->company = new ArrayCollection();
@@ -90,6 +95,18 @@ class Destination
         if ($this->company->contains($company)) {
             $this->company->removeElement($company);
         }
+
+        return $this;
+    }
+
+    public function getIso(): ?string
+    {
+        return $this->iso;
+    }
+
+    public function setIso(string $iso): self
+    {
+        $this->iso = $iso;
 
         return $this;
     }

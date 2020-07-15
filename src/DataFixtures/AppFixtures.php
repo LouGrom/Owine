@@ -15,6 +15,8 @@ use App\Entity\OrderProduct;
 use App\Entity\Type;
 use App\Entity\Company;
 use App\Entity\Cart;
+use App\Entity\Destination;
+use App\Entity\Package;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
@@ -28,6 +30,46 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         $faker->addProvider(new LoremFlickrProvider($faker));
 
+        // ----------------------------------------------------------- Destination -----------------------------------------------------------------
+
+        $countryList= [
+            'National' => [
+                'France' => 'FR'
+            ],
+            'European Country' =>[
+                'Allemagne' => 'DE',
+                'Espagne' => 'ES',
+                'Belgique' => 'BE',
+                'Royaume-Uni' => 'GB',
+                'Finlande' => 'FI'
+            ],
+            'World' =>[
+                'États-Unis' => 'US',
+                'Australie' => 'AU',
+                'Chine' => 'CN',
+                'Corée du Sud' => 'KR',
+                'Guatemala' => 'GT'
+            ]
+        ];
+
+        foreach($countryList as $region => $array) {
+
+            foreach($array as $country => $iso) {
+
+                $destination = new Destination();
+
+                $destination->setZone($region);
+                $destination->setCountry($country);
+                $destination->setIso($iso);
+
+                $destinationList[] = $destination;
+
+                $manager->persist($destination);
+                $manager->flush();
+            }
+        }
+
+        // --------------------------------------------------------- Seller/Buyer/Admin de test --------------------------------------------
         // On crée un user de chaque role 
         $seller = new User();
         $buyer = new User();
@@ -47,6 +89,26 @@ class AppFixtures extends Fixture
         $company->setSiret($faker->siret);
         $company->setVat($faker->vat);
         $company->setPicture($faker->imageUrl(450,275,['wine']));
+        $destinations = $faker->randomELements($destinationList, 4);
+        foreach ($destinations as $destination) {
+            $company->addDestination($destination);
+        }
+        
+        for($i = 0; $i < random_int(3,5); $i++) {
+
+            $package = new Package();
+
+            $package->setBottleQuantity(random_int(1,12));
+            $package->setHeight($faker->randomFloat(2, 38, 45));
+            $package->setLength($faker->randomFloat(2, 14, 50));
+            $package->setWidth($faker->randomFloat(2, 14, 45));
+            $package->setWeight($faker->randomFloat(2, 2, 20));
+
+            $company->addPackage($package);
+            
+            $manager->persist($package);
+        }
+
         // On crée un tableau de paragraphes
         $paragraphs = $faker->paragraphs(3);
         $presentation = "";
@@ -126,7 +188,7 @@ class AppFixtures extends Fixture
         
         $manager->flush();
 
-
+        // ------------------------------------------------------------------ User Random ----------------------------------------------------------
         // On crée 30 personnes et leur adreses de livraison  
         for ($i = 0; $i < 30; $i++) {
             $user = new User();
@@ -140,12 +202,16 @@ class AppFixtures extends Fixture
                 $address->setType(['COMPANY_ADDRESS']);
 
                 $company = new Company();
-        
+                        
                 $company->setName($faker->company." ".$faker->companySuffix);
                 $company->setSiret($faker->siret);
                 $company->setVat($faker->vat);
                 $company->setValidated(0);
                 $company->setPicture($faker->imageUrl(450,275,['wine']));
+                $destinations = $faker->randomELements($destinationList, random_int(2,7));
+                foreach ($destinations as $destination) {
+                    $company->addDestination($destination);
+                }
                 // On crée un tableau de paragraphes
                 $paragraphs = $faker->paragraphs(3);
                 $presentation = "";
@@ -157,6 +223,21 @@ class AppFixtures extends Fixture
                 }
                 // On enregistre ensuite ce texte dans l'objet Company
                 $company->setPresentation($presentation);
+
+                for($j = 0; $j < random_int(3,5); $j++) {
+
+                    $package = new Package();
+
+                    $package->setBottleQuantity(random_int(1,12));
+                    $package->setHeight($faker->randomFloat(2, 38, 45));
+                    $package->setLength($faker->randomFloat(2, 14, 50));
+                    $package->setWidth($faker->randomFloat(2, 14, 45));
+                    $package->setWeight($faker->randomFloat(2, 2, 20));
+
+                    $company->addPackage($package);
+                    
+                    $manager->persist($package);
+                }
 
                 $manager->persist($company);
 
@@ -193,6 +274,7 @@ class AppFixtures extends Fixture
             $manager->persist($address);
         }
 
+        // ----------------------------------------------------------- ProductBrand Random -----------------------------------------------------------------
         // On crée 4 marques
         $brand_name = ['Fabigeon', 'La villageoise', 'Cellier des Dauphins', 'Cambras'];
         for($i = 0; $i < count($brand_name); $i++){
@@ -207,7 +289,9 @@ class AppFixtures extends Fixture
 
             $manager->persist($brand);
         }
-        
+
+
+        // ----------------------------------------------------------- ProductCategory Random -----------------------------------------------------------------
         // On crée 4 categories
         $category_name = ['AOC', 'AOVDQS', 'Vin de pays', 'Vin de table'];
         for($i = 0; $i < count($category_name); $i++){
@@ -222,6 +306,7 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
 
+        // ----------------------------------------------------------- ProductType Random -----------------------------------------------------------------
         // On crée 4 Types
         $type_name = ['Cuit', 'Effervescent', 'Tranquille', 'Crémeux'];
         for($i = 0; $i < count($type_name); $i++){
@@ -233,6 +318,7 @@ class AppFixtures extends Fixture
             $manager->persist($type);
         }
 
+        // ----------------------------------------------------------- Color Random -----------------------------------------------------------------
         // On crée 5 couleurs
         $color_name = ['Rouge', 'Blanc', 'Rosé', 'Blouge', 'F0F'];
         for($i = 0; $i < count($color_name); $i++){
@@ -244,17 +330,21 @@ class AppFixtures extends Fixture
             $manager->persist($color);
         }
 
-          // On crée les appellations
-          $appellation_name = ['Alsace Edelzwicker', 'Alsace Gewurztraminer', 'Alsace Sylvaner', 'Alsace Grand Cru', 'Alsace Pinot noir'];
-          for($i = 0; $i < count($appellation_name); $i++){
-              $appellation = new Appellation();
-              $appellation->setName($appellation_name[$i]);
-  
-              // Tableau des objets appellation
-              $appellationList[] = $appellation;
-              $manager->persist($appellation);
-          }
 
+        // ----------------------------------------------------------- Appellation Random -----------------------------------------------------------------
+        // On crée les appellations
+        $appellation_name = ['Alsace Edelzwicker', 'Alsace Gewurztraminer', 'Alsace Sylvaner', 'Alsace Grand Cru', 'Alsace Pinot noir'];
+        for($i = 0; $i < count($appellation_name); $i++){
+            $appellation = new Appellation();
+            $appellation->setName($appellation_name[$i]);
+
+            // Tableau des objets appellation
+            $appellationList[] = $appellation;
+            $manager->persist($appellation);
+        }
+
+
+        // ----------------------------------------------------------- Product Random -----------------------------------------------------------------
         // On crée 100 produits
         for ($i = 0; $i < 100; $i++) {
 
@@ -290,6 +380,7 @@ class AppFixtures extends Fixture
             $manager->persist($product);
         }
 
+        // ----------------------------------------------------------- Carrier Random -----------------------------------------------------------------
         // On crée 7 transporteurs et 3 modes de transport
         $carrier_name = ['TNT', 'Vignoblexport', 'UPS', 'La Poste', 'Colissimo', 'Deliveroo', 'Uber Eat'];
         $carrier_mode=['Brouette', 'Tabouret', 'Fabigeon'];
@@ -307,6 +398,7 @@ class AppFixtures extends Fixture
             $manager->persist($carrier);
         }
         
+        // ----------------------------------------------------------- Order Random -----------------------------------------------------------------
         // On crée 30 commandes
         for ($i = 0; $i < 30; $i++) {
 
@@ -350,6 +442,8 @@ class AppFixtures extends Fixture
             $manager->persist($order);
         }
 
+
+        // ----------------------------------------------------------- Cart Random -----------------------------------------------------------------
         // On crée 100 Cart
         for ($i = 0; $i < 100; $i++) {
 
