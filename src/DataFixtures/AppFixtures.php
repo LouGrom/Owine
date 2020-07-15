@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             'National' => [
                 'France' => 'FR'
             ],
-            'European Country' =>[
+            'Europe' =>[
                 'Allemagne' => 'DE',
                 'Espagne' => 'ES',
                 'Belgique' => 'BE',

@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Address;
+use App\Entity\Destination;
+use App\Form\AddressType;
 use App\Form\UserType;
+use App\Repository\DestinationRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,15 +29,22 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserRepository $userRepository, $id): Response
+    public function edit(Request $request, UserRepository $userRepository, $id, DestinationRepository $destinationRepository): Response
     {
-
         $user = new User();
-        $user = $userRepository->find($id);
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $address = new Address();
+        $destinations = $destinationRepository->findAll();
+                
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $user = $userRepository->find($id);
+        $address = $user->getAddresses()[0];
+        
+        $userForm = $this->createForm(UserType::class, $user);
+        $addressForm = $this->createForm(AddressType::class, $address);
+        $userForm->handleRequest($request);
+        $addressForm->handleRequest($request);
+
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash("success", "L'utilisateur a bien été modifié");
@@ -42,8 +53,10 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
+            'users' => $userRepository->findAll(),
+            'addressForm' => $addressForm->createView(),
+            'userForm' => $userForm->createView(),
+            'destinations' => $destinations,
         ]);
     }
 }
