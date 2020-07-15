@@ -16,15 +16,15 @@
 
 
 {% if app.user and 'ROLE_SELLER' in app.user.roles %}
-  {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}-
+  {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}
     {# alors on voit la homepage personnalisée pour le vendeur #}
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-1">                
                 <div class="card-body text-center">
-                    <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <a href="{{ path('profil',{'id': app.user.company.id}) }}"><i class="fas fa-user-circle picto mb-4"></i></a>
                     <h5>
-                    <a class="title-picto" href="#">Mon profil</a>
+                    <a class="title-picto" href="{{ path('profil',{'id': app.user.company.id}) }}">Mon profil</a>
                     </h5>
                 </div>
             </div>

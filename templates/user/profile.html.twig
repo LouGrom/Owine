@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+    <h2 class="mt-3 mb-3">Profil</h2>
+    <h3>Vos informations personnelles</h3>
+    <p>Prénom : {{ app.user.firstname }}</p>    
+    <p>Nom : {{ app.user.lastname }}</p>
+    <p>Mot de passe : *secret*</p>
+    <a href="{{ path('user_edit',{'id': app.user.id}) }}">Modifier</a>
+
+        <div class="col-9 m-auto">
+            
+            {% if 'ROLE_SELLER' in app.user.roles %}
+                    <h3 class="mt-5 mb-3">Vos préférences d'expédition</h3>
+            {% endif %}
+            <button type="submit" class="btn btn-dark">Valider</button>
+        </div>
+{% endblock %}

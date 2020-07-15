@@ -21,7 +21,7 @@ class DefaultController extends AbstractController
     }
 
      /**
-     * @Route("/contacts", name="contacts")
+     * @Route("/contacts", name="contacts")}}
      */
     public function contacts()
     {
