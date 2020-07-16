@@ -15,6 +15,15 @@ let app = {
                 destinations[i].addEventListener('click', app.isClicked);
             }
         }
+
+        var packages = document.querySelectorAll('.package');
+
+        // assign function to onclick property of each checkbox
+        for (var i = 0, len = packages.length; i < len; i++) {
+            if (packages[i].type === 'checkbox') {
+                packages[i].addEventListener('click', app.isClicked);
+            }
+        }
     },
 
     isClicked: function (event) {

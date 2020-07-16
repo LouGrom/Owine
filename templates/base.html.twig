@@ -85,6 +85,11 @@
                 <input class="form-control mr-sm-2" value="{{ app.request.query.get('search') }}" type="search" placeholder="Rechercher" aria-label="Search">
                 <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
               </form>
+              {% if app.user %}
+              <div class="nav-item">
+              <a class="nav-link" href="{{ path('profil') }}"><i class="fas fa-user-circle fa-2x"></i></a>
+              </div>
+              {% endif %}
             </div>
           </nav>
           
