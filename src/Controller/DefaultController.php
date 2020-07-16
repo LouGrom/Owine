@@ -37,10 +37,10 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @route("/404"), name="error_404")
+     * @route("/404", name="error404")
      */
     public function error404()
     {
-        return $this->render('default/error_404.html.twig');
+        return $this->render('default/error404.html.twig');
     }
 }

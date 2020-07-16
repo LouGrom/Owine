@@ -81,7 +81,9 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
+        
             ->setTitle('O\'Wine admin');
+
     }
 
     // public function configureFilters(Filters $filters): Filters
