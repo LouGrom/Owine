@@ -53,8 +53,12 @@ class CompanyController extends AbstractController
     /**
      * @Route("/{id}", name="company_show", methods={"GET"})
      */
-    public function show(Company $company): Response
+    public function show(Company $company = null): Response
     {
+        if (!$company) {
+            // throw $this->createNotFoundException('The product does not exist');
+            return $this->redirectToRoute('error404');
+        }
         return $this->render('company/show.html.twig', [
             'company' => $company,
         ]);

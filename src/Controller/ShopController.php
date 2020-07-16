@@ -40,10 +40,15 @@ class ShopController extends AbstractController
     /**
      * @Route("/{id}", name="product_show_shop", methods={"GET"})
      */
-    public function show(Product $product): Response
+    public function show(Product $product = null): Response
     {
+        if (!$product) {
+            // throw $this->createNotFoundException('The product does not exist');
+            return $this->redirectToRoute('error404');
+        }
         return $this->render('shop/show.html.twig', [
             'product' => $product,
         ]);
+       
     }
 }
