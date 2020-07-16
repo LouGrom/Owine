@@ -31,42 +31,13 @@ let app = {
     },
 
     checkDestination: function (destinationId) {
-        // On prépare la configuration de la requête HTTP
-        var myInit = {
-            method: 'PATCH',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        // On déclenche la requête HTTP (via le moteur sous-jacent Ajax)
-        return fetch(app.apiBaseUrl + '/destination/' + destinationId + '/add', myInit)
-            // Ensuite, lorsqu'on reçoit la réponse au format JSON
-            .then(function (responseText) {
-                return responseText.status;
-            })
+        // ça fonctionne parce qu'on est des H4CK3RS (et que j'm'appelle Bob le Bricoleur)
+        return fetch(app.apiBaseUrl + '/destination/' + destinationId + '/add');
     },
 
     uncheckDestination: function (destinationId) {
-        // On prépare la configuration de la requête HTTP
-        var myInit = {
-            method: 'PATCH',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        };
-
-        // On déclenche la requête HTTP (via le moteur sous-jacent Ajax)
-        return fetch(app.apiBaseUrl + '/destination/' + destinationId + '/remove', myInit)
-            // Ensuite, lorsqu'on reçoit la réponse au format JSON
-            .then(function (responseText) {
-                console.log(responseText.status);
-                return responseText.status;
-            })
+    
+        return fetch(app.apiBaseUrl + '/destination/' + destinationId + '/remove');
     },
 }
 

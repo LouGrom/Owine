@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Repository\DestinationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -23,6 +25,8 @@ class DestinationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
 
+        return new JsonResponse(Response::HTTP_OK);
+
     }
 
     /**
@@ -36,5 +40,7 @@ class DestinationController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
+
+        return new JsonResponse(Response::HTTP_OK);
     }
 }
