@@ -5,31 +5,75 @@
 {% block body %}
 <div class="col-9 m-auto"></div>
 
-    <h2 class="mt-3 mb-3 text-center">Profil</h2>
-        <h3>Vos informations personnelles</h3>
 
+    <h2 class="mt-3 mb-3 text-center">Mon profil</h2>
+        <div class="d-flex justify-content-between">
+            <h3>Mes informations personnelles</h3>
+            <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark"><i class="fas fa-pen"></i> Modifier</a>
+        </div>
         <div class="col-9 ml-auto mr-auto mb-3">
-            <p>Prénom : {{ app.user.firstname }}</p>    
-            <p>Nom : {{ app.user.lastname }}</p>
-            <p>Mot de passe : *secret*</p>
-            <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark">Modifier vos informations personnelles</a>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Prénom :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.firstname }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Nom :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.lastname }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Mot de passe :</p>
+                </div>
+                <div class="col-sm">
+                    <p><i class="fas fa-key"></i></p>
+                </div>
+            </div>
         </div>
 
-        <h3>Votre addresse</h3>
-
-        <div class="col-9 ml-auto mr-auto mb-3">
-            <p>Adresse : {{ app.user.addresses[0].street }}</p>
-            <p>Code postal : {{ app.user.addresses[0].zipCode }}</p>
-            <p>Ville : {{ app.user.addresses[0].city }}</p>
-            <p>Pays : {{ app.user.addresses[0].country }}</p>
-            <a href="{{ path('user_edit',{'params': 'address'}) }}" class="btn btn-dark">Modifier votre adresse</a>
+        <div class="d-flex justify-content-between">
+            <h3>Mon addresse</h3>
+            <a href="{{ path('user_edit',{'params': 'address'}) }}" class="btn btn-dark"> <i class="fas fa-pen"></i> Modifier</a>
+        
         </div>
-
+        <div class="col-9 ml-auto mr-auto mb-3">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Adresse :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].street }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Code postal / Ville :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].zipCode }} - {{ app.user.addresses[0].city }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Pays :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].country }}</i></p>
+                </div>
+            </div>          
+        </div>
             
     {% if 'ROLE_SELLER' in app.user.roles %}
-        <h3 class="mt-5 mb-3">Vos préférences d'expédition</h3>
+        <h3 class="mt-3 mb-3">Mes préférences d'expédition</h3>
             
-        <div class="col-9 m-auto mb-4">
+        <div class="col-9 m-auto mb-3">
             <h4 class="mb-3">Destinations</h4>
 
             {# Div principale des Destinations#}
