@@ -23,7 +23,7 @@ var newColHtml = '<div class="btn-group pull-right">' +
     '<i class="far fa-window-close"></i>' +
     '</button>' +
     '</div>';
-var colEdicHtml = '<td name="buttons">' + newColHtml + '</td>';
+var colEdicHtml = '<th name="buttons">' + newColHtml + '</th>';
 
 $.fn.SetEditable = function (options) {
     var defaults = {
@@ -35,7 +35,7 @@ $.fn.SetEditable = function (options) {
         onAdd: function () { }     //Called when added a new row
     };
     params = $.extend(defaults, options);
-    this.find('thead tr').append('<td name="buttons"><i class="fas fa-tools"></i></td>');  //encabezado vacío
+    this.find('thead tr').append('<th name="buttons"><i class="fas fa-tools"></i></th>');  //encabezado vacío
     this.find('tbody tr').append(colEdicHtml);
     var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
     //Process "addButton" parameter

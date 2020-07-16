@@ -26,21 +26,19 @@ class AddressType extends AbstractType
             ->add('country', CountryType::class, [
                 'label' => 'Pays'
             ])
-            ->add('phoneNumber', TextType::class, [
-                'label' => 'Téléphone'
-            ])
-            //->add('type')
-            ->add('firstname', TextType::class, [
-                'label' => 'Votre prénom :'
-            ])
-            ->add('lastname', TextType::class, [
-                'label' => 'Votre nom de famille :'
-            ])
             ->add('province', TextType::class, [
                 'label' => 'Province',
                 'required' => false
+                ])
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom du contact'
             ])
-            //->add('user')
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('phoneNumber', TextType::class, [
+                'label' => 'Téléphone'
+            ])
         ;
     }
 

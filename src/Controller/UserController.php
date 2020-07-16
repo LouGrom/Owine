@@ -19,32 +19,38 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="profil", methods={"GET"})
      */
-    public function index(UserRepository $userRepository):Response
+    public function index(UserRepository $userRepository, DestinationRepository $destinationRepository):Response
     {
+        
         return $this->render('user/profile.html.twig', [
+            'destinations' => $destinationRepository->findAll(),
             'users' => $userRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{params}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserRepository $userRepository, $id, DestinationRepository $destinationRepository): Response
+    public function edit(Request $request, UserRepository $userRepository, $params, DestinationRepository $destinationRepository): Response
     {
         $user = new User();
         $address = new Address();
         $destinations = $destinationRepository->findAll();
                 
-
-        $user = $userRepository->find($id);
+        $user = $this->getUser();
         $address = $user->getAddresses()[0];
-        
-        $userForm = $this->createForm(UserType::class, $user);
-        $addressForm = $this->createForm(AddressType::class, $address);
-        $userForm->handleRequest($request);
-        $addressForm->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
+        if ($params == 'personal') {
+            $object = $user;
+            $form = $this->createForm(UserType::class, $object);
+        } elseif ($params == 'address') {
+            $object = $address;
+            $form = $this->createForm(AddressType::class, $object);
+        }
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash("success", "L'utilisateur a bien été modifié");
@@ -53,10 +59,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
-            'users' => $userRepository->findAll(),
-            'addressForm' => $addressForm->createView(),
-            'userForm' => $userForm->createView(),
             'destinations' => $destinations,
+            'form' => $form->createView(),
         ]);
     }
 }
