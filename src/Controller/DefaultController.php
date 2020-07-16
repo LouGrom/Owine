@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CompanyRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends AbstractController
 {
@@ -36,11 +37,4 @@ class DefaultController extends AbstractController
         return $this->render('default/legal_mentions.html.twig');
     }
 
-    /**
-     * @route("/404"), name="error_404")
-     */
-    public function error404()
-    {
-        return $this->render('default/error_404.html.twig');
-    }
 }
