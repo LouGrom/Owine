@@ -48,8 +48,15 @@ class CompanyCrudController extends AbstractCrudController
         return $actions
             // ...
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            
-        ;
+            ->update(Crud::PAGE_INDEX, Action::DETAIL, function (Action $action) {
+                return $action->setIcon('fa fa-search')->setLabel(false);
+            })
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setIcon('fa fa-edit')->setLabel(false);
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setIcon('fa fa-trash-alt')->setLabel(false);
+            }) ;
     }
 
 }
