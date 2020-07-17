@@ -21,8 +21,21 @@ class CartController extends AbstractController
      */
     public function buyerCart(CartRepository $cartRepository, $id): Response
     {
+
+        $carts = $cartRepository->findAllByBuyer($id);
+        $sellerList = [];
+        foreach($carts as $cart) {
+
+            $company = $cart->getProduct()->getSeller()->getCompany();
+            if (!in_array($company, $sellerList)) {
+                $sellerList[] = $company;
+            }
+        }
+
+
         return $this->render('cart/buyer_cart.html.twig', [
-            'carts' => $cartRepository->findAllByBuyer($id)
+            'carts' => $carts,
+            'companies' => $sellerList
         ]);
     }
 
