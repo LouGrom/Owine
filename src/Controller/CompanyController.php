@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Company;
-use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +28,16 @@ class CompanyController extends AbstractController
     /**
      * @Route("/{id}", name="company_show", methods={"GET"})
      */
-    public function show(Company $company): Response
+    public function sortBySeller(ProductRepository $productRepository, CompanyRepository $companyRepository, $id)
     {
+        $company = $companyRepository->find($id);
+
+        $seller = $company->getSeller();
+        $sellerId = $seller[0]->getId();
+        
         return $this->render('company/show.html.twig', [
-            'company' => $company,
+            'products' => $productRepository->findAllBySeller($sellerId),
+            'company' => $company
         ]);
     }
 

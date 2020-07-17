@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
-use App\Form\CartType;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
