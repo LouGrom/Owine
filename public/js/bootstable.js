@@ -198,6 +198,8 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
         }
         tmp = tmp + datFil + '\n';
     });
+    
+
     return tmp;
 }
 

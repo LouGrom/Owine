@@ -67,7 +67,7 @@
                 <div class="col-sm">
                     <p>{{ app.user.addresses[0].country }}</i></p>
                 </div>
-            </div>          
+            </div>
         </div>
             
     {% if 'ROLE_SELLER' in app.user.roles %}
@@ -120,13 +120,14 @@
             {# -------------------------------------------- Package -------------------------------------------------#}
                     
             <h4 class="mt-4">Colisage :
-            <button class="btn btn-dark" id="add"><i class="fas fa-plus-circle mr-2"></i>Ajouter</button>
+            <button class="btn btn-dark addPackage" id="add"><i class="fas fa-plus-circle mr-2"></i>Ajouter</button>
             </h4>
-
-            <div class="table-content">
+            </div>
+            <div class="table-content table-responsive">
                 <table class="table table-striped text-center" id="table-list">
                     <thead class="thead">
                         <tr>
+                            <th hidden>id</th>
                             <th>Nombre de bouteilles</th>
                             <th>Hauteur (en cm)</th>
                             <th>longueur (en cm)</th>
@@ -137,6 +138,7 @@
                     <tbody>
                         {% for package in app.user.company.packages %}
                         <tr class="package">
+                            <td class="packageId" hidden>{{ package.id }}</td>
                             <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
                             <td class="height">{{ package.height }}</td>
                             <td class="length">{{ package.length }}</td>
@@ -148,7 +150,7 @@
                 </table>
             </div>
 
-        </div>
+        
     {% endif %}
 </div>
 {% endblock %}
