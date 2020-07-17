@@ -33,56 +33,23 @@ class HomeCrudController extends AbstractCrudController
         return Company::class;
     }
 
-    // public function configureActions(Actions $actions): Actions
-    // {
-    //     $compapnyToValidate = Action::new('compapnyToValidate', 'fas fa-file-invoice')
-    //         ->displayIf(static function ($entity) {
-    //             return $entity->getValidated() == 0;
-    //         });
-
-    //         // in PHP 7.4 and newer you can use arrow functions
-    //         // ->displayIf(fn ($entity) => $entity->isPublished())
-
-    //     return $actions
-    //         // ...
-    //         ->add(Crud::PAGE_INDEX, $compapnyToValidate);
-    // }
-
-    // public function configureCrud(Crud $crud): Crud
-    // {
-    //     return $crud
-    //         ->setSearchFields(['']);
-
-    // }
-
-    
-
-
-    // public function configureFields(string $pageName): iterable
-    // {
-    //     return [
-
-    //         IntegerField::new('id')
-    //         ->formatValue(function ($value, $entity) {
-    //             return $entity->getValidated() === 0 ? $value : "";
-    //         })
-
-    //     ];
-    // }
-
-    // public function someMethod(AdminContext $context)
-    // {
-    //     $context = "azazazazazazzaazaazza000000";
-    // }
-
-    public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore
+    public function configureActions(Actions $actions): Actions
     {
         
-        // $responseParameters->set('_________________foo___________________', '____________test____________');
-        // $test = array($responseParameters->get("entities"));
-        // dump($test['0']);
-        return $responseParameters;
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_INDEX, Action::DETAIL, function (Action $action) {
+                return $action->setIcon('fa fa-search')->setLabel(false);
+            })
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setIcon('fa fa-edit')->setLabel(false);
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setIcon('fa fa-trash-alt')->setLabel(false);
+            }) ;
     }
+
+    
 }
 
 

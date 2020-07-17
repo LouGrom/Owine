@@ -34,5 +34,4 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/legal_mentions.html.twig');
     }
-
 }
