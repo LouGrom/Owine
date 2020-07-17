@@ -33,6 +33,19 @@ class HomeCrudController extends AbstractCrudController
         return Company::class;
     }
 
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id')->hideOnForm(),
+            TextField::new('name'),
+            TextField::new('siret'),
+            TextField::new('vat'),
+            TextField::new('picture')->hideOnIndex(),
+            IntegerField::new('validated'),
+            TextEditorField::new('presentation')->hideOnIndex(),
+        ];
+    }
+
     public function configureActions(Actions $actions): Actions
     {
         
