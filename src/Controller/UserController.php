@@ -8,6 +8,7 @@ use App\Entity\Destination;
 use App\Form\AddressType;
 use App\Form\UserType;
 use App\Repository\DestinationRepository;
+use App\Repository\PackageRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,13 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="profil", methods={"GET"})
      */
-    public function index(UserRepository $userRepository, DestinationRepository $destinationRepository):Response
+    public function index(UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
-        
+        $company = $this->getUser()->getCompany();
+        $companyId = $company->getId();
         return $this->render('user/profile.html.twig', [
             'destinations' => $destinationRepository->findAll(),
+            'packages' => $packageRepository->findAllByBottleQuantity($companyId),
             'users' => $userRepository->findAll(),
         ]);
     }

@@ -41,6 +41,22 @@ class PackageRepository extends ServiceEntityRepository
 
     }
 
+    /**
+     * @return Package[] Returns an array of Package objects
+     */
+    
+    public function findAllByBottleQuantity($companyId)
+    {
+        return $this->createQueryBuilder('package')
+            ->where('package.company = :companyId')
+            ->setParameter('companyId', $companyId)
+            ->orderBy('package.bottleQuantity', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
     // /**
     //  * @return Package[] Returns an array of Package objects
     //  */

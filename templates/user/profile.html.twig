@@ -136,7 +136,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for package in app.user.company.packages %}
+                        {% for package in packages %}
                         <tr class="package">
                             <td class="packageId" hidden>{{ package.id }}</td>
                             <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
