@@ -13,6 +13,20 @@ strong {
     font-family: 'CooperHewitt-Medium', arial;
 }
 
+.homepage a {
+    color: #6e081f;
+}
+
+.homepage a:hover {
+    color: #897A73;
+}
+
+#login-name{
+    color: #FAF6F0;
+}
+
+/*  -------------------------------- Navbar --------------------------------- */
+
 .navbar-brand {
     font-family: 'Quattrocento', serif;
     font-size: 1.3em;
@@ -44,13 +58,7 @@ strong {
     border-color: #FAF6F0;
 }
 
-.homepage a {
-    color: #6e081f;
-}
-
-.homepage a:hover {
-    color: #897A73;
-}
+/*  -------------------------------- Card --------------------------------- */
 
 .card {
     background-color: #F4EBDD;
@@ -61,9 +69,7 @@ strong {
     color: #6e081f;;
 }
 
-#login-name{
-    color: #FAF6F0;
-}
+/*  -------------------------------- Buttons --------------------------------- */
 
 .btn {
     background-color: #FAF6F0;
@@ -79,6 +85,13 @@ strong {
     background-color: #6e081f;
     color: #FAF6F0;
 }
+
+.thead {
+    background-color: #6e081f ;
+    color: #FAF6F0;
+}
+
+/*  -------------------------------- Picto --------------------------------- */
 
 .title-picto {
     color: #352025;
@@ -99,11 +112,6 @@ strong {
     color: #6e081f;
 }
 
-.thead {
-    background-color: #6e081f ;
-    color: #FAF6F0;
-}
-
 /*  -------------------------------- Shop --------------------------------- */
 
 .badge-product {
@@ -115,6 +123,8 @@ strong {
     background-color: #6e081f;
     color: #FAF6F0;
 }
+
+/*  -------------------------------- Company --------------------------------- */
 
 .show_company{
     border: 1px #352025 solid;
