@@ -75,9 +75,12 @@ class PackageController extends AbstractController
     {
         $package = $packageRepository->find($id);
         $company = $this->getUser()->getCompany();
-        $company->removeDestination($package);
+        $company->removePackage($package);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
+
+        $this->addFlash("success", "Le format de carton a bien été supprimé de vos préférences d'expédition !");
+        return new JsonResponse(Response::HTTP_OK);
     }
 }

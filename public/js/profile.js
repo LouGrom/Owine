@@ -9,6 +9,7 @@ let app = {
         var destinations = document.querySelectorAll('.destination');
         var packagesValidation = document.querySelectorAll('#bAcep');       
         var addPackageBtn = document.querySelector('.addPackage');
+        var packageDeleteBtn = document.querySelectorAll('#bElim');
 
         // assign function to onclick property of each checkbox
         for (var i = 0, len = destinations.length; i < len; i++) {
@@ -19,6 +20,10 @@ let app = {
 
         for (var i = 0, len = packagesValidation.length; i < len; i++) {
                 packagesValidation[i].addEventListener('click', app.isSaved);
+        }
+        
+        for (var i = 0, len = packageDeleteBtn.length; i < len; i++) {
+            packageDeleteBtn[i].addEventListener('click', app.isRemoved);
         }
 
         addPackageBtn.addEventListener('click', app.isAdded);
@@ -80,6 +85,18 @@ let app = {
         app.init();
         console.log("TU AS APPUYÉ SUR LE BOUTON D'ajout ! AAAAAH !!")
         app.rowEdit();
+    },
+
+    isRemoved: function(event) {
+
+        let removeButton = event.currentTarget;
+        let row = removeButton.closest('tr');
+        let packageId = row.querySelector('.packageId').innerText;
+        console.log(packageId);
+        fetch(app.apiBaseUrl + '/package/' + packageId + '/remove');
+        document.location.reload(true);
+        return;
+
     }
     
 }
