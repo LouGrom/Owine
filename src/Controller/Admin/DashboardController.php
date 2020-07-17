@@ -50,33 +50,12 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         
-        // $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
-        // return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
-        return $this->render('bundles/EasyAdminBundle/home/content.html.twig', [
-            'companies' => $this->companies->findBy(['validated'=>0])
-        ]);
+        $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
+        return $this->redirect($routeBuilder->setController(HomeCrudController::class)->generateUrl()); 
+        // return $this->render('bundles/EasyAdminBundle/home/content.html.twig', [
+        //     'companies' => $this->companies->findBy(['validated'=>0])
+        // ]);
     }
-    // /**
-    //  * @Route("/admin/show/{id}", name="show", requirements={'id'='\d+'})
-    //  */
-    // public function show($id): Response
-    // {
-    //     $company =$this->companies->findBy(['id'=>$id])
-    //     
-    //     return $this->render('bundles/EasyAdminBundle/home/show.html.twig', [
-    //         'company' => $company
-    //     ]);
-    // }
-    
-    // public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore
-    // {
-        
-    //     $responseParameters->set('_________________foo___________________', CompanyRepository::findAll());
-    //     dd($responseParameters);
-     
-    //     return $responseParameters;
-    // }
-
 
     public function configureDashboard(): Dashboard
     {
@@ -85,21 +64,6 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('O\'Wine admin');
 
     }
-
-    // public function configureFilters(Filters $filters): Filters
-    // {
-    //     return $filters
-    //     ->add(BooleanFilter::new('validated'));
-    // }
-
-    // public function configureActions(Actions $actions): Actions
-    // {
-    //     return $actions
-    //         // ...
-    //         ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            
-    //     ;
-    // }
 
     public function configureMenuItems(): iterable
     {
