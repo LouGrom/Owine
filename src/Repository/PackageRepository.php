@@ -22,16 +22,16 @@ class PackageRepository extends ServiceEntityRepository
     /**
      * @return bool Return a package if the bottleQuantity package already exist
      */
-    public function findExistingPackage($companyId, $bottleQuantity)
+    public function findExistingPackage($companyId, $packageId)
     {
         // $builder est une instance de l'objet Query Builder
         $builder = $this->createQueryBuilder('package');
 
         $builder->where("package.company = :companyId");
-        $builder->andWhere("package.bottleQuantity = :bottleQuantity");
+        $builder->andWhere("package.id = :packageId");
 
         $builder->setParameter("companyId", $companyId);
-        $builder->setParameter("bottleQuantity", $bottleQuantity);
+        $builder->setParameter("packageId", $packageId);
 
         // on recupère la requete construite
         $query = $builder->getQuery();

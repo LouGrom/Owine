@@ -21,7 +21,7 @@ let app = {
                 packagesValidation[i].addEventListener('click', app.isSaved);
         }
 
-        addPackageBtn.addEventListener('click', app.init);
+        addPackageBtn.addEventListener('click', app.isAdded);
     },
 
     isClicked: function (event) {
@@ -53,25 +53,34 @@ let app = {
         
         let saveButton = event.currentTarget;
         let row = saveButton.closest('tr');
-        console.log(row)
         let packageId = row.querySelector('.packageId').innerText;
-        console.log('packageId : ' + packageId);
         let quantity = row.querySelector('.bottleQuantity').innerText;
-        console.log('quantity : ' + quantity);
         let height = row.querySelector('.height').innerText;
-        console.log('height : ' + height);
         let length = row.querySelector('.length').innerText;
-        console.log('length : ' + length);
         let width = row.querySelector('.width').innerText;
-        console.log('width : ' + width);
         let weight = row.querySelector('.weight').innerText;
+        
+        console.log(row)
+        console.log('packageId : ' + packageId);
+        console.log('quantity : ' + quantity);
+        console.log('height : ' + height);
+        console.log('length : ' + length);
+        console.log('width : ' + width);
         console.log('weight : ' + weight);
 
-        let packageDatas = quantity+'-'+height+'-'+length+'-'+width+'-'+weight;
+        let packageDatas = packageId+'-'+quantity+'-'+height+'-'+length+'-'+width+'-'+weight;
         
-        return fetch(app.apiBaseUrl + '/package/' + packageDatas + '/add');
+        fetch(app.apiBaseUrl + '/package/' + packageDatas + '/add')
+        document.location.reload(true);
+        return
 
     },
+
+    isAdded: function(event) {
+        app.init();
+        console.log("TU AS APPUYÉ SUR LE BOUTON D'ajout ! AAAAAH !!")
+        app.rowEdit();
+    }
     
 }
 

@@ -19,25 +19,40 @@ class PackageController extends AbstractController
      */
     public function addPackage($packageDatas, PackageRepository $packageRepository)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $packageDatas = explode('-', $packageDatas);
-        $quantity = $packageDatas[0];
-        $height =  $packageDatas[1];
-        $length = $packageDatas[2];
-        $width = $packageDatas[3];
-        $weight = $packageDatas[4];        
+        $packageId = $packageDatas[0];
+        $quantity = $packageDatas[1];
+        $height =  $packageDatas[2];
+        $length = $packageDatas[3];
+        $width = $packageDatas[4];
+        $weight = $packageDatas[5];        
         
         $package = new Package();
-        $entityManager = $this->getDoctrine()->getManager();
         // On peut récupérer l'utilisateur courant avec $this->getUser()
         $company = $this->getUser()->getCompany();
 
         // On vérifie qu'un format de carton n'existe pas déjà dans le profil de l'utilisateur
-        $result = $packageRepository->findExistingPackage($company->getId(), $quantity);
+        $result = $packageRepository->findExistingPackage($company->getId(), $packageId);
         
         //Si un format de carton existe déjà, alors on récupère le premier résultat
         if (isset($result[0])) {
             $package = $result[0];
+            $allPackages = $packageRepository->findAll();
+            foreach($allPackages as $onePackage) {
+                if($quantity == $onePackage->getBottleQuantity() && $package->getId() != $onePackage->getId()) {
+                    return $this->addFlash("danger", "Le format de carton existe déjà !");
+                }
+            }
+        } else {
+            $allPackages =$packageRepository->findAll();
+            foreach($allPackages as $onePackage) {
+                if($quantity == $onePackage->getBottleQuantity()) {
+                    return $this->addFlash("danger", "Le format de carton existe déjà !");
+                }
+            }
         }
+
             $package->setBottleQuantity($quantity);
             $package->setHeight($height);
             $package->setLength($length);
