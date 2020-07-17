@@ -26,7 +26,7 @@ let app = {
             packageDeleteBtn[i].addEventListener('click', app.isRemoved);
         }
 
-        addPackageBtn.addEventListener('click', app.isAdded);
+        addPackageBtn.addEventListener('click', app.init);
     },
 
     isClicked: function (event) {
@@ -79,12 +79,6 @@ let app = {
         document.location.reload(true);
         return
 
-    },
-
-    isAdded: function(event) {
-        app.init();
-        console.log("TU AS APPUYÉ SUR LE BOUTON D'ajout ! AAAAAH !!")
-        app.rowEdit();
     },
 
     isRemoved: function(event) {

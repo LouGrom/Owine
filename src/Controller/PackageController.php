@@ -38,17 +38,17 @@ class PackageController extends AbstractController
         //Si un format de carton existe déjà, alors on récupère le premier résultat
         if (isset($result[0])) {
             $package = $result[0];
-            $allPackages = $packageRepository->findAll();
+            $allPackages = $packageRepository->findAllByBottleQuantity($company->getId());
             foreach($allPackages as $onePackage) {
                 if($quantity == $onePackage->getBottleQuantity() && $package->getId() != $onePackage->getId()) {
-                    return $this->addFlash("danger", "Le format de carton existe déjà !");
+                    return $this->addFlash("danger", "Vous avez déjà un format de carton pour cette quantité de bouteilles !");
                 }
             }
         } else {
-            $allPackages =$packageRepository->findAll();
+            $allPackages = $packageRepository->findAllByBottleQuantity($company->getId());
             foreach($allPackages as $onePackage) {
                 if($quantity == $onePackage->getBottleQuantity()) {
-                    return $this->addFlash("danger", "Le format de carton existe déjà !");
+                    return $this->addFlash("danger", "Vous avez déjà un format de carton pour cette quantité de bouteilles !");
                 }
             }
         }

@@ -205,5 +205,11 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
 
 //apply
 $("#table-list").SetEditable({
-    $addButton: $('#add')
+    $addButton: $('#add'),
+    columnsEd: null,
+    onAdd: function () {
+
+        $(".fa-edit").last().trigger("click");
+        
+    }
 });
