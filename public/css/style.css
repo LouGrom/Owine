@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    min-height: 85vh;
+    min-height: 82vh;
 }
 
 strong {
@@ -105,7 +105,6 @@ strong {
 
 .picto {
     color: #352025;
-    font-size: 10em;
 }
 
 .picto:hover{

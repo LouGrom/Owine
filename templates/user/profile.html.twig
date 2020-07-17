@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+<div class="col-9 m-auto"></div>
+
+
+    <h2 class="mt-3 mb-3 text-center">Mon profil</h2>
+        <div class="d-flex justify-content-between">
+            <h3>Mes informations personnelles</h3>
+            <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark"><i class="fas fa-pen"></i> Modifier</a>
+        </div>
+        <div class="col-9 ml-auto mr-auto mb-3">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Prénom :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.firstname }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Nom :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.lastname }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Mot de passe :</p>
+                </div>
+                <div class="col-sm">
+                    <p><i class="fas fa-key"></i></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <h3>Mon addresse</h3>
+            <a href="{{ path('user_edit',{'params': 'address'}) }}" class="btn btn-dark"> <i class="fas fa-pen"></i> Modifier</a>
+        
+        </div>
+        <div class="col-9 ml-auto mr-auto mb-3">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Adresse :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].street }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Code postal / Ville :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].zipCode }} - {{ app.user.addresses[0].city }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Pays :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ app.user.addresses[0].country }}</i></p>
+                </div>
+            </div>
+        </div>
+            
+    {% if 'ROLE_SELLER' in app.user.roles %}
+        <h3 class="mt-3 mb-3">Mes préférences d'expédition</h3>
+            
+        <div class="col-9 m-auto mb-3">
+            <h4 class="mb-3">Destinations</h4>
+
+            {# Div principale des Destinations#}
+            <div class="d-md-flex justify-content-between" id="destinations">
+                <div id="national">
+                    <p class="h5 text-center">National</p>
+                    {% for destination in destinations %}
+
+                        {% if destination.zone == 'National' %}
+                        <div class="ml-5 ml-md-0">
+                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                            <label for="{{ destination.country }}">{{ destination.country }}</label>
+                        </div>
+                        
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div id="europe">
+                    <p class="h5 text-center">Europe</p>
+                    {% for destination in destinations %}
+                        {% if destination.zone == 'Europe' %}
+                        <div class="ml-5">
+                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{destination.id}}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                            <label for="{{ destination.country }}">{{ destination.country }}</label>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div id="world">
+                    <p class="h5 text-center">Monde</p>
+                    {% for destination in destinations %}
+                        {% if destination.zone == 'World' %}
+                        <div class="ml-5">
+                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                            <label for="{{ destination.country }}">{{ destination.country }}</label>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div> 
+
+            {# -------------------------------------------- Package -------------------------------------------------#}
+                    
+            <h4 class="mt-4">Colisage :
+            <button class="btn btn-dark addPackage" id="add"><i class="fas fa-plus-circle mr-2"></i>Ajouter</button>
+            </h4>
+            </div>
+            <div class="table-content table-responsive">
+                <table class="table table-striped text-center" id="table-list">
+                    <thead class="thead">
+                        <tr>
+                            <th hidden>id</th>
+                            <th>Nombre de bouteilles</th>
+                            <th>Hauteur (en cm)</th>
+                            <th>longueur (en cm)</th>
+                            <th>Largeur (en cm)</th>
+                            <th>Poids (en kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for package in packages %}
+                        <tr class="package">
+                            <td class="packageId" hidden>{{ package.id }}</td>
+                            <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
+                            <td class="height">{{ package.height }}</td>
+                            <td class="length">{{ package.length }}</td>
+                            <td class="width">{{ package.width }}</td>
+                            <td class="weight">{{ package.weight }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        
+    {% endif %}
+</div>
+{% endblock %}
