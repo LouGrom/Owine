@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CompanyRepository;
@@ -34,13 +33,5 @@ class DefaultController extends AbstractController
     public function legal()
     {
         return $this->render('default/legal_mentions.html.twig');
-    }
-
-    /**
-     * @route("/404", name="error404")
-     */
-    public function error404()
-    {
-        return $this->render('default/error404.html.twig');
     }
 }

@@ -115,3 +115,9 @@ strong {
     background-color: #6e081f;
     color: #FAF6F0;
 }
+
+.show_company{
+    border: 1px #352025 solid;
+    padding-top : 2em;
+    padding-bottom: 1em;
+}
