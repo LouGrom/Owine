@@ -1,54 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier
-{% endblock %}
+{% block title %}Panier{% endblock %}
 
 {% block body %}
 	<h1>Votre panier</h1>
+    <div class="table-responsive">
+        {% for company in companies %}
+        <table class="table table-borderless">
+            <thead class="thead">
+                <tr>
+                    <th scope="col">{{ company.name }}</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            {% for cart in carts %}
+            {% dump(cart) %}
+            <tbody>
+                {% if cart.product.seller.company == company %}
+                <tr class="">
+                    <td>{{ cart.product.appellation.name }}</td>
+                    <td><input value="{{ cart.quantity }}" type="number"></td>
+                    <td class="float-right">{{ cart.totalAmount }} €</td>
 
-    {% for company in companies %}
-        <div class="mb-4">
-        <h3>{{ company.name }}</h3>
-        {% for cart in carts %}
-            {% if cart.product.seller.company == company %}
-            {{ cart.product.appellation.name }} - <input value="{{ cart.quantity }}" type="number"><a class="btn btn-dark"><i class="fas fa-trash"></i></a><br>
-            {% endif %}
-
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="float-right">TOTAL</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <a class="btn btn-dark float-right" href="{{ path('cart_show',{'id': app.user.id}) }}"><i class="fas fa-shopping-cart mr-2"></i>Valider</a>
+                        <a class="btn btn-dark float-right mr-2" href="#"><i class="fas fa-trash mr-2"></i>Supprimer</a>                          
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+            {% endfor %}
+        </table>
         {% endfor %}
-        </div>
-    {% endfor %}
+    </div>
+</div>
 
-	<table class="table">
-		<thead class="thead">
-			<tr>
-				<th>Client</th>
-				<th>Vendeur</th>
-				<th>Produit</th>
-				<th>Quantité</th>
-				<th>Montant total</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for cart in carts %}
-				<tr>
-					<td>{{ cart.user.firstname }}
-						{{ cart.user.lastname }}
-					</td>
-					<td>{{ cart.product.seller.firstname }}
-						{{ cart.product.seller.lastname }}</td>
-					<td>{{ cart.product.appellation.name }}</td>
-					<td>{{ cart.quantity }}</td>
-					<td>{{ cart.totalAmount }}</td>
-					<td>
-						<a class="btn btn-dark" href="{{ path('cart_show', {'id': cart.id}) }}">Détails</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+
+
 {% endblock %}
