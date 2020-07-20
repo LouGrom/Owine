@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             'National' => [
                 'France' => 'FR'
             ],
-            'European Country' =>[
+            'Europe' =>[
                 'Allemagne' => 'DE',
                 'Espagne' => 'ES',
                 'Belgique' => 'BE',
@@ -451,7 +451,7 @@ class AppFixtures extends Fixture
             $oneProduct = $productList[array_rand($productList)];
             $cart->setUser($userBuyer[array_rand($userBuyer)]);
             $cart->setProduct($oneProduct);
-            $cart->setQuantity(random_int(1,3600));
+            $cart->setQuantity(random_int(1,36));
             $cart->setTotalAmount($oneProduct->getPrice() * $cart->getQuantity());
 
             $manager->persist($cart);

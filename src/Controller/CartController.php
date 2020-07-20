@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
-use App\Form\CartType;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,35 +15,49 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CartController extends AbstractController
 {
-    /**
-     * @Route("/", name="cart_index", methods={"GET"})
-     */
-    public function index(CartRepository $cartRepository): Response
-    {
-        return $this->render('cart/index.html.twig', [
-            'carts' => $cartRepository->findAll(),
-        ]);
-    }
 
     /**
      * @Route("/{id}/customer", name="cart_buyer", methods={"GET"})
      */
     public function buyerCart(CartRepository $cartRepository, $id): Response
     {
-        return $this->render('cart/index.html.twig', [
-            'carts' => $cartRepository->findAllByBuyer($id)
+
+        $carts = $cartRepository->findAllByBuyer($id);
+        $sellerList = [];
+        foreach($carts as $cart) {
+
+            $company = $cart->getProduct()->getSeller()->getCompany();
+            if (!in_array($company, $sellerList)) {
+                $sellerList[] = $company;
+            }
+        }
+
+
+        return $this->render('cart/buyer_cart.html.twig', [
+            'carts' => $carts,
+            'companies' => $sellerList
         ]);
     }
 
     /**
-     * @Route("/{productId}/add", name="add_cart", methods={"GET"})
+     * @Route("/{productId}/add/{quantity}", name="add_cart", methods={"GET"})
      */
-    public function addCart(CartRepository $cartRepository, ProductRepository $productRepository, $productId): Response
+    public function addCart(CartRepository $cartRepository, ProductRepository $productRepository, $productId, $quantity): Response
     {
+        if($quantity <= 0) {
+            $this->addFlash('danger', "Nan mais tu peux pas acheter $quantity bouteilles, allez hop dégages de là");
+            return $this->redirectToRoute('product_show_shop', ['id' => $productId]);
+        }
+
         $cart = new Cart();
         // On peut récupérer l'utilisateur courant avec $this->getUser()
         $userId = $this->getUser()->getId();
         $product = $productRepository->find($productId);
+
+        if($quantity > $product->getStockQuantity()) {
+            $this->addFlash('danger', "Fais gaffe, t'achètes trop de bouteilles là, tu vas mal finir");
+            return $this->redirectToRoute('product_show_shop', ['id' => $productId]);
+        } 
 
         // On vérifie qu'un cart n'existe pas déjà entre l'utilisateur et le produit.
         $result = $cartRepository->findExistingCart($userId, $productId);
@@ -55,7 +68,7 @@ class CartController extends AbstractController
 
             $cart = $result[0];
             // On ajoute 1 à la quantité
-            $cart->setQuantity($cart->getQuantity() + 1);
+            $cart->setQuantity($cart->getQuantity() + $quantity);
             // Puis on met à jour le montant total
             $cart->setTotalAmount($cart->getTotalAmount() + $product->getPrice());
         } else {
@@ -71,7 +84,7 @@ class CartController extends AbstractController
                 return $this->redirectToRoute('product_list_shop');
             }
             // On initialise la quantité du nouveau cart à 1
-            $cart->setQuantity(1);
+            $cart->setQuantity($quantity);
             // Ainsi que le montant total
             $cart->setTotalAmount($product->getPrice());
         }
@@ -81,31 +94,6 @@ class CartController extends AbstractController
         $entityManager->flush();
         $this->addFlash("success","Le produit a bien été ajouté à votre panier !");
         return $this->redirectToRoute('product_show_shop', ['id' => $productId]);
-    }
-
-    /**
-     * @Route("/new", name="cart_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $cart = new Cart();
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($cart);
-            $entityManager->flush();
-
-            $this->addFlash("success","Le panier a bien été ajouté");
-
-            return $this->redirectToRoute('cart_index');
-        }
-
-        return $this->render('cart/new.html.twig', [
-            'cart' => $cart,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -119,28 +107,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="cart_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Cart $cart): Response
-    {
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash("success","Le panier a bien été modifié");
-
-            return $this->redirectToRoute('cart_index');
-        }
-
-        return $this->render('cart/edit.html.twig', [
-            'cart' => $cart,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="cart_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Cart $cart): Response
@@ -150,9 +116,9 @@ class CartController extends AbstractController
             $entityManager->remove($cart);
             $entityManager->flush();
 
-            $this->addFlash("success","Le panier a bien été supprimé");
+            $this->addFlash("success","Le produit a bien été retiré du panier");
         }
 
-        return $this->redirectToRoute('cart_index');
+        return $this->redirectToRoute('cart_buyer',['id' => $this->getUser()->getId()]);
     }
 }

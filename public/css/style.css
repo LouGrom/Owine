@@ -6,12 +6,26 @@ body {
 }
 
 .container {
-    min-height: 85vh;
+    min-height: 82vh;
 }
 
 strong {
     font-family: 'CooperHewitt-Medium', arial;
 }
+
+.homepage a {
+    color: #6e081f;
+}
+
+.homepage a:hover {
+    color: #897A73;
+}
+
+#login-name{
+    color: #FAF6F0;
+}
+
+/*  -------------------------------- Navbar --------------------------------- */
 
 .navbar-brand {
     font-family: 'Quattrocento', serif;
@@ -44,13 +58,7 @@ strong {
     border-color: #FAF6F0;
 }
 
-.homepage a {
-    color: #6e081f;
-}
-
-.homepage a:hover {
-    color: #897A73;
-}
+/*  -------------------------------- Card --------------------------------- */
 
 .card {
     background-color: #F4EBDD;
@@ -61,9 +69,7 @@ strong {
     color: #6e081f;;
 }
 
-#login-name{
-    color: #FAF6F0;
-}
+/*  -------------------------------- Buttons --------------------------------- */
 
 .btn {
     background-color: #FAF6F0;
@@ -80,6 +86,13 @@ strong {
     color: #FAF6F0;
 }
 
+.thead {
+    background-color: #6e081f ;
+    color: #FAF6F0;
+}
+
+/*  -------------------------------- Picto --------------------------------- */
+
 .title-picto {
     color: #352025;
     font-size: 1.5em;
@@ -92,16 +105,10 @@ strong {
 
 .picto {
     color: #352025;
-    font-size: 10em;
 }
 
 .picto:hover{
     color: #6e081f;
-}
-
-.thead {
-    background-color: #6e081f ;
-    color: #FAF6F0;
 }
 
 /*  -------------------------------- Shop --------------------------------- */
@@ -114,4 +121,34 @@ strong {
 .shop__add-cart-btn {
     background-color: #6e081f;
     color: #FAF6F0;
+}
+
+/*  -------------------------------- Company --------------------------------- */
+
+.show_company{
+    border: 1px #352025 solid;
+    padding-top : 2em;
+    padding-bottom: 1em;
+}
+
+/*  -------------------------------- Google Map --------------------------------- */
+#map {
+height: 400px;
+}
+
+#locationField, #controls {
+    position: relative;
+    width: 480px;
+  }
+#autocomplete {
+position: absolute;
+top: -10px;
+left: 0px;
+width: 99%;
+}
+
+
+#locationField {
+height: 20px;
+margin-bottom: 2px;
 }

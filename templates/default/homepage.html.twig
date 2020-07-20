@@ -16,15 +16,15 @@
 
 
 {% if app.user and 'ROLE_SELLER' in app.user.roles %}
-  {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}-
+  {# -------------------------------------------------------- et qu'on est un seller -------------------------------- #}
     {# alors on voit la homepage personnalisée pour le vendeur #}
     <div class="row row-cols-1 row-cols-md-3 d-flex justify-content-center">
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-1">                
                 <div class="card-body text-center">
-                    <a href="#"><i class="fas fa-user-circle picto mb-4"></i></a>
+                    <a href="{{ path('profil',{'id': app.user.company.id}) }}"><i class="fas fa-user-circle picto fa-5x mb-4"></i></a>
                     <h5>
-                    <a class="title-picto" href="#">Mon profil</a>
+                    <a class="title-picto" href="{{ path('profil',{'id': app.user.company.id}) }}">Mon profil</a>
                     </h5>
                 </div>
             </div>
@@ -32,7 +32,7 @@
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-1"> 
                 <div class="card-body text-center">
-                    <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto mb-4"></i></a>
+                    <a href="{{ path('board',{'id': app.user.company.id}) }}"><i class="fas fa-chart-pie picto fa-5x mb-4"></i></a>
                     <h5>
                     <a class="title-picto" href="{{ path('board',{'id': app.user.company.id}) }}">Mon dashboard</a>
                     </h5>
@@ -43,7 +43,7 @@
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-1">
                 <div class="card-body text-center">
-                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto mb-4"></i></i></a>
+                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto fa-5x mb-4"></i></i></a>
                     <h5>
                     <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.id)}) }}">Ma boutique</a>
                     </h5>
@@ -80,8 +80,8 @@
             </div>
             <div class="col-md-6 my-auto">
                 <div class="card-body">
-                    <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_index') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
-                    <a href="{{ path('company_index') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
+                    <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_list') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
+                    <a href="{{ path('company_list') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
                 </div>
             </div>
             <div class="col-md-6 my-auto">

@@ -1,22 +1,75 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}{{ company.name }}{% endblock %}
+{% block title %}Boutique
+{% endblock %}
 
-    {% block body %}
-        <h1 class="text-center mb-5">{{ company.name }}</h1>
+{% block body %}
+	<h1 class="text-center mb-5">{{ company.name }}</h1>
 
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <img src="{{ company.picture }}" class="mb-3 mr-3 rounded float-left mw-100">
-                    <p class="card-text">
-                    {{ company.presentation }}
-                    </p>
-                </div>
-            </div>
-        </div>
+	<a href="{{ path('company_list') }}" class="btn btn-dark ml-4 mb-3">Retour à la liste des boutiques</a>
 
-        <h2>Produits du caveau :</h2>
-        
+	<div class="card-body">
+		<div class="row show_company">
+			<div class="col-md-12">
+				<img src="{{ company.picture }}" class="mb-3 mr-3 ml-3 rounded float-right mw-100">
 
-    {% endblock %}
+				{% if company.seller[0].addresses[0] is defined and company.seller[0].productsForSale[0] is defined %}
+
+					<p><strong>
+                        {{ company.seller[0].addresses[0].zipcode }}
+						-
+						{{ company.seller[0].addresses[0].city}}
+						-
+						{{company.seller[0].productsForSale[0].area }}
+                    </p></strong>
+
+				{% endif %}
+				<p class="card-text">
+					{{ company.presentation }}
+				</p>
+
+                {% for i in 0..random(4) %}
+					<i class="fa fa-star" aria-hidden="true"></i>
+				{% endfor %}
+			</div>
+		</div>
+
+		<h2 class="mt-5 mb-4">Itinéraire</h2>
+
+		<div id="map"></div>
+
+		<h2 class="mt-5 mb-4">Produits de la boutique</h2>
+
+		<div class="row row-cols-1 row-cols-md-3">
+			{% for product in products %}
+				<div class="col mb-4">
+					<div class="card h-100">
+						<a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+						<div class="card-body">
+							<div class="d-flex justify-content-between">
+								<h5 class="card-title text-center">
+									<a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a>
+								</h5>
+								<p>{{product.price}}€</p>
+							</div>
+							{% for i in 0..random(4) %}
+								<i class="fa fa-star" aria-hidden="true"></i>
+							{% endfor %}
+							<p class="card-text">{{product.cuveeDomaine}}</p>
+							<p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
+							<a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails
+								<i class="fa fa-search"></i>
+							</a>
+                        </div>
+				    </div>
+			    </div>
+	        {% endfor %}
+		</div>
+		
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
+{% endblock %}

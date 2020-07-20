@@ -7,7 +7,6 @@ use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -42,12 +41,6 @@ class ShopController extends AbstractController
      */
     public function show(Product $product= null): Response
     {   
-        // dump($product);
-        if (!$product) {
-            throw $this->createNotFoundException();
-            // return $this->redirectToRoute('error404');
-
-        }
         return $this->render('shop/show.html.twig', [
             'product' => $product,
         ]);

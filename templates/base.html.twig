@@ -50,7 +50,7 @@
                 {% endif %}
 
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ path('company_index') }}">Caveaux</a>
+                  <a class="nav-link" href="{{ path('company_list') }}">Boutiques</a>
                 </li>
 
                  <li class="nav-item">
@@ -85,13 +85,21 @@
                 <input class="form-control mr-sm-2" value="{{ app.request.query.get('search') }}" type="search" placeholder="Rechercher" aria-label="Search">
                 <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
               </form>
+              {% if app.user %}
+              <div class="nav-item">
+              <a class="nav-link" href="{{ path('profil') }}"><i class="fas fa-user-circle fa-2x"></i></a>
+              </div>
+              {% endif %}
             </div>
           </nav>
           
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ label }}">
-                        {{ message }}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show fixed-top" role="alert">
+                      {{ message }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
                 {% endfor %}
             {% endfor %}
@@ -106,10 +114,14 @@
           {% endblock %}
         </footer>
         <!-- Optional JavaScript -->
+        
+        <!-- Google Maps scripts -->
+
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstable.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>

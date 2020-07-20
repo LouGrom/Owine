@@ -19,6 +19,44 @@ class PackageRepository extends ServiceEntityRepository
         parent::__construct($registry, Package::class);
     }
 
+    /**
+     * @return bool Return a package if the bottleQuantity package already exist
+     */
+    public function findExistingPackage($companyId, $packageId)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('package');
+
+        $builder->where("package.company = :companyId");
+        $builder->andWhere("package.id = :packageId");
+
+        $builder->setParameter("companyId", $companyId);
+        $builder->setParameter("packageId", $packageId);
+
+        // on recupère la requete construite
+        $query = $builder->getQuery();
+
+        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
+        return $query->getResult();
+
+    }
+
+    /**
+     * @return Package[] Returns an array of Package objects
+     */
+    
+    public function findAllByBottleQuantity($companyId)
+    {
+        return $this->createQueryBuilder('package')
+            ->where('package.company = :companyId')
+            ->setParameter('companyId', $companyId)
+            ->orderBy('package.bottleQuantity', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
     // /**
     //  * @return Package[] Returns an array of Package objects
     //  */
