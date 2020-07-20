@@ -31,7 +31,11 @@
     <div class="d-md-flex align-items-center">
         <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
         {% if app.user and 'ROLE_BUYER' in app.user.roles %}
-            <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
+            {% if product.status == 1 %}
+                <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
+            {% else %}
+                <img src="https://pbs.twimg.com/media/DNZwXGUXkAE8aQh?format=jpg&name=small">
+            {% endif %}
         {% endif %}
    </div>
 
@@ -52,7 +56,12 @@
                                 <span id="errorField"></span>
                         </div>
                     <div class="modal-footer">
-                        <a id="addCartBtn" class="btn btn-dark" href="{{ path('add_cart',{'productId': product.id, 'quantity': 0}) }}">Ajouter au panier</a>
+                        {% if product.status == 1 %}
+                            <a id="addCartBtn" class="btn btn-dark" href="{{ path('add_cart',{'productId': product.id, 'quantity': 0}) }}">Ajouter au panier</a>
+
+                        {% else %}
+                        <img src="https://pbs.twimg.com/media/DNZwXGUXkAE8aQh?format=jpg&name=small">
+                        {% endif %}
                     </div>
                 </form>
             </div>
