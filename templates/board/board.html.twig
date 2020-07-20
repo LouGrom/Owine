@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for product in app.user.productsForSale %}
+            {% for product in app.user.company.products %}
                 <tr>
                 <td>{{ product.appellation.name }}</td>
                 <td>{{ product.type.name }}</td>
@@ -63,7 +63,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for order in app.user.receivedOrders %}
+            {% for order in app.user.company.orders %}
                 <tr>
                 <td>{{ order.reference }}</td>
                 <td>{{ order.trackingNumber }}</td>

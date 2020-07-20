@@ -77,6 +77,17 @@ class Order
      */
     private $reference;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $company;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $shippingCosts;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -254,6 +265,30 @@ class Order
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    public function getShippingCosts(): ?float
+    {
+        return $this->shippingCosts;
+    }
+
+    public function setShippingCosts(?float $shippingCosts): self
+    {
+        $this->shippingCosts = $shippingCosts;
 
         return $this;
     }

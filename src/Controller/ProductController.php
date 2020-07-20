@@ -26,31 +26,6 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="product_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash("success","Le produit a bien été ajouté");
-
-            return $this->redirectToRoute('board');
-        }
-
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="product_show", methods={"GET"})
      */
     public function show(Product $product): Response

@@ -22,13 +22,17 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
-        $company = $this->getUser()->getCompany();
-        $companyId = $company->getId();
-        return $this->render('user/profile.html.twig', [
-            'destinations' => $destinationRepository->findAll(),
-            'packages' => $packageRepository->findAllByBottleQuantity($companyId),
-            'users' => $userRepository->findAll(),
-        ]);
+        $datas = [];
+        if (in_array('ROLE_SELLER', $this->getUser()->getRoles())) {
+            $company = $this->getUser()->getCompany();
+            $companyId = $company->getId();
+            $datas = [
+                'destinations' => $destinationRepository->findAll(),
+                'packages' => $packageRepository->findAllByBottleQuantity($companyId)
+            ];
+        }
+        
+        return $this->render('user/profile.html.twig', $datas);
     }
 
     /**

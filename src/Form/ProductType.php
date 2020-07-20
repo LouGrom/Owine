@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProductType extends AbstractType
 {
@@ -47,7 +49,7 @@ class ProductType extends AbstractType
                 ])
             ->add('cuveeDomaine', TextType::class, ["label"=>"Cuvée Domaine"])
             ->add('capacity', NumberType::class, ["label" => "Volume (en mL)"])
-            ->add('vintage', IntegerType::class, ["label" => "Date de création"])
+            ->add('vintage', IntegerType::class, ["label" => "Millésime"])
             ->add('color', EntityType::class, [
                 "label" => "Couleur du vin",
                 "class" => Color::class,
@@ -60,7 +62,22 @@ class ProductType extends AbstractType
             ])
             ->add('hsCode', TextType::class, ["label"=>"Code douanier"])
             ->add('description', TextareaType::class, ["label"=>"Description"])
-            ->add('picture')
+            ->add('picture', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4096k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/gif',
+                            'image/png',
+                            'image/bmp'
+                        ],
+                        'mimeTypesMessage' => "Le format n'est pas accepté, veuillez choisir un fichier au format .jpg, .png ou .gif"
+                    ])
+                ]
+            ])
             ->add('status', ChoiceType::class, [
                 "label" => "À vendre immédiatement ?",
                 "choices" => [
@@ -69,13 +86,6 @@ class ProductType extends AbstractType
                 ]
             ])
             ->add('stockQuantity', IntegerType::class, ["label" => "Quantité à vendre"])
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            ->add('seller', ChoiceType::class, [
-                "label" => 'Vendeur',
-                "choices" => [$this->user->getFirstname() => $this->user]
-            ])
-
 
             ->add('brand', EntityType::class, [
                 "label" => "Marque",

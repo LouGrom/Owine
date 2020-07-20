@@ -57,6 +57,7 @@ class BoardController extends AbstractController
     public function new(Request $request): Response
     {
         $product = new Product();
+        $product->setCompany($this->getUser()->getCompany());
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 

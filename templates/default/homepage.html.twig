@@ -43,9 +43,9 @@
         <div class="col-8 col-md-3 mb-4">
             <div class="card h-100 border-1">
                 <div class="card-body text-center">
-                    <a href="{{ path('seller_shop',{'id': (app.user.id)}) }}"><i class="fas fa-glass-cheers picto fa-5x mb-4"></i></i></a>
+                    <a href="{{ path('seller_shop',{'id': (app.user.company.id)}) }}"><i class="fas fa-glass-cheers picto fa-5x mb-4"></i></i></a>
                     <h5>
-                    <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.id)}) }}">Ma boutique</a>
+                    <a class="title-picto" href="{{ path('seller_shop',{'id': (app.user.company.id)}) }}">Ma boutique</a>
                     </h5>
                 </div>
             </div>

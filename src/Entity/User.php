@@ -59,11 +59,6 @@ class User implements UserInterface
     private $sentOrder;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="seller")
-     */
-    private $productsForSale;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
@@ -72,11 +67,6 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="seller")
-     */
-    private $receivedOrders;
 
     /**
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user")
@@ -101,8 +91,6 @@ class User implements UserInterface
     public function __construct()
     {
         $this->sentOrder = new ArrayCollection();
-        $this->productsForSale = new ArrayCollection();
-        $this->receivedOrders = new ArrayCollection();
         $this->carts = new ArrayCollection();
         $this->addresses = new ArrayCollection();
     }
@@ -311,77 +299,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProductsForSale(): Collection
-    {
-        return $this->productsForSale;
-    }
-
-    public function addProductsForSale(Product $productsForSale): self
-    {
-        if (!$this->productsForSale->contains($productsForSale)) {
-            $this->productsForSale[] = $productsForSale;
-            $productsForSale->setSeller($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductsForSale(Product $productsForSale): self
-    {
-        if ($this->productsForSale->contains($productsForSale)) {
-            $this->productsForSale->removeElement($productsForSale);
-            // set the owning side to null (unless already changed)
-            if ($productsForSale->getSeller() === $this) {
-                $productsForSale->setSeller(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Order[]
-     */
-    public function getReceivedOrders(): Collection
-    {
-        return $this->receivedOrders;
-    }
-
-    public function addReceivedOrder(Order $receivedOrder): self
-    {
-        if (!$this->receivedOrders->contains($receivedOrder)) {
-            $this->receivedOrders[] = $receivedOrder;
-            $receivedOrder->addSeller($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceivedOrder(Order $receivedOrder): self
-    {
-        if ($this->receivedOrders->contains($receivedOrder)) {
-            $this->receivedOrders->removeElement($receivedOrder);
-            $receivedOrder->removeSeller($this);
-        }
-
-        return $this;
-    }
-
-    // public function isVerified(): bool
-    // {
-    //     return $this->isVerified;
-    // }
-
-    // public function setIsVerified(bool $isVerified): self
-    // {
-    //     $this->isVerified = $isVerified;
-
-    //     return $this;
-    // }
 
     /**
      * @return Collection|Cart[]

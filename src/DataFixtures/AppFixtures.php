@@ -179,6 +179,7 @@ class AppFixtures extends Fixture
         $userSeller[] = $seller;
         $userBuyer[] = $buyer;
 
+        $companyList[] = $company;
         $manager->persist($buyer);
         $manager->persist($seller);
         $manager->persist($admin);
@@ -208,6 +209,7 @@ class AppFixtures extends Fixture
                 $company->setVat($faker->vat);
                 $company->setValidated(0);
                 $company->setPicture($faker->imageUrl(450,275,['wine']));
+
                 $destinations = $faker->randomELements($destinationList, random_int(2,7));
                 foreach ($destinations as $destination) {
                     $company->addDestination($destination);
@@ -240,7 +242,7 @@ class AppFixtures extends Fixture
                 }
 
                 $manager->persist($company);
-
+                $companyList[] = $company;
                 $user->setCompany($company);
             } else {
                 $address->setType(['DELIVERY_ADDRESS','BILLING_ADDRESS']);
@@ -368,7 +370,7 @@ class AppFixtures extends Fixture
             $product->setHsCode($faker->randomNumber(5));
             $product->setDescription($faker->paragraph(5));
             $product->setStatus($faker->numberBetween(0,1));
-            $product->setSeller($userSeller[array_rand($userSeller)]);
+            $product->setCompany($companyList[array_rand($companyList)]);
             $product->setBrand($brandList[array_rand($brandList)]);
             $product->addCategory($categoryList[array_rand($categoryList)]);
             $product->setStockQuantity($faker->numberBetween(0,1500));
@@ -428,8 +430,8 @@ class AppFixtures extends Fixture
                 $total_quantity += $quantity;
                 $total_amount += $oneProduct->getPrice() * $quantity;
                 
-                // On ajoute le vendeur du produit à la liste des vendeurs
-                $order->addSeller($oneProduct->getSeller());
+                // On ajoute la company qui vend du produit à la liste des vendeurs
+                $order->setCompany($oneProduct->getCompany());
                 $order_product->setProduct($oneProduct);
                 $order->setTotalQuantity($total_quantity);
                 $order->setTotalAmount($total_amount);

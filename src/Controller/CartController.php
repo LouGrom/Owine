@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Order;
 use App\Repository\CartRepository;
+use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +28,7 @@ class CartController extends AbstractController
         $sellerList = [];
         foreach($carts as $cart) {
 
-            $company = $cart->getProduct()->getSeller()->getCompany();
+            $company = $cart->getProduct()->getCompany();
             if (!in_array($company, $sellerList)) {
                 $sellerList[] = $company;
             }
@@ -86,7 +88,7 @@ class CartController extends AbstractController
             // On initialise la quantité du nouveau cart à 1
             $cart->setQuantity($quantity);
             // Ainsi que le montant total
-            $cart->setTotalAmount($product->getPrice());
+            $cart->setTotalAmount($product->getPrice() * $quantity);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -97,14 +99,49 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="cart_show", methods={"GET"})
+     * @Route("/{companyId}/details", name="cart_details", methods={"GET"})
      */
-    public function show(Cart $cart): Response
+    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, $companyId): Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
+        $company = $companyRepository->find($companyId);
+        $totalQuantity = 0;
+        $totalCartAmount = 0;
+
+        $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
+        foreach($carts as $cart) {
+
+            if($cart->getProduct()->getCompany() == $company) {
+                $cartList[] = $cart;
+                $totalQuantity += $cart->getQuantity();
+                $totalCartAmount += $cart->getTotalAmount();
+            }
+        }
+        
+        return $this->render('cart/details.html.twig', [
+            'carts' => $cartList,
+            'totalQuantity' => $totalQuantity,
+            'totalCartAmount' => $totalCartAmount
         ]);
     }
+
+
+    /**
+     * @Route("/{companyId}/validate", name="cart_validate", methods={"GET"})
+     */
+    /*
+    public function cartValidate() {
+        
+        // 1)Créer un objet Order avec les coordonnées de l'user
+        $order = new Order;
+        $order->setBuyer($this->getUser());
+        // 2)Créer des objets OrderProducts pour lier les Products achetés
+        $order->setTotalQuantity();
+        // 3)Effacer les carts de l'user qui ont été ajoutés à l'Order
+
+        return $this->render();
+
+    }
+*/
 
     /**
      * @Route("/{id}", name="cart_delete", methods={"DELETE"})
