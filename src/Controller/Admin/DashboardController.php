@@ -83,14 +83,14 @@ class DashboardController extends AbstractDashboardController
             
             
             // Point de menu concernant les Users
-            MenuItem::section('User', 'fa fa-users'),
-            MenuItem::linkToCrud('All Users', '', User::class),
+            // MenuItem::section('User', 'fa fa-users'),
+            MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
            
-            MenuItem::linkToCrud('Buyers', '' , User::class)
-            ->setController(BuyerCrudController::class),
+            // MenuItem::linkToCrud('Buyers', '' , User::class)
+            // ->setController(BuyerCrudController::class),
 
-            MenuItem::linkToCrud('Sellers', '' , User::class)
-            ->setController(SellerCrudController::class),
+            // MenuItem::linkToCrud('Sellers', '' , User::class)
+            // ->setController(SellerCrudController::class),
             
 
             // MenuItem::subMenu('Actions')->setSubItems([
@@ -145,7 +145,7 @@ class DashboardController extends AbstractDashboardController
            
             
             // Point de menu concernant les Orders with Product List
-            MenuItem::linkToCrud('Order with Product List', 'fa fa-list-alt', OrderProduct::class),
+            MenuItem::linkToCrud('Order', 'fa fa-list-alt', Order::class),
            
             
             // Point de menu concernant les Products
