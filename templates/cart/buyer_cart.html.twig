@@ -29,7 +29,10 @@
                         <td>{{ cart.product.price }}</td>
                         <td>{{ cart.totalAmount }} €</td>
                         {% set totalAmountByCompany = totalAmountByCompany + cart.totalAmount %}
-                        <td><a class="btn btn-dark float-right" href="#"><i class="fas fa-trash mr-2"></i></a></td>
+                        <td>
+                            {#<a class="btn btn-dark float-right" href="{{ path('cart_delete', {'id': cart.product.id})}}"><i class="fas fa-trash mr-2"></i></a>#}
+                            {{ include('cart/_delete_form.html.twig') }}
+                        </td>
                         
                     </tr>
                         {% endif %}
@@ -40,7 +43,7 @@
                         <td >{{ totalQuantityByCompany }}</td>
                         <td></td>
                         <td>{{ totalAmountByCompany }} €</td>
-                        <td><a class="btn btn-dark float-right" href="{{ path('cart_show',{'id': app.user.id}) }}"><i class="fas fa-shopping-cart mr-2"></i>Valider</a></td>
+                        <td class="text-center"><a class="btn btn-dark" href="{{ path('cart_show',{'id': app.user.id}) }}"><i class="fas fa-shopping-cart mr-2"></i>Valider</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -106,9 +106,9 @@ class CartController extends AbstractController
             $entityManager->remove($cart);
             $entityManager->flush();
 
-            $this->addFlash("success","Le panier a bien été supprimé");
+            $this->addFlash("success","Le produit a bien été retiré du panier");
         }
 
-        return $this->redirectToRoute('cart_buyer');
+        return $this->redirectToRoute('cart_buyer',['id' => $this->getUser()->getId()]);
     }
 }
