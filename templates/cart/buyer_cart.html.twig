@@ -4,43 +4,48 @@
 
 {% block body %}
 	<h1>Votre panier</h1>
-    <div class="table-responsive">
         {% for company in companies %}
-        <table class="table table-borderless">
-            <thead class="thead">
-                <tr>
-                    <th scope="col">{{ company.name }}</th>
-                    <th scope="col">Quantité</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            {% for cart in carts %}
-            {% dump(cart) %}
-            <tbody>
-                {% if cart.product.seller.company == company %}
-                <tr class="">
-                    <td>{{ cart.product.appellation.name }}</td>
-                    <td><input value="{{ cart.quantity }}" type="number"></td>
-                    <td class="float-right">{{ cart.totalAmount }} €</td>
+        {% set totalQuantityByCompany = 0 %}
+        {% set totalAmountByCompany = 0 %}
+        <div class="table-responsive">
+            <table class="table table-borderless text-center">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">{{ company.name }}</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Prix/u</th>
+                        <th scope="col">Prix du lot</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <div class="float-right">TOTAL</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <a class="btn btn-dark float-right" href="{{ path('cart_show',{'id': app.user.id}) }}"><i class="fas fa-shopping-cart mr-2"></i>Valider</a>
-                        <a class="btn btn-dark float-right mr-2" href="#"><i class="fas fa-trash mr-2"></i>Supprimer</a>                          
-                    </td>
-                </tr>
-                {% endif %}
-            </tbody>
-            {% endfor %}
-        </table>
+                {% for cart in carts %}
+                    {% if cart.product.seller.company == company %}
+                    <tr class="">
+                        <td>{{ cart.product.appellation.name }}</td>
+                        <td><input value="{{ cart.quantity }}" type="number" style="width: 60px;"></td>
+                        {% set totalQuantityByCompany = totalQuantityByCompany + cart.quantity %}
+                        <td>{{ cart.product.price }}</td>
+                        <td>{{ cart.totalAmount }} €</td>
+                        {% set totalAmountByCompany = totalAmountByCompany + cart.totalAmount %}
+                        <td><a class="btn btn-dark float-right" href="#"><i class="fas fa-trash mr-2"></i></a></td>
+                        
+                    </tr>
+                        {% endif %}
+                        {% endfor %}
+                    <tr><td colspan="5"><hr></td></tr>
+                    <tr>
+                        <td>TOTAL</td>
+                        <td >{{ totalQuantityByCompany }}</td>
+                        <td></td>
+                        <td>{{ totalAmountByCompany }} €</td>
+                        <td><a class="btn btn-dark float-right" href="{{ path('cart_show',{'id': app.user.id}) }}"><i class="fas fa-shopping-cart mr-2"></i>Valider</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         {% endfor %}
-    </div>
 </div>
 
 
