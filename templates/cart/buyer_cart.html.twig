@@ -4,6 +4,10 @@
 
 {% block body %}
 	<h1>Votre panier</h1>
+
+        {% if companies is empty %}
+        <p>Votre panier est vide !</p>
+        {% endif %}
         {% for company in companies %}
         {% set totalQuantityByCompany = 0 %}
         {% set totalAmountByCompany = 0 %}

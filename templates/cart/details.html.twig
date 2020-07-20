@@ -89,7 +89,7 @@
             </tbody>
         </table>
         <div class="text-right mt-2">
-            <a class="btn btn-dark " href="#"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
+            <a class="btn btn-dark " href="{{ path('cart_validate',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
         </div>
     </div>
 {% endblock %}
