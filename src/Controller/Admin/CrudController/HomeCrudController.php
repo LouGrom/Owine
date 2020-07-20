@@ -61,6 +61,13 @@ class HomeCrudController extends AbstractCrudController
                 return $action->setIcon('fa fa-trash-alt')->setLabel(false);
             }) ;
     }
+    
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPageTitle('index','Companies to validate')
+        ;
+    }
 
     
 }

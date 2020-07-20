@@ -61,7 +61,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
         
-            ->setTitle('O\'Wine admin');
+            ->setTitle('<img src="/images/logoOwineBurgundry.png" height="50px" position="relative" bottom="0px"> ' . ' O\'Wine ' .  '<em>Admin dashboard</em>');
 
     }
 
