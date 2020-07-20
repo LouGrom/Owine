@@ -41,12 +41,6 @@ class ShopController extends AbstractController
      */
     public function show(Product $product= null): Response
     {   
-        dump($product);
-        if (!$product) {
-            throw $this->createNotFoundException("blabla");
-            // return $this->redirectToRoute('error404');
-
-        }
         return $this->render('shop/show.html.twig', [
             'product' => $product,
         ]);
