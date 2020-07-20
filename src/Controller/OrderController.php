@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/board/order")
+ * @Route("/order")
  */
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/", name="order_index", methods={"GET"})
+     * @Route("/", name="order_list", methods={"GET"})
      */
     public function index(OrderRepository $orderRepository): Response
     {

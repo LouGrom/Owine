@@ -35,7 +35,9 @@ class AddressController extends AbstractController
         $user = $userRepository->find($this->getUser()->getId());
         $address->setFirstname($user->getFirstname());
         $address->setLastname($user->getLastname());
-        $address->setPhoneNumber($user->getAddresses()[0]->getPhoneNumber());
+        if (isset($user->getAddresses[0])) {
+            $address->setPhoneNumber($user->getAddresses()[0]->getPhoneNumber());
+        }
         if(in_array('ROLE_SELLER', $this->getUser()->getRoles())) {
             $address->setType(['COMPANY_ADDRESS']);
         } else {
