@@ -68,6 +68,8 @@ autocomplete.addListener('place_changed', fillInAddress);
 function fillInAddress() {
   // Get the place details from the autocomplete object.
   var place = autocomplete.getPlace();
+  var street = document.querySelector('#address')
+  street.value = place.address_components[0].short_name + ' ' + place.address_components[1].long_name
   console.log(place.address_components);
   console.log(place.address_components[0].long_name);
   console.log(place.address_components[0].short_name);
@@ -83,6 +85,8 @@ function fillInAddress() {
   console.log(place.address_components[5].short_name);
   console.log(place.address_components[6].long_name);
   console.log(place.address_components[6].short_name);
+
+  console.log(places.bounds);
 
 
   for (var component in componentForm) {

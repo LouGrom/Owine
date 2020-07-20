@@ -38,26 +38,18 @@ class UserController extends AbstractController
     /**
      * @Route("/{params}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserRepository $userRepository, $params, DestinationRepository $destinationRepository): Response
+    public function edit(Request $request, $params, DestinationRepository $destinationRepository): Response
     {
         $user = new User();
-        $address = new Address();
         $destinations = $destinationRepository->findAll();
                 
         $user = $this->getUser();
-        $address = $user->getAddresses()[0];
-
-        if ($params == 'personal') {
-            $object = $user;
-            $form = $this->createForm(UserType::class, $object);
-        } elseif ($params == 'address') {
-            $object = $address;
-            $form = $this->createForm(AddressType::class, $object);
-        }
+        $form = $this->createForm(UserType::class, $user);
         
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash("success", "L'utilisateur a bien été modifié");
