@@ -50,12 +50,6 @@ class UserCrudController extends AbstractCrudController
             }) ;
     }
 
-
-    // public function configureCrud(Crud $crud): Crud
-    // {
-     
-    // }
-
     public function configureFields(string $pageName): iterable
     {
         
@@ -64,18 +58,15 @@ class UserCrudController extends AbstractCrudController
             Field::new('email'),
             Field::new('firstname'),
             Field::new('lastname'),
+            ArrayField::new('roles'),
             Field::new('address')->hideOnIndex(),
             Field::new('zipCode')->hideOnIndex(),
             Field::new('city')->hideOnIndex(),
             Field::new('country')->hideOnIndex(),
             Field::new('phoneNumber')->hideOnIndex()
-
                        
         ];
     
-        
     }
-
-
 
 }
