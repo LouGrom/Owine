@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Order;
 use App\Repository\CartRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
@@ -27,7 +28,7 @@ class CartController extends AbstractController
         $sellerList = [];
         foreach($carts as $cart) {
 
-            $company = $cart->getProduct()->getSeller()->getCompany();
+            $company = $cart->getProduct()->getCompany();
             if (!in_array($company, $sellerList)) {
                 $sellerList[] = $company;
             }
@@ -109,7 +110,7 @@ class CartController extends AbstractController
         $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
         foreach($carts as $cart) {
 
-            if($cart->getProduct()->getSeller()->getCompany() == $company) {
+            if($cart->getProduct()->getCompany() == $company) {
                 $cartList[] = $cart;
                 $totalQuantity += $cart->getQuantity();
                 $totalCartAmount += $cart->getTotalAmount();
@@ -122,6 +123,25 @@ class CartController extends AbstractController
             'totalCartAmount' => $totalCartAmount
         ]);
     }
+
+
+    /**
+     * @Route("/{companyId}/validate", name="cart_validate", methods={"GET"})
+     */
+    /*
+    public function cartValidate() {
+        
+        // 1)Créer un objet Order avec les coordonnées de l'user
+        $order = new Order;
+        $order->setBuyer($this->getUser());
+        // 2)Créer des objets OrderProducts pour lier les Products achetés
+        $order->setTotalQuantity();
+        // 3)Effacer les carts de l'user qui ont été ajoutés à l'Order
+
+        return $this->render();
+
+    }
+*/
 
     /**
      * @Route("/{id}", name="cart_delete", methods={"DELETE"})

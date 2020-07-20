@@ -82,12 +82,6 @@ class Product
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="productsForSale")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $seller;
-
-    /**
      * @ORM\OneToMany(targetEntity=ProductCategory::class, mappedBy="product")
      */
     private $category;
@@ -139,6 +133,12 @@ class Product
      * @ORM\ManyToOne(targetEntity=Appellation::class, inversedBy="products")
      */
     private $appellation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $company;
 
     public function __construct()
     {
@@ -267,18 +267,6 @@ class Product
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getSeller(): ?User
-    {
-        return $this->seller;
-    }
-
-    public function setSeller(?User $seller): self
-    {
-        $this->seller = $seller;
 
         return $this;
     }
@@ -437,6 +425,18 @@ class Product
     public function setAppellation(?Appellation $appellation): self
     {
         $this->appellation = $appellation;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }

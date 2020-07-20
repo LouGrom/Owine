@@ -32,7 +32,7 @@ class ShopController extends AbstractController
     {
         
         return $this->render('shop/list.html.twig', [
-            'products' => $productRepository->findAllBySeller($id)
+            'products' => $productRepository->findAllByCompany($id)
         ]);
     }
 

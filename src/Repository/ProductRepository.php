@@ -22,14 +22,14 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
-    public function findAllBySeller($id)
+    public function findAllByCompany($id)
     {
         // $builder est une instance de l'objet Query Builder
         $builder = $this->createQueryBuilder('product');
 
-        $builder->where("product.seller = :sellerId");
+        $builder->where("product.company = :companyId");
 
-        $builder->setParameter("sellerId", $id);
+        $builder->setParameter("companyId", $id);
 
         // on recupère la requete construite
         $query = $builder->getQuery();

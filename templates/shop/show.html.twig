@@ -40,7 +40,7 @@
         {% endif %}
    </div>
 
-   <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.seller.company.id}) }}">{{ product.seller.company.name }}</a></h2>
+   <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.company.id}) }}">{{ product.company.name }}</a></h2>
 
 		<div class="row row-cols-1 row-cols-md-12">
 
@@ -51,8 +51,8 @@
                   <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    {% for otherProduct in product.seller.productsForSale %}
-                        <div class="carousel-item {% if otherProduct == product.seller.productsForSale[0] %}active{% endif %}">
+                    {% for otherProduct in product.company.products %}
+                        <div class="carousel-item {% if otherProduct == product.company.products[0] %}active{% endif %}">
                             <div class="card mb-3" style="">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">

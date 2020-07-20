@@ -21,7 +21,7 @@
                 <tbody>
 
                 {% for cart in carts %}
-                    {% if cart.product.seller.company == company %}
+                    {% if cart.product.company == company %}
                     <tr class="">
                         <td>{{ cart.product.appellation.name }}</td>
                         <td><input value="{{ cart.quantity }}" type="number" style="width: 60px;"></td>

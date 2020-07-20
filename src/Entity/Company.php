@@ -69,11 +69,23 @@ class Company
      */
     private $packages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="company", orphanRemoval=true)
+     */
+    private $products;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="company", orphanRemoval=true)
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->seller = new ArrayCollection();
         $this->destinations = new ArrayCollection();
         $this->packages = new ArrayCollection();
+        $this->products = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,6 +261,68 @@ class Company
             // set the owning side to null (unless already changed)
             if ($package->getCompany() === $this) {
                 $package->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getCompany() === $this) {
+                $product->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
+            // set the owning side to null (unless already changed)
+            if ($order->getCompany() === $this) {
+                $order->setCompany(null);
             }
         }
 
