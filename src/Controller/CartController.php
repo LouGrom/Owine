@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cart;
 use App\Repository\CartRepository;
+use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,7 +87,7 @@ class CartController extends AbstractController
             // On initialise la quantité du nouveau cart à 1
             $cart->setQuantity($quantity);
             // Ainsi que le montant total
-            $cart->setTotalAmount($product->getPrice());
+            $cart->setTotalAmount($product->getPrice() * $quantity);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -97,12 +98,28 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="cart_show", methods={"GET"})
+     * @Route("/{companyId}/details", name="cart_details", methods={"GET"})
      */
-    public function show(Cart $cart): Response
+    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, $companyId): Response
     {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
+        $company = $companyRepository->find($companyId);
+        $totalQuantity = 0;
+        $totalCartAmount = 0;
+
+        $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
+        foreach($carts as $cart) {
+
+            if($cart->getProduct()->getSeller()->getCompany() == $company) {
+                $cartList[] = $cart;
+                $totalQuantity += $cart->getQuantity();
+                $totalCartAmount += $cart->getTotalAmount();
+            }
+        }
+        
+        return $this->render('cart/details.html.twig', [
+            'carts' => $cartList,
+            'totalQuantity' => $totalQuantity,
+            'totalCartAmount' => $totalCartAmount
         ]);
     }
 

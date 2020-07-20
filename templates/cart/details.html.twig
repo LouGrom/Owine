@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h2>Votre commande</h2>
+
+    <a href="{{ path('cart_buyer',{'id': (app.user.id)}) }}" class="btn btn-dark mb-4">Retour au panier</a>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Addresse de facturation</th>
+                <td>
+                    
+                    {{ app.user.addresses[0].street }}<br>
+                    {{ app.user.addresses[0].zipCode }} {{ app.user.addresses[0].city }}, 
+                    {{ app.user.addresses[0].country }}
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <th>Addresse de livraison</th>
+                <td>
+                    {{ app.user.addresses[0].street }}<br/>
+                    {{ app.user.addresses[0].zipCode }} {{ app.user.addresses[0].city }}, 
+                    {{ app.user.addresses[0].country }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Détails de la commande</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead">
+                <tr>
+                    <th scope="col">Appellation</th>
+                    <th scope="col">Couleur</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Millésime</th>
+                    <th scope="col">Prix unitaire</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col" class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for cart in carts %}
+                <tr>
+                    <td scope="row">{{ cart.product.appellation.name }}</td>
+                    <td>{{ cart.product.color.name }}</td>
+                    <td>{{ cart.product.type.name }}</td>
+                    <td>{{ cart.product.capacity }}</td>
+                    <td>{{ cart.product.vintage }}</td>
+                    <td>{{ cart.product.price }} €</td>
+                    <td>{{ cart.quantity }}</td>
+                    <td class="text-right">{{ cart.totalAmount }} €</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <th scope="row"></th>
+                    <td colspan="4"></td>
+                    <td style="font-weight:bold">Sous-total</td>
+                    <td>{{ totalQuantity }}</td>
+                    <td class="text-right">{{ totalCartAmount }} €</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td colspan="4"></td>
+                    <td style="font-weight:bold">Frais de port</td>
+                    <td></td>
+                    {# !TODO à dynamiser plus tard  #}
+                    <td class="text-right">30 €</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td colspan="4"></td>
+                    <td style="font-weight:bold">Total</td>
+                    <td></td>
+                    {# !TODO à dynamiser plus tard  #}
+                    <td class="text-right">{{ totalCartAmount + 30 }} €</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="text-right mt-2">
+            <a class="btn btn-dark" href="#"><i class="far fa-credit-card"></i> RENDS L'ARGENT Fais-pas ta pince !</a>
+        </div>
+    </div>
+{% endblock %}
