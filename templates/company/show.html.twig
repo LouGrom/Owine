@@ -73,3 +73,8 @@
 		
     </div>
 {% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
+{% endblock %}
