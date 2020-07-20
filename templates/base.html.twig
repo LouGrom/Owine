@@ -38,16 +38,6 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="{{ path('homepage') }}">Accueil <span class="sr-only">(current)</span></a>
                 </li>
-                {# Si on est connecté #}
-                {% if app.user %}
-                  {# et qu'on est un seller #}
-                  {% if 'ROLE_SELLER' in app.user.roles %}
-                    {# alors on voit le lien vers le tableau de bord  #}
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ path('board') }}">Tableau de bord</a>
-                    </li>
-                  {% endif %}
-                {% endif %}
 
                 <li class="nav-item">
                   <a class="nav-link" href="{{ path('company_list') }}">Boutiques</a>
@@ -67,6 +57,27 @@
                 </li>
                 {% endif %}
               {% endif %}
+              {# Si on est connecté #}
+                {% if app.user %}
+                  {# et qu'on est un seller #}
+                  {% if 'ROLE_SELLER' in app.user.roles %}
+                    {# alors on voit le lien vers le tableau de bord  #}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('board') }}">Tableau de bord</a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+
+                {# Si on est connecté #}
+                {% if app.user %}
+                  {# et qu'on est un seller #}
+                  {% if 'ROLE_ADMIN' in app.user.roles %}
+                    {# alors on voit le lien vers le tableau de bord  #}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('admin') }}">Tableau d'administration</a>
+                    </li>
+                  {% endif %}
+                {% endif %}
               </ul>
 
               {% if app.user %}
