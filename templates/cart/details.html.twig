@@ -31,7 +31,7 @@
         </tbody>
     </table>
     {% else %}
-    <p>Aucune adresse n'a été trouvée, vous pouvez en renseigner une <a href="#">ICI</a></p>
+    <p>Aucune adresse n'a été trouvée, vous pouvez en renseigner une <a href="{{ path('address_new') }}">ICI</a></p>
     {% endif %}
     <h2>Détails de la commande</h2>
 
@@ -89,7 +89,11 @@
             </tbody>
         </table>
         <div class="text-right mt-2">
+        {% if app.user.addresses[0] is defined %}
             <a class="btn btn-dark " href="{{ path('cart_validate',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
+        {% else %}
+        <p>Vous devez renseigner une adresse avant de pouvoir valider votre commande</p>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

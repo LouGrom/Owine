@@ -36,7 +36,7 @@ class CompanyController extends AbstractController
         $sellerId = $seller[0]->getId();
         
         return $this->render('company/show.html.twig', [
-            'products' => $productRepository->findAllByCompany($sellerId),
+            'products' => $productRepository->findAllByCompany($id),
             'company' => $company
         ]);
     }

@@ -151,6 +151,16 @@
                             <td class="weight">{{ package.weight }}</td>
                         </tr>
                         {% endfor %}
+                        {% if packages is empty %}
+                        <tr>
+                            <td class="packageId" hidden></td>
+                            <td class="bottleQuantity"></td>
+                            <td class="height"></td>
+                            <td class="length"></td>
+                            <td class="width"></td>
+                            <td class="weight"></td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
