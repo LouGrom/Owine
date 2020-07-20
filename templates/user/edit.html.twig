@@ -8,6 +8,49 @@
     <h3>Vos informations personnelles</h3>
         {{ form_start(form) }}
         <div class="col-9 ml-auto mr-auto mb-3">
+            <div id="locationField">
+                <input id="autocomplete"
+                       placeholder="Renseignez votre adresse"
+                       onFocus="geolocate()"
+                       type="text"/>
+                </input>
+            </div>
+          
+              <!-- Note: The address components in this sample are typical. You might need to adjust them for
+                         the locations relevant to your app. For more information, see
+                   https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+              -->
+
+              
+          
+              <table id="address">
+                <tr>
+                  <td>{{ form_row(form.city, {'attr': {'id': 'locality'}}) }}</td>
+                  <td class="label">Addresse</td>
+                  <td class="slimField"><input class="field" id="street_number" disabled="true"/></td>
+                  <td class="wideField" colspan="2"><input class="field" id="route" disabled="true"/></td>
+                </tr>
+                <tr>
+                  <td class="label">Ville</td>
+                  <td class="wideField" colspan="3"><input class="field" id="locality" disabled="true"/></td>
+                </tr>
+                <tr>
+                  <td class="label">Province</td>
+                  <td class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"/></td>
+                  <td class="label">Code Postal</td>
+                  <td class="wideField"><input class="field" id="postal_code" disabled="true"/></td>
+                
+                </tr>
+                <tr>
+                  <td class="label">Pays</td>
+                  <td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
+                </tr>
+              </table>
+
+              <div id="map"></div>
+
+              
+
             {{ form_widget(form) }}
         <button type="submit" class="btn btn-dark">Valider</button>
         </div>
