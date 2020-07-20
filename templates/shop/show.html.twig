@@ -14,6 +14,7 @@
                 <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
             </div>
             <div>
+                
                 <p class="h4">{{ product.brand.name }}<br>
                 {{ product.vintage }}</p>
                 <p>{{ product.area }} <strong>-</strong> Vin {{ product.color.name }}</p>
@@ -38,6 +39,61 @@
             {% endif %}
         {% endif %}
    </div>
+
+   <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.seller.company.id}) }}">{{ product.seller.company.name }}</a></h2>
+
+		<div class="row row-cols-1 row-cols-md-12">
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    {% for otherProduct in product.seller.productsForSale %}
+                        <div class="carousel-item {% if otherProduct == product.seller.productsForSale[0] %}active{% endif %}">
+                            <div class="card mb-3" style="">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <div class="imageContainer">
+                                            {% if otherProduct.status == 0 %}
+                                                <div class="notToSell">
+                                                    <p>Ce produit n'est pas disponible à la vente</p>
+                                                </div>
+                                            {% endif %}
+                                            <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}"><img src="{{ otherProduct.picture }}" class="card-img-top" alt="..."></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="card-title text-center"><a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}">{{otherProduct.appellation.name }}</a></h5>
+                                                <p>{{otherProduct.price}}€</p>
+                                            </div>
+                                            {% for i in 0..random(4) %}
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            {% endfor %}
+                                            <p class="card-text">{{otherProduct.cuveeDomaine}}</p>
+                                            <p>{{otherProduct.description|length > 100 ? otherProduct.description|slice(0, 70) ~ '(...)' : otherProduct.description}}</p>
+                                            <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+            </div>
+		</div>
 
 
    <!-- Modal -->
