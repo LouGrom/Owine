@@ -2,12 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Cart;
 use App\Entity\Type;
 use App\Entity\User;
 use App\Entity\Color;
 use App\Entity\Order;
+use App\Entity\Address;
+use App\Entity\Carrier;
 use App\Entity\Company;
+use App\Entity\Package;
 use App\Entity\Product;
+use App\Entity\Appellation;
+use App\Entity\Destination;
 use App\Entity\OrderProduct;
 use App\Entity\ProductBrand;
 use App\Entity\ProductCategory;
@@ -73,7 +79,7 @@ class DashboardController extends AbstractDashboardController
         
         return [
             // Point de menu pour revenir sur la page d'accueil du dashboard
-            MenuItem::linktoDashboard('Home','fa fa-home'),
+            MenuItem::linktoDashboard('Home','fa fa-landmark'),
             
             
             // Point de menu concernant les Users
@@ -101,53 +107,59 @@ class DashboardController extends AbstractDashboardController
              
             // Point de menu invisible sur le front mais servant a créer un espace
             MenuItem::section('', ''),
+           
+             // Point de menu concernant les Products
+            MenuItem::linkToCrud('Address', 'fa fa-house-user', Address::class),
+
+            // Point de menu concernant les Products
+            MenuItem::linkToCrud('Appellation', 'fas fa-bullhorn', Appellation::class),
+
+
+            // Point de menu concernant les Product brands
+            MenuItem::linkToCrud('Brand', 'fa fa-copyright', ProductBrand::class),
+
+            // Point de menu concernant les Product brands
+            MenuItem::linkToCrud('Carrier', 'fa fa-truck', Carrier::class),
+            
+
+            // Point de menu concernant les Product brands
+            MenuItem::linkToCrud('Cart', 'fa fa-shopping-cart', Cart::class),
+
+
+            // Point de menu concernant les Product Categories
+            MenuItem::linkToCrud('Category', 'fa fa-tags', ProductCategory::class),
+                
+           
+            // Point de menu concernant les Product Colors
+            MenuItem::linkToCrud('Color', 'fa fa-tint', Color::class),
+           
 
             // Point de menu concernant les Companies
             
             MenuItem::linkToCrud('Company', 'fa fa-building', Company::class)
-            ->setController(CompanyCrudController::class),
-            
-            
-            // Point de menu concernant les Orders 
-            MenuItem::linkToCrud('Order', 'fa fa-handshake-o', Order::class),
-           
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
+            ->setController(CompanyCrudController::class),        
 
+
+            // Point de menu concernant les Orders 
+            MenuItem::linkToCrud('Destination', 'fa fa-map-marked-alt', Destination::class),
+           
+            
             // Point de menu concernant les Orders with Product List
             MenuItem::linkToCrud('Order with Product List', 'fa fa-list-alt', OrderProduct::class),
            
             
             // Point de menu concernant les Products
-            MenuItem::linkToCrud('Product', 'fa fa-glass', Product::class),
+            MenuItem::linkToCrud('Package', 'fa fa-box-open', Package::class),
 
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
-            
-            // Point de menu concernant les Product brands
-            MenuItem::linkToCrud('Brand', 'fa fa-circle', ProductBrand::class),
-           
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
-           
-            // Point de menu concernant les Product Categories
-            MenuItem::linkToCrud('Category', 'fa fa-tags', ProductCategory::class),
-           
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
+
+            // Point de menu concernant les Products
+            MenuItem::linkToCrud('Product', 'fa fa-glass', Product::class),
 
             // Point de menu concernant les Product Types
             MenuItem::linkToCrud('Type', 'fa fa-th-large', Type::class),
            
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
-           
-            // Point de menu concernant les Product Colors
-            MenuItem::linkToCrud('Color', 'fa fa-tint', Color::class),
-           
-            // MenuItem::subMenu('Actions')->setSubItems([            
-
-                       
+                
+            MenuItem::section('', ''),
             // point de menu pour la deconnexion
            
             MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
