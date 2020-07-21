@@ -19,7 +19,10 @@ class CompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, Company::class);
     }
     
-    public function findByCompanyName($search)
+    /**
+     * @return Company[] Returns an array of Company objects
+     */
+    public function searchCompany($search)
     {
         // $builder est une instance de l'objet Query Builder
         $builder = $this->createQueryBuilder('company');

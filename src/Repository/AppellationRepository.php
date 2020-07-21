@@ -19,6 +19,24 @@ class AppellationRepository extends ServiceEntityRepository
         parent::__construct($registry, Appellation::class);
     }
 
+    /**
+     * @return Appellation[] Return an array of Appellation objects
+     */
+    public function searchAppellation($search) {
+
+        $builder = $this->createQueryBuilder('appellation');
+        $builder->orderBy('appellation.name');
+
+        if(!empty($search)){
+            $builder->where('appellation.name LIKE :search');
+            $builder->setParameter('search', "%$search%");
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Appellation[] Returns an array of Appellation objects
     //  */
