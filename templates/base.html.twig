@@ -55,6 +55,9 @@
                  <li class="nav-item">
                   <a class="nav-link" href="{{ path('cart_buyer',{'id': (app.user.id)}) }}">Panier</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('order_list',{'id': (app.user.id)}) }}">Commandes</a>
+                </li>
                 {% endif %}
               {% endif %}
               {# Si on est connecté #}

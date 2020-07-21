@@ -6,7 +6,7 @@
     <h2>Votre commande</h2>
 
     <a href="{{ path('cart_buyer',{'id': (app.user.id)}) }}" class="btn btn-dark mb-4"><i class="fas fa-shopping-cart mr-2"></i>Retour au panier</a>
-
+    {% if app.user.addresses[0] is defined %}
     <table class="table">
         <tbody>
             <tr>
@@ -30,7 +30,9 @@
             </tr>
         </tbody>
     </table>
-
+    {% else %}
+    <p>Aucune adresse n'a été trouvée, vous pouvez en renseigner une <a href="{{ path('address_new') }}">ICI</a></p>
+    {% endif %}
     <h2>Détails de la commande</h2>
 
     <div class="table-responsive">
@@ -87,7 +89,11 @@
             </tbody>
         </table>
         <div class="text-right mt-2">
-            <a class="btn btn-dark " href="#"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
+        {% if app.user.addresses[0] is defined %}
+            <a class="btn btn-dark " href="{{ path('cart_validate',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
+        {% else %}
+        <p>Vous devez renseigner une adresse avant de pouvoir valider votre commande</p>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

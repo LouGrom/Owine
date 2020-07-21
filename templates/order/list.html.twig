@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des commandes{% endblock %}
+
+{% block body %}
+<h2 class="mb-3">Vos commandes</h2>
+{% if app.user.sentOrder is empty %}
+<p>Vous n'avez passé aucune commande (pour l'instant HEHEHE)
+{% else %}
+
+    {% for order in app.user.sentOrder %}
+    <div class="mb-4">
+        <div class="table-responsive">
+            <table class="table table-borderless text-center">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">Boutique</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Transporteur</th>
+                        <th scope="col">Frais de livraison</th>
+                        <th scope="col">Numéro de suivi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ order.company.name }}</td>
+                        <td>{{ order.totalQuantity }}</td>
+                        <td>{{ order.totalAmount }} €</td>
+                        <td>{{ order.carrier.name }}</td>
+                        <td>{{ order.shippingCosts }} €</td>
+                        <td>{{ order.trackingNumber }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
