@@ -2,36 +2,20 @@
 
 namespace App\Controller\Admin\CrudController;
 
-use App\Entity\User;
+use App\Entity\ProductCategory;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-
-
-
-class UserCrudController extends AbstractCrudController
+class CategoryCrudController extends AbstractCrudController
 {
-    
-
-
     public static function getEntityFqcn(): string
     {
-        return User::class;
-
-    }
-
-    
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-        ->add('roles')
-    ;
+        return ProductCategory::class;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -50,19 +34,21 @@ class UserCrudController extends AbstractCrudController
             }) ;
     }
 
-    public function configureFields(string $pageName): iterable
+    public function configureCrud(Crud $crud): Crud
     {
-        
-        return [
-            Field::new('id')->hideOnForm(),
-            Field::new('email'),
-            Field::new('firstname'),
-            Field::new('lastname'),
-            ArrayField::new('roles'),
-            
-                       
-        ];
-    
+        return $crud
+            ->setPageTitle('index','Category')
+        ;
     }
 
+    /*
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id'),
+            TextField::new('title'),
+            TextEditorField::new('description'),
+        ];
+    }
+    */
 }

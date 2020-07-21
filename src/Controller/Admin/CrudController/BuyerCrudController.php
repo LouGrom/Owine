@@ -28,13 +28,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class BuyerCrudController extends AbstractCrudController
 {
-    private $users;
+    // private $users;
 
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_BUYER']);
+    // public function __construct(UserRepository $userRepository)
+    // {
+    //     $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_BUYER']);
         
-    }
+    // }
 
     public static function getEntityFqcn(): string
     {
@@ -81,14 +81,14 @@ class BuyerCrudController extends AbstractCrudController
     
     }
 
-    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
-    {
-        $test = '["ROLE_USER", "ROLE_BUYER"]';
-        // dd($test);
-        $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters)->where('entity.roles = "$test"');
-        dump($response, 'entity.roles');
-        return $response;
+    // public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    // {
+    //     $test = '["ROLE_USER", "ROLE_BUYER"]';
+    //     //dd($response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters),  $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters)->where('entity.roles'->LIKE('%BUYER%')));
+    //     $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters)->andWhere('entity.roles = ROLE_USER, ROLE_BUYER');
+    //     dump($response, 'entity.roles');
+    //     return $response;
  
-    }
+    // }
 
 }
