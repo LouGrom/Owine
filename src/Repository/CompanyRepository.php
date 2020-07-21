@@ -19,7 +19,22 @@ class CompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, Company::class);
     }
     
-    // /**
+    public function findByCompanyName($search)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('company');
+        $builder->orderBy('company.name');
+
+        if (!empty($search)) {
+            $builder->where('company.name LIKE :search');
+            $builder->setParameter('search', "%$search%");
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     //  * @return Company[] Returns an array of Company objects
     //  */
     /*
