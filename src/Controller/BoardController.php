@@ -39,7 +39,7 @@ class BoardController extends AbstractController
         ]);
     }
 
-      /**
+    /**
      * @Route("/order/{id}/view", name="order_view", requirements={"id" = "\d+"})
      */
     public function viewOrder($id)

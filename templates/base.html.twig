@@ -43,7 +43,7 @@
                   <a class="nav-link" href="{{ path('company_list') }}">Boutiques</a>
                 </li>
 
-                 <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="{{ path('product_list_shop') }}">Produits</a>
                 </li>
                 
@@ -52,7 +52,7 @@
                   {# et qu'on est un seller #}
                   {% if 'ROLE_BUYER' in app.user.roles %}
                     {# alors on voit le lien vers le tableau de bord  #}
-                 <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="{{ path('cart_buyer',{'id': (app.user.id)}) }}">Panier</a>
                 </li>
                 <li class="nav-item">
@@ -94,11 +94,14 @@
                 <div class="mr-3">
                   <a href="{{ path('app_login') }}" class="btn btn-dark">Connexion</a>
                 </div>
-               {% endif %}
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" value="{{ app.request.query.get('search') }}" type="search" placeholder="Rechercher" aria-label="Search">
-                <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
+              {% endif %}
+
+              <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('search') }}">
+                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control" name="search">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
               </form>
+
+
               {% if app.user %}
               <div class="nav-item">
               <a class="nav-link" href="{{ path('profil') }}"><i class="fas fa-user-circle fa-2x"></i></a>
@@ -118,9 +121,9 @@
                 {% endfor %}
             {% endfor %}
             
-         <div class="container mt-5 mb-3">
+          <div class="container mt-5 mb-3">
             {% block body %}{% endblock %}
-         </div>
+          </div>
             
         <footer id="footer" class="footer">
           {% block footer %}
