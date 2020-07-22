@@ -86,9 +86,6 @@ function fillInAddress() {
   console.log(place.address_components[6].long_name);
   console.log(place.address_components[6].short_name);
 
-  console.log(places.bounds);
-
-
   for (var component in componentForm) {
     document.getElementById(component).value = '';
     document.getElementById(component).disabled = false;
