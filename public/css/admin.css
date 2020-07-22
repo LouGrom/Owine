@@ -1,24 +1,118 @@
-body
-{
-    background-color:#FAF6F0
+body {
+    background-color: #FAF6F0
 }
 
-a
-{
-    color:rgb(66, 64, 64);
+a {
+    color: rgb(66, 64, 64);
 }
 
-a:hover
-{
-    color:black;
+a:hover {
+    color: black;
 }
 
-.list-group-item-danger.list-group-item-action.active
-{
-    background-color:#6b1f1f;
+.list-group-item-danger.list-group-item-action.active {
+    background-color: #6b1f1f;
 }
 
-.modal-content
-{
-    background-color:#F4EBDD;
+.modal-content {
+    background-color: #F4EBDD;
+}
+
+.pr-0 {
+    padding-right: 10px!important;
+}
+
+.main-sidebar {
+    background: #FAF6F0;
+}
+
+.content-header {
+    background: #FAF6F0;
+}
+
+.content-header:after, .content-header:before {
+    background: #FAF6F0;
+}
+
+.page-actions>a {
+    background-color: white;
+    color: #352025;
+}
+
+.page-actions>a:hover {
+    background-color: #6E081F;
+    color: white;
+}
+
+.content-panel {
+    background: #F4EBDD;
+}
+
+.content-panel-body {
+    background: #F4EBDD;
+}
+
+.content-panel-body.with-background {
+    background: #FAF6F0;
+}
+
+.list-pagination {
+    align-items: center;
+    background: #6E081F;
+}
+
+.list-pagination-counter {
+    color: white;
+}
+
+.sidebar-menu li:not(.submenu-active).active .menu-icon, .sidebar-menu li:not(.submenu-active).active a {
+    color: #6E081F;
+}
+
+table.datagrid {
+    background: var(--white)#F4EBDD;
+}
+
+.datagrid thead {
+    background: #6E081F;
+}
+
+.datagrid thead a, .datagrid thead span {
+    color: white;
+}
+
+.datagrid tbody tr:hover td, .datagrid tbody tr:hover th {
+    background: #897A73;
+    color: white;
+}
+
+.datagrid td.actions {
+    color: #352025;
+}
+
+#modal-filters .modal-header {
+    background: #F4EBDD;
+}
+
+dl.datalist .data-row.with-background {
+    background: #F4EBDD;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled):focus {
+    background-color: #6E081F;
+}
+
+.select2-container--bootstrap .select2-selection {
+    border: 0;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 0 1px rgba(43, 45, 80, .16), 0 0 0 1px rgba(6, 122, 184, 0), 0 0 0 2px rgba(6, 122, 184, 0), 0 1px 1px rgba(0, 0, 0, .08);
+    color: var(--text-color);
+    max-width: 350px;
+    transition: box-shadow .08s ease-in, color .08s ease-in;
+}
+
+.action-delete {
+    border: 0px solid #e3e7ed;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px rgba(43,45,80,.1),0 2px 5px 0 rgba(43,45,80,.08), 0 1px 1.5px 0 rgba(0,0,0,.07), 0 1px 2px 0 rgba(0,0,0,.08);
 }
