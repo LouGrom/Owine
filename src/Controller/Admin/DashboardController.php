@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\CrudController\CompanyCrudController;
+use App\Controller\Admin\CrudController\HomeCrudController;
 use App\Entity\Cart;
 use App\Entity\Type;
 use App\Entity\User;
@@ -14,29 +16,16 @@ use App\Entity\Package;
 use App\Entity\Product;
 use App\Entity\Appellation;
 use App\Entity\Destination;
-use App\Entity\OrderProduct;
 use App\Entity\ProductBrand;
 use App\Entity\ProductCategory;
-use App\Repository\UserRepository;
 use App\Repository\CompanyRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
-use App\Controller\Admin\CrudController\HomeCrudController;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use App\Controller\Admin\CrudController\BuyerCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
-use App\Controller\Admin\CrudController\SellerCrudController;
-use App\Controller\Admin\CrudController\CompanyCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-
+use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 
@@ -71,91 +60,62 @@ class DashboardController extends AbstractDashboardController
 
     }
 
+    public function configureAssets(): Assets
+    {
+        return Assets::new()->addCssFile('css/admin.css');
+    }
+
     public function configureMenuItems(): iterable
     {
-        
-       
-        
-        
         return [
             // Point de menu pour revenir sur la page d'accueil du dashboard
             MenuItem::linktoDashboard('Home','fa fa-landmark'),
             
-            
-            // Point de menu concernant les Users
-            // MenuItem::section('User', 'fa fa-users'),
+            // Point de menu concernant les Utilisateurs
             MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
-           
-            // MenuItem::linkToCrud('Buyers', '' , User::class)
-            // ->setController(BuyerCrudController::class),
 
-            // MenuItem::linkToCrud('Sellers', '' , User::class)
-            // ->setController(SellerCrudController::class),
-            
-
-            // MenuItem::subMenu('Actions')->setSubItems([
-            
-            // MenuItem::linkToCrud('Detail User', 'fa fa-search-plus' , User::class)
-            // ->setAction('detail'),
-            // MenuItem::linkToCrud('Edit User', 'fa fa-pencil-square-o' , User::class)
-            // ->setAction('edit'),
-            // MenuItem::linkToCrud('Delete User', 'fa fa-trash' , User::class)
-            // ->setAction('delete'),
-            // MenuItem::linkToCrud('Add User', 'fa fa-plus-circle' , User::class)
-            // ->setAction('new'),
-            // ]), 
              
-            // Point de menu invisible sur le front mais servant a créer un espace
+            // Section invisible sur le front mais servant a créer un espace
             MenuItem::section('', ''),
            
-             // Point de menu concernant les Products
+             // Point de menu concernant les Adresses 
             MenuItem::linkToCrud('Address', 'fa fa-house-user', Address::class),
 
-            // Point de menu concernant les Products
+            // Point de menu concernant les Appellations de produit
             MenuItem::linkToCrud('Appellation', 'fas fa-bullhorn', Appellation::class),
 
-
-            // Point de menu concernant les Product brands
+            // Point de menu concernant les Marques de produit
             MenuItem::linkToCrud('Brand', 'fa fa-copyright', ProductBrand::class),
 
-            // Point de menu concernant les Product brands
+            // Point de menu concernant les Transporteurs
             MenuItem::linkToCrud('Carrier', 'fa fa-truck', Carrier::class),
-            
 
-            // Point de menu concernant les Product brands
+            // Point de menu concernant les Paniers
             MenuItem::linkToCrud('Cart', 'fa fa-shopping-cart', Cart::class),
 
-
-            // Point de menu concernant les Product Categories
+            // Point de menu concernant les Categories de produit
             MenuItem::linkToCrud('Category', 'fa fa-tags', ProductCategory::class),
-                
            
-            // Point de menu concernant les Product Colors
+            // Point de menu concernant les Coleurs de produit (ex.: couleur du vin)
             MenuItem::linkToCrud('Color', 'fa fa-tint', Color::class),
-           
-
-            // Point de menu concernant les Companies
-            
+        
+            // Point de menu concernant les Entreprises vendant sur notre site
             MenuItem::linkToCrud('Company', 'fa fa-building', Company::class)
             ->setController(CompanyCrudController::class),        
 
-
-            // Point de menu concernant les Orders 
+            // Point de menu concernant les Commandes 
             MenuItem::linkToCrud('Destination', 'fa fa-map-marked-alt', Destination::class),
            
-            
-            // Point de menu concernant les Orders with Product List
+            // Point de menu concernant les Commandes intrégrant la liste des produits
             MenuItem::linkToCrud('Order', 'fa fa-list-alt', Order::class),
            
-            
-            // Point de menu concernant les Products
+            // Point de menu concernant le Conditionnement des produits
             MenuItem::linkToCrud('Package', 'fa fa-box-open', Package::class),
 
-
-            // Point de menu concernant les Products
+            // Point de menu concernant les Produits
             MenuItem::linkToCrud('Product', 'fa fa-glass', Product::class),
 
-            // Point de menu concernant les Product Types
+            // Point de menu concernant les Types de produit
             MenuItem::linkToCrud('Type', 'fa fa-th-large', Type::class),
            
                 

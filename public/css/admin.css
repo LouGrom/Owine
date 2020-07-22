@@ -1,0 +1,24 @@
+body
+{
+    background-color:#FAF6F0
+}
+
+a
+{
+    color:rgb(66, 64, 64);
+}
+
+a:hover
+{
+    color:black;
+}
+
+.list-group-item-danger.list-group-item-action.active
+{
+    background-color:#6b1f1f;
+}
+
+.modal-content
+{
+    background-color:#F4EBDD;
+}
