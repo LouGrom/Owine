@@ -292,4 +292,5 @@ class Order
 
         return $this;
     }
+
 }
