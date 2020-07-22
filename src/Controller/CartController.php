@@ -169,7 +169,7 @@ class CartController extends AbstractController
         $order->setTotalAmount($totalCartAmount);
  
         // TODO : Infos générées par l'api (plus tard)
-        $order->setTrackingNumber(random_bytes(10));
+        $order->setTrackingNumber(random_int(10000000, 99999999));
         $order->setCarrier($carrierRepository->findAll()[0]);
         $order->setShippingCosts(random_int(10, 20));
         $order->setReference('???');
