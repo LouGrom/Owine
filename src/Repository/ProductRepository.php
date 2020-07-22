@@ -46,24 +46,6 @@ class ProductRepository extends ServiceEntityRepository
         ;*/
     }
 
-    // /**
-    //  * @return Product[] Return an array of Product objects
-    //  */
-    // public function searchProduct($search) {
-
-    //     $builder = $this->createQueryBuilder('product');
-    //     $builder->orderBy('product..name');
-
-    //     if(!empty($search)){
-    //         $builder->where('product.appellation.name LIKE :search');
-    //         $builder->setParameter('search', "%$search%");
-    //     }
-
-    //     $query = $builder->getQuery();
-
-    //     return $query->getResult();
-    // }
-        
     /**
      * @return Product[] Returns an array of Product objects
      */
@@ -121,4 +103,65 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Product[] Return an array of Poducty objects
+     */
+    public function searchProduct($search)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+        $builder->orderBy('product.cuveeDomaine');
+
+        if (!empty($search)) {
+            $builder->where('product.cuveeDomaine LIKE :search');
+            $builder->setParameter('search', "%$search%");
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+     // /**
+    //  * @return Product[] Return an array of Product objects
+    //  */
+    //  public function searchProduct($search) {
+
+    //     $builder = $this->createQueryBuilder('product');
+    //     $builder->orderBy('product.name');
+
+    //     if(!empty($search)){
+    //         $builder->where('product.appellation.name LIKE :search');
+    //         $builder->setParameter('search', "%$search%");
+    //     }
+
+    //     $query = $builder->getQuery();
+
+    //     return $query->getResult();
+    // }
+
+/**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findByCompany($search)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+        $builder->orderBy('product.cuveeDomaine');
+        $builder->where("product.company = :companyName");
+
+        // on recupère la requete construite
+        $query = $builder->getQuery();
+
+        if (!empty($search)) {
+            $builder->where('product.cuveeDomaine LIKE :search');
+            $builder->setParameter('search', "%$search%");
+        }
+
+        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
+        return $query->getResult();
+
+    }
+
 }
