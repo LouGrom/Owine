@@ -6,7 +6,7 @@
 
 <div id="locationField" class="form-group" >
 	<label for="autocomplete" class="required">Renseignez votre adresse complète ci-dessous</label>
-	<input id="autocomplete" placeholder="Exemple d'adresse : 1 Rue du Vignoble, Bussy-Saint-Georges, France" onFocus="geolocate()" type="text"/>
+	<input id="autocomplete" placeholder="Exemple: 57 Rue de Varenne, 75007 Paris" onFocus="geolocate()" type="text"/>
 </div>
 <div id="map"></div>
 <table id="address">
@@ -49,5 +49,5 @@
 
 {% block javascripts %}
   <script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&amp;callback=initMap"></script>
 {% endblock %}
