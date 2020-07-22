@@ -61,6 +61,7 @@ class VignoblexportApi
         // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
         // dump($content[0]['price']);
+        // dump($content[0]['name']);
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
         // die;
         return $content[0];

@@ -8,7 +8,6 @@ use App\Entity\OrderProduct;
 use App\Repository\CartRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
-use App\Repository\CarrierRepository;
 use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,7 +103,7 @@ class CartController extends AbstractController
     /**
      * @Route("/{companyId}/details", name="cart_details", methods={"GET"})
      */
-    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, CarrierRepository $carrierRepository, VignoblexportApi $vignoblexportApi, $companyId): Response
+    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, VignoblexportApi $vignoblexportApi, $companyId): Response
     {
         $company = $companyRepository->find($companyId);
         $entityManager = $this->getDoctrine()->getManager();
@@ -140,7 +139,7 @@ class CartController extends AbstractController
  
         // TODO : Infos générées par l'api (plus tard)
         $order->setTrackingNumber(random_int(10000000, 99999999));
-        $order->setCarrier($carrierRepository->findAll()[0]);
+        $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
         $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
         $order->setReference('???');
 
@@ -159,7 +158,7 @@ class CartController extends AbstractController
     /**
      * @Route("/{companyId}/validate", name="cart_validate", methods={"GET"})
      */
-    public function cartValidate(CompanyRepository $companyRepository, CartRepository $cartRepository, CarrierRepository $carrierRepository, VignoblexportApi $vignoblexportApi, $companyId) {
+    public function cartValidate(CompanyRepository $companyRepository, CartRepository $cartRepository, VignoblexportApi $vignoblexportApi, $companyId) {
         
         $company = $companyRepository->find($companyId);
         $entityManager = $this->getDoctrine()->getManager();

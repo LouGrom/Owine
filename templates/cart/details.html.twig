@@ -28,6 +28,11 @@
                     {{ app.user.addresses[0].country }}
                 </td>
             </tr>
+
+            <tr>
+                <th>Transporteur : </th>
+                <td>{{ order.carrier }}</td>
+            </tr>
         </tbody>
     </table>
     {% else %}
@@ -75,7 +80,7 @@
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
                     {# !TODO à dynamiser plus tard  #}
-                    <td class="text-right">{{order.shippingCosts}} €</td>
+                    <td class="text-right">{{order.shippingCosts }} €</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
