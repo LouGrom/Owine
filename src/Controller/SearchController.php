@@ -3,33 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\Company;
+use App\Entity\Product;
+use App\Entity\Appellation;
 use App\Repository\CompanyRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\ProductRepository;
+use App\Repository\AppellationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SearchController extends AbstractController
 {
     /**
      * @Route("/search", name="search")
      */
-    public function search(Request $request): Response
+    public function search(CompanyRepository $companyRepository, ProductRepository $productRepository, AppellationRepository $appellationRepository): Response
     {
-
-        /** @var CompanyRepository */
-        $companyRepository = $this->getDoctrine()->getRepository(Company::class);
-        
-        
         $search = $_POST['search'];
-
-        // je peux utiliser ma methode de repository personnalisé
-        $company = $companyRepository->findByCompanyName($search);
         
-        //$product = $ProductRepository->findAllByCompany($search);
-
-        return $this->render('company/list.html.twig', [
-            'companies' => $company
+        // je peux utiliser ma methode de repository personnalisé
+        $companies = $companyRepository->searchCompany($search);
+        $appellations = $appellationRepository->searchAppellation($search);
+    
+        dd($companies, $appellations, $companyRepository, $appellationRepository);
+        return $this->render('search/result.html.twig', [
+            'companies' => $companies,
+            'appellations' => $appellations
         ]);
     }
 }

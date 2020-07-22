@@ -22,7 +22,7 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
-    public function findAllByCompany($id, $search)
+    public function findAllByCompany($id)
     {
         // $builder est une instance de l'objet Query Builder
         $builder = $this->createQueryBuilder('product');
@@ -30,11 +30,6 @@ class ProductRepository extends ServiceEntityRepository
         $builder->where("product.company = :companyId");
 
         $builder->setParameter("companyId", $id);
-
-    if(!empty($search)){
-        $builder->where('company.name LIKE :search');
-        $builder->setParameter('search', "%$search%");
-    }
 
         // on recupère la requete construite
         $query = $builder->getQuery();
@@ -50,6 +45,24 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
         ;*/
     }
+
+    // /**
+    //  * @return Product[] Return an array of Product objects
+    //  */
+    // public function searchProduct($search) {
+
+    //     $builder = $this->createQueryBuilder('product');
+    //     $builder->orderBy('product..name');
+
+    //     if(!empty($search)){
+    //         $builder->where('product.appellation.name LIKE :search');
+    //         $builder->setParameter('search', "%$search%");
+    //     }
+
+    //     $query = $builder->getQuery();
+
+    //     return $query->getResult();
+    // }
         
     /**
      * @return Product[] Returns an array of Product objects
