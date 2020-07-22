@@ -49,20 +49,20 @@ class VignoblexportApi
         ]);
 
 
-        dump($response);
+        // dump($response);
         $statusCode = $response->getStatusCode();
-        dump($statusCode);
+        // dump($statusCode);
         // $statusCode = 200
         $contentType = $response->getHeaders()['content-type'][0];
-        dump($contentType);
+        // dump($contentType);
         // $contentType = 'application/json'
         $content = $response->getContent();
-        dump($content);
+        // dump($content);
         // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
-        dump($content);
+        // dump($content[0]['price']);
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-        die;
-        return $content;
+        // die;
+        return $content[0];
     }
 }

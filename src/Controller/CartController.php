@@ -104,11 +104,17 @@ class CartController extends AbstractController
     /**
      * @Route("/{companyId}/details", name="cart_details", methods={"GET"})
      */
-    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, $companyId): Response
+    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, CarrierRepository $carrierRepository, VignoblexportApi $vignoblexportApi, $companyId): Response
     {
         $company = $companyRepository->find($companyId);
+        $entityManager = $this->getDoctrine()->getManager();
         $totalQuantity = 0;
         $totalCartAmount = 0;
+        // 1)Créer un objet Order avec les coordonnées de l'user
+        $order = new Order();
+        $order->setStatus(0);
+        $order->setCompany($company);
+        $order->setBuyer($this->getUser());
 
         $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
         foreach($carts as $cart) {
@@ -117,17 +123,38 @@ class CartController extends AbstractController
                 $cartList[] = $cart;
                 $totalQuantity += $cart->getQuantity();
                 $totalCartAmount += $cart->getTotalAmount();
+
+                // 2)Créer des objets OrderProducts pour lier les Products achetés
+                $orderProduct = new OrderProduct();
+                $orderProduct->setProduct($cart->getProduct());
+                $orderProduct->setQuantity($cart->getQuantity());
+
+                $order->addOrderProduct($orderProduct);
+
+                $entityManager->persist($orderProduct);
             }
         }
+
+        $order->setTotalQuantity($totalQuantity);
+        $order->setTotalAmount($totalCartAmount);
+ 
+        // TODO : Infos générées par l'api (plus tard)
+        $order->setTrackingNumber(random_int(10000000, 99999999));
+        $order->setCarrier($carrierRepository->findAll()[0]);
+        $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
+        $order->setReference('???');
+
+        $entityManager->persist($order);
+        $entityManager->flush();
         
         return $this->render('cart/details.html.twig', [
             'carts' => $cartList,
             'totalQuantity' => $totalQuantity,
             'totalCartAmount' => $totalCartAmount,
-            'company' => $company
+            'company' => $company,
+            'order' => $order
         ]);
     }
-
 
     /**
      * @Route("/{companyId}/validate", name="cart_validate", methods={"GET"})
