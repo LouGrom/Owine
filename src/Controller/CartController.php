@@ -199,8 +199,8 @@ class CartController extends AbstractController
  
         // TODO : Infos générées par l'api (plus tard)
         $order->setTrackingNumber(random_int(10000000, 99999999));
-        $order->setCarrier($carrierRepository->findAll()[0]);
-        $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order));
+        $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
+        $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
         $order->setReference('???');
 
         $entityManager->persist($order);
