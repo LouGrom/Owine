@@ -19,7 +19,7 @@ class SearchController extends AbstractController
         $search = $_POST['search'];
         
         // je peux utiliser ma methode de repository personnalisé
-        $companies = $productRepository->findByCompany($search);
+        $companies = $companyRepository->searchCompany($search);
         $appellations = $appellationRepository->searchAppellation($search);
         $products = $productRepository->searchProduct($search);
 
@@ -27,7 +27,6 @@ class SearchController extends AbstractController
             'companies' => $companies,
             'appellations' => $appellations,
             'products'=> $products,
-            'products' => $productRepository->findByCompany($search),
         ]);
     }
 }

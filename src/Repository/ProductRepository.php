@@ -141,27 +141,6 @@ class ProductRepository extends ServiceEntityRepository
     //     return $query->getResult();
     // }
 
-/**
-     * @return Product[] Returns an array of Product objects
-     */
-    public function findByCompany($search)
-    {
-        // $builder est une instance de l'objet Query Builder
-        $builder = $this->createQueryBuilder('product');
-        $builder->orderBy('product.cuveeDomaine');
-        $builder->where("product.company = :companyName");
-
-        // on recupère la requete construite
-        $query = $builder->getQuery();
-
-        if (!empty($search)) {
-            $builder->where('product.cuveeDomaine LIKE :search');
-            $builder->setParameter('search', "%$search%");
-        }
-
-        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
-        return $query->getResult();
-
-    }
+    
 
 }
