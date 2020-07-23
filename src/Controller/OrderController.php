@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Repository\OrderRepository;
+use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,5 +39,15 @@ class OrderController extends AbstractController
         }
 
         return $this->redirectToRoute('board');
+    }
+
+    /**
+     * @Route("/{id}/ship", name="order_ship", requirements={"id" = "\d+"}, methods={"GET","POST"})
+     */
+    public function shipOrder(OrderRepository $orderRepository, VignoblexportApi $vignoblexportApi, $id)
+    {
+        $order = $orderRepository->find($id);
+        $vignoblexportApi->createShipment($order);
+
     }
 }

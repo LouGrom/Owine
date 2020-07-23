@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Order;
+use App\Repository\PackageRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class VignoblexportApi
@@ -14,8 +15,80 @@ class VignoblexportApi
         $this->client = $client;
     }
 
-    public function estimateShippingCosts(Order $order)
+    public function selectPackage(Order $order)
     {
+        $response = $this->client
+        ->request(
+            'GET',
+            'http://vignoblexport-fr.publish-it.fr/api/package/get-sizes',
+            ['headers' => [
+                'X-AUTH-TOKEN' => $_ENV['VIGNOBLEXPORT_TOKEN'],
+            ],
+            'query' => [
+                'nbBottles' => $order->getTotalQuantity(),
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+
+        $contentType = $response->getHeaders()['content-type'][0];
+        $content = $response->getContent();
+        $content = $response->toArray();
+        // die;
+        return $content['packages'];
+    }
+
+    public function estimateShippingCosts(Order $order)
+    {        
+
+        $packages = $this->selectPackage($order);
+
+        // $nbBottlesOfPackage = $packages['nbBottles'];
+        // $nbPackages = $packages['nbPackages'];
+
+        $sellerPackages = $order->getCompany()->getPackages();
+
+        // On récupère les nombres de bouteilles que peuvent accueillir les cartons du vendeur
+        foreach($sellerPackages as $sellerPackage) {
+            $sellerNbBottles[] = $sellerPackage->getBottleQuantity();
+        }
+        $useable = null;
+
+        foreach($packages as $choice) {
+            foreach($choice as $nbPacks) {
+                // Avant de vérifier un nouveau choice, on initialise $success à true.
+                $success = true;
+                // Pour chaque choice proposé, on vérifie les formats de carton.
+                foreach ($nbPacks as $choiceDetails) {
+                    // Si l'un deux n'est pas possédé par le vendeur, on attribue la valeur false à $success
+                    // Inversement, si le vendeur possède tous les types de carton demandés pour le choice, $success sera toujours à true
+                    if(!in_array($choiceDetails['nbBottles'], $sellerNbBottles)){
+                        $success = false;
+                    }
+                }
+                // Arrivé ici, si $success est à true, ça veut dire que le vendeur est capable d'envoyer la commande avec les cartons demandés par le dernier choice
+                // Donc on sort de la boucle avec break;
+                if($success == true){
+                    $useable = $nbPacks;
+                    break;
+                }
+            }
+            // Puis on sort de la boucle principale avec un autre break;
+            if($success == true){
+                break;
+            }
+        }
+
+        // Par défaut, si le vendeur n'a aucun format de carton compatible on lui envoie le premier choix proposé par l'API (et il se débrouillera tout seul)
+        if($success == false) {
+            $useable = $packages[0]['choice1'];
+        }
+
+        dump($useable);
+        
+        dd($sellerPackages);
+
+
         $response = $this->client
         ->request(
             'GET',
@@ -32,11 +105,7 @@ class VignoblexportApi
                 'destAddress[postalCode]' => $order->getBuyer()->getAddresses()[0]->getZipCode(),
                 'destAddress[city]' => $order->getBuyer()->getAddresses()[0]->getCity(),
                 'destAddress[country]' => 'FR', //TODO
-                'packages[0][nb]' => '1', //! TOUT DOUX
-                'packages[0][weight]' => '10', //TODO
-                'packages[0][width]' => '39', //TODO 
-                'packages[0][height]' => '40', //TODO
-                'packages[0][depth]' => '27', //TODO
+                'packages[]' => $packages,
                 'pickupDate' => '2020-07-28',  //TODO
                 'hourMini' => '10:10:00',
                 'hourLimit' => '18:00:00',
@@ -70,6 +139,8 @@ class VignoblexportApi
     public function createShipment(Order $order)
     {
 
+        $packages = $this->selectPackage($order);
+
         foreach($order->getOrderProducts() as $orderProduct) {
 
             $product = [
@@ -88,7 +159,9 @@ class VignoblexportApi
             ];
 
             $details[] = $product;
+            
         }
+        $carrier = $this->estimateShippingCosts($order);
 
         $response = $this->client
         ->request(
@@ -102,83 +175,66 @@ class VignoblexportApi
                 'expAddress[addressType]' => 'societe',
                 'expAddress[company]' => $order->getCompany()->getName(),
                 'expAddress[contact]' => $order->getCompany()->getSeller()[0]->getFullName(),
-                'expAddress[phone]' => $order->getCompany()[0]->getSeller()->getPhoneNumber(),
-                'expAddress[address]' => $order->getCompany()[0]->getSeller()->getAddresses()[0]->getStreet(),
-                'expAddress[address2]' => '',
+                'expAddress[phone]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getPhoneNumber(),
+                'expAddress[address]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getStreet(),
+                // 'expAddress[address2]' => '',
                 'expAddress[postalCode]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getZipCode(),
                 'expAddress[city]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getCity(),
-                'expAddress[country]' => $order->getCompany()[0]->getSeller()->getAddresses()[0]->getIso(),
-                'expAddress[state]' => $order->getCompany()[0]->getSeller()->getAddresses()[0]->getProvince(),
+                'expAddress[country]' => 'FR',
+                'expAddress[state]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getProvince(),
                 'destAddress[country]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getIso(),
-                'expAddress[fda]' => '',
-                'expAddress[eori]' => '',
+                // 'expAddress[fda]' => '',
+                // 'expAddress[eori]' => '',
                 'expAddress[notify]' => '0',
                 'expAddress[tvaNum]' => $order->getCompany()->getVat(),
-                'expAddress[acciseNum]' => '',
-                'expAddress[licenceImportation]' => '',
+                // 'expAddress[acciseNum]' => '',
+                // 'expAddress[licenceImportation]' => '',
                 'expAddress[email]' => $order->getBuyer()->getEmail(),
                 // 'destAddress[]' => '',
                 'destAddress[addressType]' => 'particulier',
-                'destAddress[company]' => '',
+                // 'destAddress[company]' => '',
                 'destAddress[contact]' => $order->getBuyer()->getFullName(),
-                'destAddress[lastname]' => '',
-                'destAddress[firstname]' => '',
+                // 'destAddress[lastname]' => '',
+                // 'destAddress[firstname]' => '',
                 'destAddress[phone]' => $order->getBuyer()->getAddresses()[0]->getPhoneNumber(),
                 'destAddress[address]' => $order->getBuyer()->getAddresses()[0]->getStreet(),
-                'destAddress[address2]' => '',
+                // 'destAddress[address2]' => '',
                 'destAddress[postalCode]' => $order->getBuyer()->getAddresses()[0]->getZipCode(),
                 'destAddress[city]' => $order->getBuyer()->getAddresses()[0]->getCity(),
-                'destAddress[country]' => $order->getBuyer()->getAddresses()[0]->getIso(),
+                'destAddress[country]' => 'FR',
                 'destAddress[state]' => $order->getBuyer()->getAddresses()[0]->getProvince(),
-                'destAddress[notify]' => '0',
-                'destAddress[saveAddress]' => '0',
-                'destAddress[addressName]' => '',
-                'destAddress[tvaSociety]' => '',
-                'destAddress[acciseNum]' => '',
-                'destAddress[licenceImportation]' => '',
-                'destAddress[destTax]' => '',
+                // 'destAddress[notify]' => '0',
+                // 'destAddress[saveAddress]' => '0',
+                // 'destAddress[addressName]' => '',
+                // 'destAddress[tvaSociety]' => '',
+                // 'destAddress[acciseNum]' => '',
+                // 'destAddress[licenceImportation]' => '',
+                // 'destAddress[destTax]' => '',
                 'destAddress[email]' => $order->getBuyer()->getEmail(),
-                'packages[][nb]' => '1', //TODO
-                'packages[][weight]' => '10', //TODO
-                'packages[][width]' => '39', //TODO
-                'packages[][height]' => '40', //TODO
-                'packages[][depth]' => '27', //TODO
-                'carrier[]' => '',
-                'carrier[pickupDate]' => '2020-07-28', //TODO
-                'carrier[name]' => '',
-                'carrier[service]' => '',
-                'carrier[serviceCode]' => '',
-                'carrier[price]' => '',
-                'carrier[surcharges]' => '',
-                'carrier[local]' => '',
-                'carrier[cutoff]' => '',
-                'carrier[pickupTime]' => '',
-                'carrier[deliveryDate]' => '',
-                'carrier[deliveryTime]' => '',
-                'carrier[pickupAccessDelay]' => '',
-                'carrier[saturdayDelivery]' => '',
+                'packages[]' => $packages,
+                'carrier[]' => $carrier,
                 'details[]' => $details,
                 'insurance' => '0',
-                'insurancePrice' => '',
+                // 'insurancePrice' => '',
                 'emailDutiesTaxes' => '0',
                 'totalValue' => $order->getTotalAmount(),
-                'instructions' => '', 
+                // 'instructions' => '', 
                 'devise' => 'EUR',
                 'detailsType' => 'vente',
                 'circulation' => 'CRD',
-                'reference' => '',
-                'dutiesTaxes' => '',
-                'colaAttachments[]' => '',
-                'colaAttachments[name]' => '',
-                'colaAttachments[file]' => '',
-                'champagneAttachments[]' => '',
-                'champagneAttachments[name]' => '',
-                'champagneAttachments[file]' => '',
+                // 'reference' => '',
+                // 'dutiesTaxes' => '',
+                // 'colaAttachments[]' => '',
+                // 'colaAttachments[name]' => '',
+                // 'colaAttachments[file]' => '',
+                // 'champagneAttachments[]' => '',
+                // 'champagneAttachments[name]' => '',
+                // 'champagneAttachments[file]' => '',
                 'hourMini' => '10:10:00',
                 'hourLimit' => '18:00:00',
                 'nbBottles' => $order->getTotalQuantity(),
-                'nbMagnums' => '',
-                'wineType' => $order->getOrderProducts()[0]->getType(),
+                // 'nbMagnums' => '',
+                'wineType' => 'tranquille',
                 // 'accessPoint[]' => '',
                 // 'accessPoint[id]' => '',
                 // 'accessPoint[name]' => '',
@@ -223,10 +279,11 @@ class VignoblexportApi
         ]);
 
 
-        // dump($response);
+        dump($response);
         $statusCode = $response->getStatusCode();
-        // dump($statusCode);
-        // $statusCode = 200
+        dump($statusCode);
+        $statusCode = 200;
+        // die;
         $contentType = $response->getHeaders()['content-type'][0];
         // dump($contentType);
         // $contentType = 'application/json'

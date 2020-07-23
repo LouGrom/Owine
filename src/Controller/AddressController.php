@@ -52,7 +52,7 @@ class AddressController extends AbstractController
             $entityManager->persist($address);
             $entityManager->flush();
 
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('profile');
         }
 
         return $this->render('address/new.html.twig', [

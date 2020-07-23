@@ -376,7 +376,7 @@ class User implements UserInterface
 
     public function getFullName(): string
     {
-        return $this->firstName.' '.$this->lastName;
+        return $this->firstname.' '.$this->lastname;
     }
 
 }

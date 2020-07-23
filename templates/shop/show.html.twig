@@ -11,9 +11,9 @@
                 {% for i in 0..random(4) %}
                 <i class="fa fa-star" aria-hidden="true"></i>
                 {% endfor %} - Voir les avis
-                {% if product.stockQuantity < 60 and product.status == 1 %}
+                <div{% if product.stockQuantity < 60 and product.status == 1 %} hidden{% endif %}>
                     <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
-                {% endif %}
+                </div>
             </div>
             <div>
                 
