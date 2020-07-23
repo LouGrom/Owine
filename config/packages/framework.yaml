@@ -15,3 +15,10 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    http_client:
+        scoped_clients:
+            vignoblexport_api:
+                scope: 'http://vignoblexport-fr\.publish-it\.fr/api'
+                headers:
+                    X-AUTH-TOKEN: 'on7cONFEljwsVewWLjrn1R70F8rF+GsVj8pwHT7d4e2sF881muXHPGlN2tV851kAUoA='

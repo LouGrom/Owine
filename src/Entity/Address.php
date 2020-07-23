@@ -67,6 +67,11 @@ class Address
      */
     private $province;
 
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    private $iso;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +193,18 @@ class Address
     public function setProvince(?string $province): self
     {
         $this->province = $province;
+
+        return $this;
+    }
+
+    public function getIso(): ?string
+    {
+        return $this->iso;
+    }
+
+    public function setIso(string $iso): self
+    {
+        $this->iso = $iso;
 
         return $this;
     }

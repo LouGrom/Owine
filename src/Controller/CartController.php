@@ -8,7 +8,7 @@ use App\Entity\OrderProduct;
 use App\Repository\CartRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
-use App\Repository\CarrierRepository;
+use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,11 +103,17 @@ class CartController extends AbstractController
     /**
      * @Route("/{companyId}/details", name="cart_details", methods={"GET"})
      */
-    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, $companyId): Response
+    public function details(CompanyRepository $companyRepository, CartRepository $cartRepository, VignoblexportApi $vignoblexportApi, $companyId): Response
     {
         $company = $companyRepository->find($companyId);
+        $entityManager = $this->getDoctrine()->getManager();
         $totalQuantity = 0;
         $totalCartAmount = 0;
+        // 1)Créer un objet Order avec les coordonnées de l'user
+        $order = new Order();
+        $order->setStatus(0);
+        $order->setCompany($company);
+        $order->setBuyer($this->getUser());
 
         $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
         foreach($carts as $cart) {
@@ -116,32 +122,54 @@ class CartController extends AbstractController
                 $cartList[] = $cart;
                 $totalQuantity += $cart->getQuantity();
                 $totalCartAmount += $cart->getTotalAmount();
+
+                // 2)Créer des objets OrderProducts pour lier les Products achetés
+                $orderProduct = new OrderProduct();
+                $orderProduct->setProduct($cart->getProduct());
+                $orderProduct->setQuantity($cart->getQuantity());
+
+                $order->addOrderProduct($orderProduct);
+
+                $entityManager->persist($orderProduct);
             }
         }
+
+        $order->setTotalQuantity($totalQuantity);
+        $order->setTotalAmount($totalCartAmount);
+ 
+        // TODO : Infos générées par l'api (plus tard)
+        $order->setTrackingNumber(random_int(10000000, 99999999));
+        $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
+        $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
+        $order->setReference('???');
+
+        $entityManager->persist($order);
+        $entityManager->flush();
         
         return $this->render('cart/details.html.twig', [
             'carts' => $cartList,
             'totalQuantity' => $totalQuantity,
             'totalCartAmount' => $totalCartAmount,
-            'company' => $company
+            'company' => $company,
+            'order' => $order
         ]);
     }
-
 
     /**
      * @Route("/{companyId}/validate", name="cart_validate", methods={"GET"})
      */
-    public function cartValidate(CompanyRepository $companyRepository, CartRepository $cartRepository, CarrierRepository $carrierRepository, $companyId) {
+    public function cartValidate(CompanyRepository $companyRepository, CartRepository $cartRepository, VignoblexportApi $vignoblexportApi, $companyId) {
         
         $company = $companyRepository->find($companyId);
         $entityManager = $this->getDoctrine()->getManager();
         $totalQuantity = 0;
         $totalCartAmount = 0;
         // 1)Créer un objet Order avec les coordonnées de l'user
-        $order = new Order;
+        $order = new Order();
         $order->setStatus(0);
         $order->setCompany($company);
         $order->setBuyer($this->getUser());
+
         // 1.5) Récupérer tous les carts de l'user courant qui vont vers le companyId
         $carts = $cartRepository->findAllByBuyer($this->getUser()->getId());
         foreach($carts as $cart) {
@@ -162,6 +190,7 @@ class CartController extends AbstractController
                 // 3)Effacer les carts de l'user qui ont été ajoutés à l'Order
                 $entityManager->remove($cart);
                 //$entityManager->flush();
+
             }
         }
 
@@ -169,9 +198,9 @@ class CartController extends AbstractController
         $order->setTotalAmount($totalCartAmount);
  
         // TODO : Infos générées par l'api (plus tard)
-        $order->setTrackingNumber(random_bytes(10));
-        $order->setCarrier($carrierRepository->findAll()[0]);
-        $order->setShippingCosts(random_int(10, 20));
+        $order->setTrackingNumber(random_int(10000000, 99999999));
+        $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
+        $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
         $order->setReference('???');
 
         $entityManager->persist($order);
