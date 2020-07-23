@@ -3,15 +3,19 @@
 {{ form_row(form.firstname) }}
 {{ form_row(form.lastname) }}
 {{ form_row(form.phoneNumber) }}
-<div id="locationField">
-	<input id="autocomplete" placeholder="Renseignez votre adresse" onFocus="geolocate()" type="text"/>
+
+<div id="locationField" class="form-group" >
+	<label for="autocomplete" class="required">Renseignez votre adresse complète ci-dessous</label>
+	<input id="autocomplete" placeholder="Exemple: 57 Rue de Varenne, 75007 Paris" onFocus="geolocate()" type="text"/>
 </div>
+<div id="map"></div>
 <table id="address">
 {{ form_row(form.street, { 'id': 'address'} ) }}
 {{ form_row(form.city, { 'id': 'locality'} ) }}
 {{ form_row(form.zipCode, { 'id': 'postal_code'} ) }}
 {{ form_row(form.province, { 'id': 'administrative_area_level_1'} ) }}
 {{ form_row(form.country, { 'id': 'country'} ) }}
+
 </table>
 
 
@@ -36,14 +40,14 @@
 			<td class="label">Pays</td>
 			<td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
 		</tr>
-	<button class="btn">{{ button_label|default('Save') }}</button>
+	<button class="btn save"><strong>{{ button_label|default('Enregistrer') }}</strong></button>
 	</table>
 
             
-            <div id="map"></div>
+            
 {{ form_end(form) }}
 
 {% block javascripts %}
   <script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&amp;callback=initMap"></script>
 {% endblock %}
