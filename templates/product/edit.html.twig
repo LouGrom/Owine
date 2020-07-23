@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Modifier un produit</h1>
 
-     <a href="{{ path('product_view', {'id': product.id}) }}" class="btn btn-dark mb-4">Retour au produit</a>
+    <a href="{{ path('product_view', {'id': product.id}) }}" class="btn btn-dark mb-4">Retour au produit</a>
 
     {{ include('product/_form.html.twig', {'button_label': 'Valider'}) }}
 

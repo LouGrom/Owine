@@ -11,7 +11,9 @@
                 {% for i in 0..random(4) %}
                 <i class="fa fa-star" aria-hidden="true"></i>
                 {% endfor %} - Voir les avis
-                <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
+                {% if product.stockQuantity < 60 and product.status == 1 %}
+                    <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
+                {% endif %}
             </div>
             <div>
                 
@@ -32,23 +34,23 @@
     <div class="d-md-flex align-items-center">
         <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
         {% if app.user and 'ROLE_BUYER' in app.user.roles %}
-            {% if product.status == 1 %}
-                <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
-            {% else %}
-                <img src="https://pbs.twimg.com/media/DNZwXGUXkAE8aQh?format=jpg&name=small">
+                {% if product.status == 1 %}
+                    <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
+                {% else %}
+                    <img src="https://pbs.twimg.com/media/DNZwXGUXkAE8aQh?format=jpg&name=small">
             {% endif %}
         {% endif %}
-   </div>
+    </div>
 
-   <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.company.id}) }}">{{ product.company.name }}</a></h2>
+    <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.company.id}) }}">{{ product.company.name }}</a></h2>
 
 		<div class="row row-cols-1 row-cols-md-12">
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
                     {% for otherProduct in product.company.products %}
@@ -85,18 +87,18 @@
                     {% endfor %}
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
                 </a>
             </div>
 		</div>
 
 
-   <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
