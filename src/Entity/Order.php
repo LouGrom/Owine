@@ -31,7 +31,7 @@ class Order
     private $totalAmount;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $trackingNumber;
 
@@ -62,8 +62,7 @@ class Order
     private $seller;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Carrier::class, inversedBy="delivery")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $carrier;
 
@@ -233,17 +232,6 @@ class Order
         return $this;
     }
 
-    public function getCarrier(): ?Carrier
-    {
-        return $this->carrier;
-    }
-
-    public function setCarrier(?Carrier $carrier): self
-    {
-        $this->carrier = $carrier;
-
-        return $this;
-    }
 
     public function getStatus(): ?int
     {
@@ -292,4 +280,17 @@ class Order
 
         return $this;
     }
+
+    public function getCarrier(): ?string
+    {
+        return $this->carrier;
+    }
+
+    public function setCarrier(string $carrier): self
+    {
+        $this->carrier = $carrier;
+
+        return $this;
+    }
+
 }
