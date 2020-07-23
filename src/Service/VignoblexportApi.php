@@ -64,6 +64,7 @@ class VignoblexportApi
         // dump($content[0]['name']);
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
         // die;
+        // dd($content);
         return $content[0];
     }
 }
