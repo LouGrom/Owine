@@ -49,6 +49,25 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
+    public function findAllByAppellation($appellation)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+
+        $builder->where("product.appellation = :appellation");
+
+        $builder->setParameter("appellation", $appellation);
+
+        // on recupère la requete construite
+        $query = $builder->getQuery();
+
+        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
+        return $query->getResult();
+    }
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
     public function findWithAllData($id)
     {
 
