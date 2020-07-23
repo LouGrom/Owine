@@ -76,7 +76,6 @@ let app = {
         let packageDatas = packageId+'-'+quantity+'-'+height+'-'+length+'-'+width+'-'+weight;
         
         fetch(app.apiBaseUrl + '/package/' + packageDatas + '/add')
-        document.location.reload(true);
         return
 
     },

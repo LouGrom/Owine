@@ -29,7 +29,7 @@ class AddressType extends AbstractType
                 )
             ])
             ->add('province', TextType::class, [
-                'label' => 'Province',
+                'label' => 'Région',
                 'required' => false
                 ])
             ->add('firstname', TextType::class, [
