@@ -8,7 +8,6 @@ use App\Entity\Address;
 use App\Entity\Product;
 use App\Entity\ProductCategory;
 use App\Entity\ProductBrand;
-use App\Entity\Carrier;
 use App\Entity\Color;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
@@ -146,21 +145,23 @@ class AppFixtures extends Fixture
 
         $buyerAddress->setFirstname($buyer->getFirstname());
         $buyerAddress->setLastname($buyer->getLastname());
-        $buyerAddress->setZipCode($faker->postcode);
-        $buyerAddress->setCity($faker->city);
-        $buyerAddress->setCountry($faker->country);
-        $buyerAddress->setPhoneNumber($faker->phoneNumber);
-        $buyerAddress->setStreet($faker->streetAddress);
+        $buyerAddress->setZipCode('76000');
+        $buyerAddress->setCity('Rouen');
+        $buyerAddress->setCountry('France');
+        $buyerAddress->setIso('FR');
+        $buyerAddress->setPhoneNumber('0102030405');
+        $buyerAddress->setStreet('40 Rue Molière');
         $buyerAddress->setType(['DELIVERY_ADDRESS', 'BILLING_ADDRESS']);
         $buyer->addAddress($buyerAddress);
 
         $sellerAddress->setFirstname($seller->getFirstname());
         $sellerAddress->setLastname($seller->getLastname());
-        $sellerAddress->setZipCode($faker->postcode);
-        $sellerAddress->setCity($faker->city);
-        $sellerAddress->setCountry($faker->country);
-        $sellerAddress->setPhoneNumber($faker->phoneNumber);
-        $sellerAddress->setStreet($faker->streetAddress);
+        $sellerAddress->setZipCode('21700');
+        $sellerAddress->setCity('Vosne-Romanée');
+        $sellerAddress->setCountry('France');
+        $sellerAddress->setIso('FR');
+        $sellerAddress->setPhoneNumber('0123456789');
+        $sellerAddress->setStreet('1 Place de l\'Église');
         $sellerAddress->setType(['COMPANY_ADDRESS']);
         $seller->addAddress($sellerAddress);
 
@@ -169,6 +170,7 @@ class AppFixtures extends Fixture
         $adminAddress->setZipCode($faker->postcode);
         $adminAddress->setCity($faker->city);
         $adminAddress->setCountry($faker->country);
+        $adminAddress->setIso($faker->countryCode);
         $adminAddress->setPhoneNumber($faker->phoneNumber);
         $adminAddress->setStreet($faker->streetAddress);
         $admin->addAddress($adminAddress);
@@ -258,6 +260,7 @@ class AppFixtures extends Fixture
             $address->setZipCode($faker->postcode);
             $address->setCity($faker->city);
             $address->setCountry($faker->country);
+            $address->setIso($faker->countryCode);
             $address->setPhoneNumber($faker->phoneNumber);
             $address->setStreet($faker->streetAddress);
 
@@ -381,24 +384,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($product);
         }
-
-        // ----------------------------------------------------------- Carrier Random -----------------------------------------------------------------
-        // On crée 7 transporteurs et 3 modes de transport
-        $carrier_name = ['TNT', 'Vignoblexport', 'UPS', 'La Poste', 'Colissimo', 'Deliveroo', 'Uber Eat'];
-        $carrier_mode=['Brouette', 'Tabouret', 'Fabigeon'];
-       
-        for($i = 0; $i < count($carrier_name); $i++){
-
-            $carrier = new Carrier();
-            $carrier->setName($carrier_name[$i]);
-            $carrier->setMode($carrier_mode[array_rand($carrier_mode)]);
-            // $carrier_mode[1]  <---- array_rand($carrier_mode) <----- 0-2
-
-            // Tableau des objets carrier
-            $carrierList[] = $carrier;
-
-            $manager->persist($carrier);
-        }
         
         // ----------------------------------------------------------- Order Random -----------------------------------------------------------------
         // On crée 30 commandes
@@ -412,7 +397,7 @@ class AppFixtures extends Fixture
             $order->setReference($faker->bothify('##?###??##?#?'));
             $order->setTrackingNumber($faker->bothify('##?###??##?#?'));
             $order->setBuyer($userBuyer[array_rand($userBuyer)]);
-            $order->setCarrier($carrierList[array_rand($carrierList)]);
+            $order->setCarrier($faker->randomElement(['DHL', 'TNT', 'Deliveroo']));
             $order->setCreatedAt($faker->unique()->dateTime($max = 'now', $timezone = null));
             $order->setStatus(array_rand([0,1]));
             

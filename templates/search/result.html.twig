@@ -7,7 +7,7 @@
 <!-- Affichage du résultat de la recherche sur la liste des boutiques -->
 {% if companies %}
 
-            <h1 class="text-center mb-5">Liste des boutiques</h1>
+            <h3 class="text-center mb-5">Liste des boutiques</h3>
 
             <div class="row row-cols-1 row-cols-md-3">
                 {% for company in companies %}
@@ -36,7 +36,7 @@
 {% if products %}
 
 
-        <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
+        <h3 class="text-center mt-2 mb-5">Liste des produits</h3>
     
         <div class="row row-cols-1 row-cols-md-3">
             {% for product in products %}
@@ -65,11 +65,16 @@
                         <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
                         <a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a></td>
                     </div>
+
                 </div>
             </div>
             {% endfor %}
         </div>
+{% endif %}
 
+
+{% if companies is empty and products is empty and appellations is empty  %}
+Oups aucun résultat.. essaies encore ;)
 {% endif %}
 
 {% endblock %}

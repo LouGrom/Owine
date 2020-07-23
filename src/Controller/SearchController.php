@@ -20,8 +20,26 @@ class SearchController extends AbstractController
         
         // je peux utiliser ma methode de repository personnalisé
         $companies = $companyRepository->searchCompany($search);
-        $appellations = $appellationRepository->searchAppellation($search);
         $products = $productRepository->searchProduct($search);
+        $appellations = $appellationRepository->searchAppellation($search);
+        foreach($appellations as $appellation) 
+        {
+            $productsByAppellation[] = $productRepository->findAllByAppellation($appellation);
+        }
+        if (!empty($productsByAppellation)) {
+            foreach ($productsByAppellation as $appellation) {
+                foreach ($appellation as $product) {
+                    if (!in_array($product, $products)) {
+                        $products[] = $product;
+                    }
+                }
+            }
+        }
+
+        // dump($productsByAppellation);
+        // dump($companies);
+        // dump($products);
+        // dd($appellations);
 
         return $this->render('search/result.html.twig', [
             'companies' => $companies,
