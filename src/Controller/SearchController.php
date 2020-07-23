@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
-use App\Entity\Product;
-use App\Entity\Appellation;
 use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
 use App\Repository\AppellationRepository;
@@ -24,11 +21,12 @@ class SearchController extends AbstractController
         // je peux utiliser ma methode de repository personnalisé
         $companies = $companyRepository->searchCompany($search);
         $appellations = $appellationRepository->searchAppellation($search);
-    
-        dd($companies, $appellations, $companyRepository, $appellationRepository);
+        $products = $productRepository->searchProduct($search);
+
         return $this->render('search/result.html.twig', [
             'companies' => $companies,
-            'appellations' => $appellations
+            'appellations' => $appellations,
+            'products'=> $products,
         ]);
     }
 }

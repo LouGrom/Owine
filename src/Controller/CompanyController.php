@@ -37,7 +37,7 @@ class CompanyController extends AbstractController
         
         return $this->render('company/show.html.twig', [
             'products' => $productRepository->findAllByCompany($id),
-            'company' => $company
+            'company' => $company,
         ]);
     }
 
@@ -56,4 +56,5 @@ class CompanyController extends AbstractController
 
         return $this->redirectToRoute('company_index');
     }
+    
 }
