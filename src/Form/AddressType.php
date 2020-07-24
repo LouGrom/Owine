@@ -41,6 +41,9 @@ class AddressType extends AbstractType
             ->add('phoneNumber', TextType::class, [
                 'label' => 'Téléphone'
             ])
+            ->add('iso', TextType::class, [
+                'label' => 'Code ISO'
+            ])
         ;
     }
 

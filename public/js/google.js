@@ -70,6 +70,8 @@ function fillInAddress() {
   var place = autocomplete.getPlace();
   var street = document.querySelector('#address');
   street.value = place.address_components[0].short_name + ' ' + place.address_components[1].long_name;
+  var iso = document.querySelector('#iso');
+  iso.value = place.address_components[5].short_name ;
   // var city = document.querySelector('#locality');
   // city.value = place.address_components[2].long_name;
   // var postal_code = document.querySelector('#postal_code');
@@ -78,7 +80,7 @@ function fillInAddress() {
   // administrative_area_level_1.value = place.address_components[3].short_name;
   // var country = document.querySelector('#country');
   // country.value = place.address_components[5].long_name;
-  console.log(place.address_components);
+  console.log(place);
   // console.log(place.address_components[0].long_name);
   // console.log(place.address_components[0].short_name);
   // console.log(place.address_components[1].long_name);
@@ -119,9 +121,11 @@ function fillInAddress() {
   var geocoder = new google.maps.Geocoder();
   console.log(geocoder);
   geocoder.geocode({'address': address}, function (coord) {
-      console.log(coord);
+      console.log(coord[0].geometry.location);
       // Et centrage de la map sur les coordonnées renvoyées par Google :
-      map.setCenter(coord, 15);
+      infoWindow.setPosition(coord[0].geometry.location);
+      infoWindow.setContent('Voici l\'adresse indiquée');
+      map.setCenter(coord[0].geometry.location);
 });
 }
 
