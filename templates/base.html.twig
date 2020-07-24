@@ -44,7 +44,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ path('product_list_shop') }}">Produits</a>
+                  <a class="nav-link mr-4" href="{{ path('product_list_shop') }}">Produits</a>
                 </li>
                 
                 {# Si on est connecté #}
@@ -85,7 +85,7 @@
 
               {% if app.user %}
                 <div class="mr-3" id="login-name">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark">Déconnexion</a>
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark ml-3">Déconnexion</a>
                 </div>
                 {% else %}
                 <div class="mr-3">
@@ -97,7 +97,7 @@
               {% endif %}
 
               <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('search') }}">
-                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control mr-2" name="search">
+                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control mr-2 ml-3" name="search">
                 <button type="submit" class="btn btn-outline-dark my-2 my-sm-0">Rechercher</button>
               </form>
 
