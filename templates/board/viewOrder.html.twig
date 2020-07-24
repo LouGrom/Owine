@@ -103,7 +103,7 @@
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
                     {# !TODO à dynamiser plus tard  #}
-                    <td>30.00 €</td>
+                    <td>{{order.shippingCosts }} €</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
@@ -116,7 +116,7 @@
                     <td style="font-weight:bold">Total</td>
                     <td></td>
                     {# !TODO à dynamiser plus tard  #}
-                    <td>{{ order.totalAmount + 30 }} €</td>
+                    <td>{{ order.totalAmount + order.shippingCosts }} €</td>
                 </tr>
 
             </tbody>

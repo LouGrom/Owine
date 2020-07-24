@@ -34,14 +34,8 @@ class VignoblexportApi
         $contentType = $response->getHeaders()['content-type'][0];
         $content = $response->getContent();
         $content = $response->toArray();
-        // die;
-        return $content['packages'];
-    }
 
-    public function estimateShippingCosts(Order $order)
-    {        
-
-        $packages = $this->selectPackage($order);
+        $packages = $content['packages'];
 
         // $nbBottlesOfPackage = $packages['nbBottles'];
         // $nbPackages = $packages['nbPackages'];
@@ -84,10 +78,28 @@ class VignoblexportApi
             $useable = $packages[0]['choice1'];
         }
 
-        dump($useable);
-        
-        dd($sellerPackages);
+        // On prend le poids d'une bouteille de vin tranquille par défaut, on verra plus tard pour du Champagne
+        $packageList = null;
+        foreach ($useable as $box) {
+            $packageList[] = [
+                'nb' => $box['nbPackages'],
+                'weight' => $box['sizes']['weightVT'],
+                'width' => $box['sizes']['width'],
+                'height' => $box['sizes']['height'],
+                'depth' => $box['sizes']['depth']
+            ];
+        }
+        // $truc = ['treg'],['vedfvq'];
+        // dd($packageList);
 
+        
+        return $packageList;
+    }
+
+    public function estimateShippingCosts(Order $order)
+    {        
+
+        $packageList = $this->selectPackage($order);
 
         $response = $this->client
         ->request(
@@ -105,7 +117,7 @@ class VignoblexportApi
                 'destAddress[postalCode]' => $order->getBuyer()->getAddresses()[0]->getZipCode(),
                 'destAddress[city]' => $order->getBuyer()->getAddresses()[0]->getCity(),
                 'destAddress[country]' => 'FR', //TODO
-                'packages[]' => $packages,
+                'packages' => $packageList,
                 'pickupDate' => '2020-07-28',  //TODO
                 'hourMini' => '10:10:00',
                 'hourLimit' => '18:00:00',
@@ -117,29 +129,18 @@ class VignoblexportApi
             ]
         ]);
 
-
-        // dump($response);
         $statusCode = $response->getStatusCode();
-        // dump($statusCode);
-        // $statusCode = 200
         $contentType = $response->getHeaders()['content-type'][0];
-        // dump($contentType);
-        // $contentType = 'application/json'
         $content = $response->getContent();
-        // dump($content);
-        // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
-        // dump($content[0]['price']);
-        // dump($content[0]['name']);
-        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-        // die;
+
         return $content[0];
     }
 
     public function createShipment(Order $order)
     {
 
-        $packages = $this->selectPackage($order);
+        $packageList = $this->selectPackage($order);
 
         foreach($order->getOrderProducts() as $orderProduct) {
 
@@ -211,7 +212,7 @@ class VignoblexportApi
                 // 'destAddress[licenceImportation]' => '',
                 // 'destAddress[destTax]' => '',
                 'destAddress[email]' => $order->getBuyer()->getEmail(),
-                'packages[]' => $packages,
+                'packages' => $packageList,
                 'carrier[]' => $carrier,
                 'details[]' => $details,
                 'insurance' => '0',
