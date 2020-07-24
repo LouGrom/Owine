@@ -8,7 +8,6 @@
         <div class=" mb-3"> 
             <div class="d-flex justify-content-between thead px-2 mb-2">
                 <h3>Informations personnelles</h3>
-                <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark"><i class="fas fa-pen"></i> Modifier</a>
             </div>
             <div class="col-9 ml-auto mr-auto mb-3">
                 <div class="row">
@@ -36,12 +35,18 @@
                     </div>
                 </div>
             </div>
+            <div>
+            <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark col align-self-end"><i class="fas fa-pen "></i> Modifier</a>
+            </div>
         </div>
 
         <div> 
-            <div class="d-flex justify-content-between thead px-2 mb-2">
+            <div class="text-center d-flex justify-content-between thead px-2 mb-2">
                 <h3>Adresses</h3>
+            </div>
+            <div>
                 <a href="{{ path('address_new') }}" class="btn btn-dark"> <i class="fas fa-plus"></i> Ajouter</a>
+            </div>
             </div>
             {% if app.user.addresses[0] is defined %}
             {% for address in app.user.addresses %}
@@ -58,21 +63,23 @@
                 <div class="col-sm">
                     <p>Code postal / Ville :</p>
                 </div>
-                    <div class="col-sm">
-                        <p>{{ address.zipCode }} - {{ address.city }}</p>
-                    </div>
+                <div class="col-sm">
+                    <p>{{ address.zipCode }} - {{ address.city }}</p>
                 </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Pays :</p>
-                    </div>
-                    <div class="col-sm">
-                        <p>{{ address.country }}</i></p>
-                    </div>
-                    <a href="{{ path('address_edit',{'id': address.id}) }}" class="btn btn-dark justify-content-end"> <i class="fas fa-pen"></i> Modifier</a>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Pays :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ address.country }}</p>                    
                 </div>
             </div>
         </div>
+        <div>
+            <a href="{{ path('address_edit',{'id': address.id}) }}" class="btn btn-dark col align-self-end"> <i class="fas fa-pen"></i> Modifier</a>
+        </div>
+    </div>
         {% endfor %}
         {% else %}
         <p>Aucune adresse n'a été trouvée, appuyez sur le bouton "Ajouter" pour... Bah ajouter une adresse</p>
