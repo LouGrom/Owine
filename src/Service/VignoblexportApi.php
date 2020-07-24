@@ -10,6 +10,8 @@ class VignoblexportApi
 {
     private $client;
 
+    private $selectedPackages = null;
+
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
@@ -17,6 +19,10 @@ class VignoblexportApi
 
     public function selectPackage(Order $order)
     {
+        if ($this->selectedPackages !== null) {
+            return $this->selectedPackages;
+        }
+
         $response = $this->client
         ->request(
             'GET',
@@ -92,12 +98,13 @@ class VignoblexportApi
         // $truc = ['treg'],['vedfvq'];
         // dd($packageList);
 
-        
+        $this->selectedPackages = $packageList;
+
         return $packageList;
     }
 
     public function estimateShippingCosts(Order $order)
-    {        
+    {
 
         $packageList = $this->selectPackage($order);
 
@@ -140,14 +147,14 @@ class VignoblexportApi
     public function createShipment(Order $order)
     {
 
-        $packageList = $this->selectPackage($order);
+        // $packageList = $this->selectPackage($order);
 
         foreach($order->getOrderProducts() as $orderProduct) {
 
             $product = [
                 'appellation' => $orderProduct->getProduct()->getAppellation()->getName(),
                 'origin' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getCountry(),
-                'description' => $orderProduct->getProduct()->getDescription(),
+                // 'description' => $orderProduct->getProduct()->getDescription(),
                 'capacity' => $orderProduct->getProduct()->getCapacity(),
                 'degre' => $orderProduct->getProduct()->getAlcoholVolume(),
                 'color' => $orderProduct->getProduct()->getColor()->getName(),
@@ -162,16 +169,16 @@ class VignoblexportApi
             $details[] = $product;
             
         }
-        $carrier = $this->estimateShippingCosts($order);
+        // $carrier = $this->estimateShippingCosts($order);
 
         $response = $this->client
         ->request(
             'POST',
-            'http://vignoblexport-fr.publish-it.fr/api/expedition/create',
+            'http://vignoblexport.fr/api/expedition/create',
             ['headers' => [
                 'X-AUTH-TOKEN' => $_ENV['VIGNOBLEXPORT_TOKEN'],
             ],
-            'query' => [
+            'body' => [
                 // 'expAddress[]' => '',
                 'expAddress[addressType]' => 'societe',
                 'expAddress[company]' => $order->getCompany()->getName(),
@@ -181,9 +188,8 @@ class VignoblexportApi
                 // 'expAddress[address2]' => '',
                 'expAddress[postalCode]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getZipCode(),
                 'expAddress[city]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getCity(),
-                'expAddress[country]' => 'FR',
-                'expAddress[state]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getProvince(),
-                'destAddress[country]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getIso(),
+                // 'expAddress[state]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getProvince(),
+                'expAddress[country]' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getIso(),
                 // 'expAddress[fda]' => '',
                 // 'expAddress[eori]' => '',
                 'expAddress[notify]' => '0',
@@ -203,7 +209,7 @@ class VignoblexportApi
                 'destAddress[postalCode]' => $order->getBuyer()->getAddresses()[0]->getZipCode(),
                 'destAddress[city]' => $order->getBuyer()->getAddresses()[0]->getCity(),
                 'destAddress[country]' => 'FR',
-                'destAddress[state]' => $order->getBuyer()->getAddresses()[0]->getProvince(),
+                // 'destAddress[state]' => $order->getBuyer()->getAddresses()[0]->getProvince(),
                 // 'destAddress[notify]' => '0',
                 // 'destAddress[saveAddress]' => '0',
                 // 'destAddress[addressName]' => '',
@@ -212,9 +218,31 @@ class VignoblexportApi
                 // 'destAddress[licenceImportation]' => '',
                 // 'destAddress[destTax]' => '',
                 'destAddress[email]' => $order->getBuyer()->getEmail(),
-                'packages' => $packageList,
-                'carrier[]' => $carrier,
-                'details[]' => $details,
+                // 'packages' => $packageList,
+                'packages[0][nb]' => 4,
+                'packages[0][weight]' => 20,
+                'packages[0][width]' => 50,
+                'packages[0][height]' => 40,
+                'packages[0][depth]' => 45,
+                'packages[1][nb]' => 1,
+                'packages[1][weight]' => 10,
+                'packages[1][width]' => 27,
+                'packages[1][height]' => 40,
+                'packages[1][depth]' => 39,
+                'carrier[pickupDate]' => '2020-07-28',
+                'carrier[name]' => 'dhl',
+                'carrier[service]' => 'DHL DOMESTIC EXPRESS',
+                'carrier[serviceCode]' => 'N',
+                'carrier[price]' => 126.49,
+                'carrier[surcharges]' => [],
+                'carrier[local]' => 'N',
+                'carrier[cutoff]' => '12:00:00',
+                'carrier[pickupTime]' => '14:00:00',
+                'carrier[deliveryDate]' => '2020-07-29',
+                'carrier[deliveryTime]' => '23:59:00',
+                'carrier[pickupAccessDelay]' => 120,
+                // 'carrier[saturdayDelivery]' => null,
+                'details' => $details,
                 'insurance' => '0',
                 // 'insurancePrice' => '',
                 'emailDutiesTaxes' => '0',
@@ -280,22 +308,22 @@ class VignoblexportApi
         ]);
 
 
-        dump($response);
+        // dd($response);
         $statusCode = $response->getStatusCode();
-        dump($statusCode);
-        $statusCode = 200;
+        // dump($statusCode);
+        // $statusCode = 200;
         // die;
         $contentType = $response->getHeaders()['content-type'][0];
-        // dump($contentType);
+        // dd($contentType);
         // $contentType = 'application/json'
         $content = $response->getContent();
-        // dump($content);
+        // dd($content);
         // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
         // dump($content[0]['price']);
         // dump($content[0]['name']);
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
         // die;
-        return $content[0];
+        return $content;
     }
 }
