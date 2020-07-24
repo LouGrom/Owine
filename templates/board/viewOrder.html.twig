@@ -13,7 +13,7 @@
                 <th>Date de la commande</th>
                 <td>{{ order.createdAt ? order.createdAt|date('d/m/Y') : '' }}</td>
             </tr>
-             <tr>
+            <tr>
                 <th>Code barre</th>
                 <td>{{ order.trackingNumber }}</td>
             </tr>
@@ -22,7 +22,7 @@
                 <td>{{ order.buyer.firstname }} {{ order.buyer.lastname }}</td>
             </tr>
             <tr>
-                <th>Addresse de facturation</th>
+                <th>Adresse de facturation</th>
                 <td>
                     
                     {{ order.buyer.addresses[0].street }}<br>
@@ -37,7 +37,7 @@
                 <td>{{ order.buyer.addresses[0].firstname }} {{ order.buyer.addresses[0].lastname }}</td>
             </tr>
             <tr>
-                <th>Addresse de livraison</th>
+                <th>Adresse de livraison</th>
                 <td>
                     {{ order.buyer.addresses[0].street }}<br/>
                     {{ order.buyer.addresses[0].zipCode }} {{ order.buyer.addresses[0].city }}<br/>
@@ -102,8 +102,7 @@
                     <td></td>
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
-                    {# !TODO à dynamiser plus tard  #}
-                    <td>30.00 €</td>
+                    <td>{{order.shippingCosts }}</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
@@ -115,8 +114,7 @@
                     <td></td>
                     <td style="font-weight:bold">Total</td>
                     <td></td>
-                    {# !TODO à dynamiser plus tard  #}
-                    <td>{{ order.totalAmount + 30 }} €</td>
+                    <td>{{ order.totalAmount + order.shippingCosts }} €</td>
                 </tr>
 
             </tbody>
