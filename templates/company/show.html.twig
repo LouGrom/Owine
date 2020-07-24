@@ -4,8 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-center mb-5">{{ company.name }}</h1>
 
+	<h1 class="text-center mb-5">{{ company.name }}</h1>
+	
 	<a href="{{ path('company_list') }}" class="btn btn-dark ml-4 mb-3">Retour à la liste des boutiques</a>
 
 	<div class="card-body">
@@ -34,8 +35,20 @@
 			</div>
 		</div>
 
-		<h2 class="mt-5 mb-4">Itinéraire</h2>
+		<h2 class="mt-5 mb-4">Adresse de notre boutique</h2>
+		<p class="card-text" id="companyAddress">
+			{{ company.seller[0].addresses[0].street~', '~company.seller[0].addresses[0].city~', '~company.seller[0].addresses[0].zipCode~', '~company.seller[0].addresses[0].country }}
+		</p>
 
+		<h2 class="mt-5 mb-4">Itinéraire</h2>
+		<div>
+		<strong>Mode de transport: </strong>
+		<select id="mode" onchange="calcRoute();">
+			<option value="DRIVING">En voiture</option>
+			<option value="WALKING">A pied</option>
+			<option value="BICYCLING">A velo</option>
+		</select>
+		</div>
 		<div id="map"></div>
 
 		<h2 class="mt-5 mb-4">Produits de la boutique</h2>
@@ -70,6 +83,6 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/itineraryGoogle.js') }}"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
 {% endblock %}
