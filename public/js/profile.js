@@ -1,6 +1,6 @@
 let app = {
 
-    apiBaseUrl: 'https://owine.shop/',
+    apiBaseUrl: 'https://owine.shop',
 
     init: function () {
         // console.log("Script initialisé");
