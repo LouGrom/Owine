@@ -3,36 +3,52 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
 
-    <h1 class="h3 mb-3 font-weight-normal">Connecte toi</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                <div class="text-center mt-4">
+                    <h1 class="h2">Connectez-vous</h1>
+                    <p class="lead">
+                        Saisissez vos identifiants pour continuer
+                    </p>
+                </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    
-        {# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html #}
-
-        <div class="checkbox mb-3 mt-2">
-            <label>
-                <input type="checkbox" name="_remember_me">Rester connecté
-            </label>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4">
+                                <form method="post">
+                                    {% if error %}
+                                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <label for="inputEmail">Email</label>
+                                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-lg" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword">Mot de passe</label>
+                                        <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" required>
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    </div>
+                                    <small>
+                                        <a href="{{ path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
+                                    </small>
+                                    <div>
+                                        <div class="custom-control custom-checkbox align-items-center">
+                                            <input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me" checked="">
+                                            <label class="custom-control-label text-small" name="_remember_me">Rester connecté</label>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <a href="index.html" class="btn btn-lg btn-dark">Connexion</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    
-
-    <button class="btn btn-dark mt-4" type="submit">
-        Connexion
-    </button>
-</form>
-
-<a class="btn btn-dark mt-4" href=" {{ path('app_forgot_password_request')}} ">J'ai oublié mon mot de passe</a>
+    </div>
+</div>
 {% endblock %}
