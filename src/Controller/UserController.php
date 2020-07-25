@@ -7,6 +7,7 @@ use App\Entity\Address;
 use App\Entity\Destination;
 use App\Form\AddressType;
 use App\Form\UserType;
+use App\Repository\AddressRepository;
 use App\Repository\DestinationRepository;
 use App\Repository\PackageRepository;
 use App\Repository\UserRepository;
@@ -20,7 +21,7 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="profile", methods={"GET"})
      */
-    public function index(UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
+    public function index(AddressRepository $addressRepository, UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
         $datas = [];
         if (in_array('ROLE_SELLER', $this->getUser()->getRoles())) {
@@ -36,9 +37,28 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{params}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/personal/edit", name="edit_user_infos", methods={"POST"})
      */
-    public function edit(Request $request, $params, DestinationRepository $destinationRepository): Response
+    public function changeInfos(Request $request)
+    {
+        
+        $user = $this->getUser();
+
+        $user->setFirstname($_POST['user']['firstname']);
+        $user->setLastname($_POST['user']['lastname']);
+        $user->setEmail($_POST['user']['email']);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_edit');
+    }
+
+    /**
+     * @Route("/edit", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, DestinationRepository $destinationRepository): Response
     {
         $user = new User();
         $destinations = $destinationRepository->findAll();
@@ -62,4 +82,5 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

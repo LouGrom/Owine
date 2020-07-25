@@ -19,6 +19,21 @@ class AddressRepository extends ServiceEntityRepository
         parent::__construct($registry, Address::class);
     }
 
+    /**
+    * @return Address[] Returns an array of Address objects
+    */
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('address')
+            ->andWhere('address.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Address[] Returns an array of Address objects
     //  */

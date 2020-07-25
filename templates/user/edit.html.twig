@@ -4,62 +4,207 @@
 
 {% block body %}
 
-    <h2 class="mt-3 mb-3 text-center">Modifier votre profil</h2>
-    {% if 'ROLE_SELLER' in app.user.roles %}
-    <h3>Adresse de votre entreprise</h3>
-    {% else %}
-    <h3>Vos informations personnelles</h3>
-    {% endif %}
-        {{ form_start(form) }}
-        <div class="col-9 ml-auto mr-auto mb-3">
-            {# <div id="locationField">
-                <input id="autocomplete"
-                      placeholder="Renseignez votre adresse"
-                      onFocus="geolocate()"
-                      type="text"/>
-                </input>
-            </div> #}
-          
-              <!-- Note: The address components in this sample are typical. You might need to adjust them for
-                        the locations relevant to your app. For more information, see
-                  https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-              -->
+<div class="container">
 
-              
-          
-              {# <table id="address">
-                <tr>
-                  <td>{{ form_row(form.city, {'attr': {'id': 'locality'}}) }}</td>
-                  <td class="label">Addresse</td>
-                  <td class="slimField"><input class="field" id="street_number" disabled="true"/></td>
-                  <td class="wideField" colspan="2"><input class="field" id="route" disabled="true"/></td>
-                </tr>
-                <tr>
-                  <td class="label">Ville</td>
-                  <td class="wideField" colspan="3"><input class="field" id="locality" disabled="true"/></td>
-                </tr>
-                <tr>
-                  <td class="label">Province</td>
-                  <td class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"/></td>
-                  <td class="label">Code Postal</td>
-                  <td class="wideField"><input class="field" id="postal_code" disabled="true"/></td>
-                
-                </tr>
-                <tr>
-                  <td class="label">Pays</td>
-                  <td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
-                </tr>
-              </table>
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('profile') }}">Mon profil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Paramètres</li>
+    </ol>
+  </nav>
+  <!-- /Breadcrumb -->
 
-              <div id="map"></div> #}
-
-              
-
-            {{ form_widget(form) }}
-        <button type="submit" class="btn btn-dark">Valider</button>
+  <div class="row gutters-sm">
+    <div class="col-md-4 d-none d-md-block">
+      <div class="card">
+        <div class="card-body">
+          <nav class="nav flex-column nav-pills nav-gap-y-1">
+            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+              <i class="far fa-user mr-2"></i>Mes informations personnelles</a>
+            {% if app.user.addresses[0] is defined %}
+              {% for address in app.user.addresses %}
+            <a href="#address" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-map-marker-alt mr-2"></i></i>Mes adresses</a>
+              {% endfor %}
+            {% endif %}
+            <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-key mr-2"></i>Mon mot de passe</a>
+            {% if 'ROLE_SELLER' in app.user.roles %}
+            <a href="#company" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-building mr-3"></i>Mon entreprise</a>
+            <a href="#dashboard" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-building mr-3"></i>Mon dasboard</a>
+            {% endif %}
+            {% if 'ROLE_BUYER' in app.user.roles %}
+            <a href="#cart" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-shopping-cart mr-2"></i>Mon panier
+            </a>
+            <a href="#order" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-truck mr-2"></i>Mes commandes
+              {% endif %}
+            </a>
+          </nav>
         </div>
-        
-        {{ form_end(form) }}
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header border-bottom mb-3 d-flex d-md-none">
+          <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+            
+            <li class="nav-item">
+              <a href="#profile" data-toggle="tab" class="nav-link has-icon active"><i class="far fa-user"></i></a>
+            </li>
+            {% if app.user.addresses[0] is defined %}
+              {% for address in app.user.addresses %}
+            <li class="nav-item">
+              <a href="#account" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-map-marker-alt"></i></a>
+            </li>
+              {% endfor %}
+            {% endif %}
+            <li class="nav-item">
+              <a href="#security" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-key"></i></a>
+            </li>
+            {% if 'ROLE_SELLER' in app.user.roles %}
+            <li class="nav-item">
+              <a href="#company" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-building mr-3"></i></a>
+            </li>
+            <li class="nav-item">
+              <a href="#dashboard" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-building mr-3"></i></a>
+            </li>
+            {% endif %}
+            {% if 'ROLE_BUYER' in app.user.roles %}
+            <li class="nav-item">
+              <a href="#cart" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-shopping-cart"></i></a>
+            </li>
+            <li class="nav-item">
+              <a href="#order" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-truck"></i></a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="card-body tab-content">
+          <div class="tab-pane active" id="profile">
+            <h6>INFORMATIONS PERSONNELLES</h6>
+            <hr>
+            <form method="post" action="{{ path('edit_user_infos') }}">
+              <div class="col-sm-12 col-md-9 ml-auto mr-auto mb-3">            
+      
+                  {{ form_row(form.firstname) }}
+                  {{ form_row(form.lastname) }}
+                  {{ form_row(form.email) }}
+              <button type="submit" class="btn btn-dark">Valider</button>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="account">
+            <h6>MES ADRESSES</h6>
+            <hr>
+            <form>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="kennethvaldez">
+                <small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
+              </div>
+              <hr>
+              <div class="form-group">
+                <label class="d-block text-danger">Delete Account</label>
+                <p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
+              </div>
+              <button class="btn btn-danger" type="button">Delete Account</button>
+            </form>
+          </div>
+          <div class="tab-pane" id="security">
+            <h6>Paramètres de sécurité</h6>
+            <hr>
+            {{ form_start(form) }}
+
+              {{ form_row(form.password)}}
+
+            {{ form_end(form) }}
+            
+          </div>
+          <div class="tab-pane" id="notification">
+            <h6>NOTIFICATION SETTINGS</h6>
+            <hr>
+            <form>
+              <div class="form-group">
+                <label class="d-block mb-0">Security Alerts</label>
+                <div class="small text-muted mb-3">Receive security alert notifications via email</div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+                  <label class="custom-control-label" for="customCheck1">Email each time a vulnerability is found</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
+                  <label class="custom-control-label" for="customCheck2">Email a digest summary of vulnerability</label>
+                </div>
+              </div>
+              <div class="form-group mb-0">
+                <label class="d-block">SMS Notifications</label>
+                <ul class="list-group list-group-sm">
+                  <li class="list-group-item has-icon">
+                    Comments
+                    <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
+                      <label class="custom-control-label" for="customSwitch1"></label>
+                    </div>
+                  </li>
+                  <li class="list-group-item has-icon">
+                    Updates From People
+                    <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                      <label class="custom-control-label" for="customSwitch2"></label>
+                    </div>
+                  </li>
+                  <li class="list-group-item has-icon">
+                    Reminders
+                    <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="">
+                      <label class="custom-control-label" for="customSwitch3"></label>
+                    </div>
+                  </li>
+                  <li class="list-group-item has-icon">
+                    Events
+                    <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch4" checked="">
+                      <label class="custom-control-label" for="customSwitch4"></label>
+                    </div>
+                  </li>
+                  <li class="list-group-item has-icon">
+                    Pages You Follow
+                    <div class="custom-control custom-control-nolabel custom-switch ml-auto">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch5">
+                      <label class="custom-control-label" for="customSwitch5"></label>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="billing">
+            <h6>BILLING SETTINGS</h6>
+            <hr>
+            <form>
+              <div class="form-group">
+                <label class="d-block mb-0">Payment Method</label>
+                <div class="small text-muted mb-3">You have not added a payment method</div>
+                <button class="btn btn-info" type="button">Add Payment Method</button>
+              </div>
+              <div class="form-group mb-0">
+                <label class="d-block">Payment History</label>
+                <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}
 
 {% block javascripts %}
