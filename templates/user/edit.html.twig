@@ -119,12 +119,15 @@
           <div class="tab-pane" id="security">
             <h6>Paramètres de sécurité</h6>
             <hr>
-            {{ form_start(form) }}
-
-              {{ form_row(form.password)}}
-
-            {{ form_end(form) }}
-            
+            <form method="post" action="{{ path('edit_user_password') }}">
+              <div class="col-sm-12 col-md-9 ml-auto mr-auto mb-3">            
+                <div class="form-group" data-children-count="1">
+                <label for="user_firstname" class="required">Mot de passe actuel</label>
+                <input type="password" id="user_oldPassword" name="user[oldPassword]" required="required" class="form-control"></div>
+                <span style="float: left">Nouveau&nbsp;</span> {{ form_row(form.password)}}
+              <button type="submit" class="btn btn-dark">Valider</button>
+              </div>
+            </form>
           </div>
           <div class="tab-pane" id="notification">
             <h6>NOTIFICATION SETTINGS</h6>

@@ -56,6 +56,37 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/password/edit", name="edit_user_password", methods={"POST"})
+     */
+    public function changePassword(Request $request)
+    {
+        $user = $this->getUser();
+        $oldPassword = $_POST['user']['oldPassword'];
+        $newPassword1 = $_POST['user']['password']['first'];
+        $newPassword2 = $_POST['user']['password']['second'];
+        if(password_verify($oldPassword, $user->getPassword())) {
+
+            if($newPassword1 == $newPassword2) {
+
+                $user->setPassword(password_hash($newPassword1, PASSWORD_DEFAULT));
+            
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash("success", "Votre mot de passe a bien été modifié");
+            } else {
+
+                $this->addFlash("danger", "Vous devez taper deux fois votre nouveau mot de passe");
+            }
+        } else {
+
+            $this->addFlash("danger", "Mauvais mot de passe (banane)");
+        }
+
+        return $this->redirectToRoute('user_edit');
+    }
+
+    /**
      * @Route("/edit", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, DestinationRepository $destinationRepository): Response
