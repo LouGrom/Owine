@@ -15,8 +15,8 @@
         <!-- FontAwesome -->
         <link rel="stylesheet" href="{{ asset('css/font-awesome/css/all.css')}}">
         <!-- Font Cooper Hewitt-->
-        <link href="https://fr.allfont.net/cache/css/cooperhewitt-light.css" rel="stylesheet" type="text/css" />
-        <link href="https://fr.allfont.net/cache/css/cooperhewitt-book.css" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/fonts/CooperHewitt-Light/CooperHewitt-Light.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/fonts/CooperHewitt-Book/CooperHewitt-Book.css') }}" rel="stylesheet" type="text/css" />
         <!-- Font Quattrocento -->
         <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
 
@@ -85,7 +85,7 @@
 
               {% if app.user %}
                 <div class="mr-3" id="login-name">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark">Déconnexion</a>
+                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark ml-3">Déconnexion</a>
                 </div>
                 {% else %}
                 <div class="mr-3">
@@ -97,8 +97,8 @@
               {% endif %}
 
               <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('search') }}">
-                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control" name="search">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
+                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control mr-2" name="search">
+                <button type="submit" class="btn btn-outline-dark my-2 my-sm-0">Rechercher</button>
               </form>
 
 

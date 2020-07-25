@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class AddressType extends AbstractType
 {
@@ -40,6 +41,9 @@ class AddressType extends AbstractType
             ])
             ->add('phoneNumber', TextType::class, [
                 'label' => 'Téléphone'
+            ])
+            ->add('iso', HiddenType::class, [
+                'label' => 'Code ISO'
             ])
         ;
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a765ee230361cf74539ae3dc1495678e",
+    "content-hash": "8dc193175535b4cbf8e295e68272bdf0",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1641,6 +1641,58 @@
                 "zf"
             ],
             "time": "2020-05-20T16:45:56+00:00"
+        },
+        {
+            "name": "mledoze/countries",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:mledoze/countries.git",
+                "reference": "b5d7432868c0b27956c66072e2a5c003b78f6c52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mledoze/countries/zipball/b5d7432868c0b27956c66072e2a5c003b78f6c52",
+                "reference": "b5d7432868c0b27956c66072e2a5c003b78f6c52",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.33",
+                "symfony/console": "^2.8|^3.4|~4.0|^5.0",
+                "symfony/yaml": "^2.8|^3.4|~4.0|^5.0"
+            },
+            "require-dev": {
+                "roave/security-advisories": "dev-master"
+            },
+            "bin": [
+                "countries.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MLD\\": "src/MLD"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ODbL-1.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mohammed Le Doze"
+                }
+            ],
+            "description": "List of world countries in JSON, CSV, XML and Yaml",
+            "homepage": "https://mledoze.github.io/countries/",
+            "keywords": [
+                "countries",
+                "csv",
+                "json",
+                "world",
+                "xml",
+                "yaml"
+            ],
+            "time": "2020-03-30T14:47:04+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -1,6 +1,6 @@
 let app = {
 
-    apiBaseUrl: 'http://localhost:8000',
+    apiBaseUrl: 'https://owine.shop',
 
     init: function () {
         // console.log("Script initialisé");

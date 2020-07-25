@@ -15,13 +15,14 @@
 {{ form_row(form.zipCode, { 'id': 'postal_code'} ) }}
 {{ form_row(form.province, { 'id': 'administrative_area_level_1'} ) }}
 {{ form_row(form.country, { 'id': 'country'} ) }}
+{{ form_row(form.iso, { 'id': 'iso'} ) }}
 
 </table>
 
 
 	<table id="address" hidden>
 		<tr>
-			<td class="label">Addresse</td>
+			<td class="label">Adresse</td>
 			<td class="slimField"><input class="field street_number" id="street_number" disabled="true"/></td>
 			<td class="wideField" colspan="2"><input class="field route" id="route" disabled="true"/></td>
 		</tr>
@@ -48,6 +49,6 @@
 {{ form_end(form) }}
 
 {% block javascripts %}
-  <script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&amp;callback=initMap"></script>
+	<script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&amp;callback=initMap"></script>
 {% endblock %}

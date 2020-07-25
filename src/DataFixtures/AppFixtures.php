@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
         $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         
         // On crée une company à notre seller@mail.fr
-        $company->setName($faker->company." ".$faker->companySuffix);
+        $company->setName('Domaine de la Romané-Truc');
         $company->setSiret($faker->siret);
         $company->setVat($faker->vat);
         $company->setPicture($faker->imageUrl(450,275,['wine']));

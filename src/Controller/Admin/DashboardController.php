@@ -74,10 +74,10 @@ class DashboardController extends AbstractDashboardController
             // Point de menu concernant les Utilisateurs
             MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
 
-             
+            
             // Section invisible sur le front mais servant a créer un espace
             MenuItem::section('', ''),
-           
+        
              // Point de menu concernant les Adresses 
             MenuItem::linkToCrud('Address', 'fa fa-house-user', Address::class),
 
@@ -95,7 +95,7 @@ class DashboardController extends AbstractDashboardController
 
             // Point de menu concernant les Categories de produit
             MenuItem::linkToCrud('Category', 'fa fa-tags', ProductCategory::class),
-           
+        
             // Point de menu concernant les Coleurs de produit (ex.: couleur du vin)
             MenuItem::linkToCrud('Color', 'fa fa-tint', Color::class),
         
@@ -105,10 +105,10 @@ class DashboardController extends AbstractDashboardController
 
             // Point de menu concernant les Commandes 
             MenuItem::linkToCrud('Destination', 'fa fa-map-marked-alt', Destination::class),
-           
+        
             // Point de menu concernant les Commandes intrégrant la liste des produits
             MenuItem::linkToCrud('Order', 'fa fa-list-alt', Order::class),
-           
+        
             // Point de menu concernant le Conditionnement des produits
             MenuItem::linkToCrud('Package', 'fa fa-box-open', Package::class),
 
@@ -117,14 +117,13 @@ class DashboardController extends AbstractDashboardController
 
             // Point de menu concernant les Types de produit
             MenuItem::linkToCrud('Type', 'fa fa-th-large', Type::class),
-           
+        
                 
             MenuItem::section('', ''),
             // point de menu pour la deconnexion
-           
+        
             MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
             
-           
         ];
 
     }

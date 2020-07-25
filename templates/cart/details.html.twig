@@ -10,33 +10,36 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Addresse de facturation</th>
-                <td>
-                    
+                <th>Adresse de facturation</th>
+                <td>         
                     {{ app.user.addresses[0].street }}<br>
                     {{ app.user.addresses[0].zipCode }} {{ app.user.addresses[0].city }}, 
                     {{ app.user.addresses[0].country }}
-                    
                 </td>
+                <td></td>
             </tr>
 
             <tr>
-                <th>Addresse de livraison</th>
+                <th>Adresse de livraison</th>
                 <td>
                     {{ app.user.addresses[0].street }}<br/>
                     {{ app.user.addresses[0].zipCode }} {{ app.user.addresses[0].city }}, 
                     {{ app.user.addresses[0].country }}
+                </td>
+                <td>
+                    <a class="btn btn-dark" href="{{ path('address_new') }}">Changer d'adresse</a>
                 </td>
             </tr>
 
             <tr>
                 <th>Transporteur : </th>
                 <td>{{ order.carrier }}</td>
+                <td></td>
             </tr>
         </tbody>
     </table>
     {% else %}
-    <p>Aucune adresse n'a été trouvée, vous pouvez en renseigner une <a href="{{ path('address_new') }}">ICI</a></p>
+    <p>Aucune adresse n'a été trouvée, vous pouvez en renseigner une <a class="btn btn-dark" href="{{ path('address_new') }}">ICI</a></p>
     {% endif %}
     <h2>Détails de la commande</h2>
 
@@ -79,7 +82,6 @@
                     <td colspan="4"></td>
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
-                    {# !TODO à dynamiser plus tard  #}
                     <td class="text-right">{{order.shippingCosts }} €</td>
                 </tr>
                 <tr>
@@ -87,7 +89,6 @@
                     <td colspan="4"></td>
                     <td style="font-weight:bold">Total</td>
                     <td></td>
-                    {# !TODO à dynamiser plus tard  #}
                     <td class="text-right">{{ totalCartAmount + order.shippingCosts }} €</td>
                 </tr>
 
