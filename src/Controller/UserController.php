@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="profil", methods={"GET"})
+     * @Route("/user", name="profile", methods={"GET"})
      */
     public function index(UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
@@ -54,7 +54,7 @@ class UserController extends AbstractController
 
             $this->addFlash("success", "L'utilisateur a bien été modifié");
 
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('profile');
         }
 
         return $this->render('user/edit.html.twig', [

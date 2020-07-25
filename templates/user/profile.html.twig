@@ -40,10 +40,21 @@
             <a href="{{ path('user_edit',{'params': 'personal'}) }}" class="btn btn-dark col align-self-end"><i class="fas fa-pen "></i> Modifier</a>
             </div>
         </div>
-    {# Adresse de l'utilisateurs#}
-        <div> 
-            <div class="text-center d-flex justify-content-between thead px-2 mb-2">
-                <h3>Adresses</h3>
+        <div class="d-flex justify-content-between">
+            <h3>Mes adresses</h3>
+            <a href="{{ path('address_new') }}" class="btn btn-dark"> <i class="fas fa-plus"></i> Ajouter</a>
+        </div>
+        {% if app.user.addresses[0] is defined %}
+        {% for address in app.user.addresses %}
+        <div class="col-9 ml-auto mr-auto mb-3">
+            <div class="row">
+                <div class="col-sm">
+                    <p>Adresse :</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ address.street }}</p>
+                </div>
+
             </div>
             <div>
                 <a href="{{ path('address_new') }}" class="btn btn-dark"><i class="fas fa-plus"></i> Ajouter</a>
@@ -87,6 +98,7 @@
                 {% endif %}
                 {% if 'ROLE_SELLER' in app.user.roles %}
             </div>
+                <a href="{{ path('address_edit',{'id': address.id}) }}" class="btn btn-dark" style="float: right; position: relative; top: -45px"> <i class="fas fa-pen"></i> Modifier</a>
         </div>
     {#Préférences d'expédition#}
         <div>

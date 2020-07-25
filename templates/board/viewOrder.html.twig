@@ -102,7 +102,7 @@
                     <td></td>
                     <td style="font-weight:bold">Frais de port</td>
                     <td></td>
-                    <td>{{order.shippingCosts }}</td>
+                    <td>{{order.shippingCosts }} €</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
@@ -124,5 +124,6 @@
     <div class="d-flex">
 
         {{ include('order/_delete_form.html.twig') }}
+        <a class="btn btn-dark" href="{{ path('order_ship',{'id':order.id}) }}">Expédier la commande</a>
     </div>
 {% endblock %}

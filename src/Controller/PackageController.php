@@ -64,7 +64,6 @@ class PackageController extends AbstractController
         $company->addPackage($package);
         $entityManager->flush();
 
-        $this->addFlash("success","Le format de carton a bien été ajouté à vos préférences d'expédition !");
         return new JsonResponse(Response::HTTP_OK);
     }
 
