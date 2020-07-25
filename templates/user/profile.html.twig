@@ -3,185 +3,142 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-<div class="col-9 m-auto"></div>
-    <h2 class="mt-3 mb-3 text-center content-between">Mon profil</h2>
-    {# infos personnelles de l'utilisateur #}
-        <div class=" mb-3"> 
-            <div class="d-flex justify-content-between thead px-2 mb-2">
-                <h3>Informations personnelles</h3>
-            </div>
-            <div class="col-9 ml-auto mr-auto mb-3">
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Prénom :</p>
-                    </div>
-                    <div class="col-sm">
-                        <p>{{ app.user.firstname }}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Nom :</p>
-                    </div>
-                    <div class="col-sm">
-                        <p>{{ app.user.lastname }}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>Mot de passe :</p>
-                    </div>
-                    <div class="col-sm">
-                        <p><i class="fas fa-key"></i></p>
-                    </div>
-                </div>
-            </div>
-            <div>
-            <a href="{{ path('user_edit') }}" class="btn btn-dark col align-self-end"><i class="fas fa-pen "></i> Modifier</a>
-            </div>
+
+<div class="container">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('profile') }}">Mon profil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Paramètres</li>
+    </ol>
+  </nav>
+  <!-- /Breadcrumb -->
+
+  <div class="row gutters-sm">
+    <div class="col-md-4 d-none d-md-block">
+      <div class="card">
+        <div class="card-body">
+          <nav class="nav flex-column nav-pills nav-gap-y-1">
+            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+              <i class="far fa-user mr-2"></i>Mes informations personnelles</a>
+              <a href="#address" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                <i class="fas fa-map-marker-alt mr-2"></i></i>Mes adresses</a>
+            <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-key mr-2"></i>Mon mot de passe</a>
+            {% if 'ROLE_SELLER' in app.user.roles %}
+            <a href="{{ path('company_profile') }}" class="nav-item nav-link has-icon nav-link-faded">
+              <i class="fas fa-building mr-3"></i>Mon entreprise</a>
+            {% endif %}
+            </a>
+          </nav>
         </div>
-        <div class="d-flex justify-content-between">
-            <h3>Mes adresses</h3>
-            <a href="{{ path('address_new') }}" class="btn btn-dark"> <i class="fas fa-plus"></i> Ajouter</a>
-        </div>
-        {% if app.user.addresses[0] is defined %}
-            {% for address in app.user.addresses %}
-                <div class="col-9 ml-auto mr-auto mb-3">
-                        <div class="row">
-                            <div class="col-sm">
-                                <p>Adresse :</p>
-                            </div>
-                                <div class="col-sm">
-                                    <p>{{ address.street }}</p>
-                                </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <p>Code postal / Ville :</p>
-                            </div>
-                            <div class="col-sm">
-                                <p>{{ address.zipCode }} - {{ address.city }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <p>Pays :</p>
-                            </div>
-                            <div class="col-sm">
-                                <p>{{ address.country }}</p>                    
-                            </div>
-                        </div>
-                </div>
-                <a href="{{ path('address_edit',{'id': address.id}) }}" class="btn btn-dark col align-self-end mb-3"> <i class="fas fa-pen"></i> Modifier</a>
-                
-            {% endfor %}
-        {# Si l'utilisateur n'a pas d'adresse #}
-        {% else %}
-            <p>Aucune adresse n'a été trouvée, appuyez sur le bouton "Ajouter" pour... Bah ajouter une adresse</p>
-        {% endif %}
-
-
-        {% if 'ROLE_SELLER' in app.user.roles %}
-        
-        {#Préférences d'expédition#}
-        <div>
-            <div class="text-center d-flex justify-content-between thead px-2 mb-2">               
-                <h3>Mes préférences d'expédition</h3>
-            </div> 
-            <div class="col-9 m-auto mb-3">
-                <h4 class="mb-3 border-bottom">Destinations</h4>
-            {# Div principale des Destinations#}
-                <div class="d-md-flex justify-content-between" id="destinations">
-                    <div id="national">
-                        <p class="h5 text-center">National</p>
-                        {% for destination in destinations %}
-                        {% if destination.zone == 'National' %}
-                        <div class="ml-5 ml-md-0">
-                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                            <label for="{{ destination.country }}">{{ destination.country }}</label>
-                        </div>
-                    <div>
-                </div>
-                        {% endif %}
-                        {% endfor %}
-                </div>
-                {#Europe#}
-                <div id="europe">
-                    <p class="h5 text-center">Europe</p>
-                    {% for destination in destinations %}
-                        {% if destination.zone == 'Europe' %}
-                        <div class="ml-5">
-                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{destination.id}}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                            <label for="{{ destination.country }}">{{ destination.country }}</label>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                {#Monde#}
-                <div id="world">
-                    <p class="h5 text-center">Monde</p>
-                    {% for destination in destinations %}
-                        {% if destination.zone == 'World' %}
-                        <div class="ml-5">
-                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                            <label for="{{ destination.country }}">{{ destination.country }}</label>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div> 
-
-    {# -------------------------------------------- Package -------------------------------------------------#}
-            <div>        
-            <h4 class="mt-4 border-bottom">Colisage :</h4>
-            </div>
-            <div>
-            <button class="btn btn-dark addPackage mb-3" id="add"><i class="fas fa-plus"></i> Ajouter</button>
-            </div>
-
-            <div class="table-content table-responsive">
-                <table class="table table-striped text-center" id="table-list">
-                    <thead class="thead">
-                        <tr>
-                            <th hidden>id</th>
-                            <th>Nombre de bouteilles</th>
-                            <th>Hauteur (en cm)</th>
-                            <th>longueur (en cm)</th>
-                            <th>Largeur (en cm)</th>
-                            <th>Poids (en kg)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for package in packages %}
-                        <tr class="package">
-                            <td class="packageId" hidden>{{ package.id }}</td>
-                            <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
-                            <td class="height">{{ package.height }}</td>
-                            <td class="length">{{ package.length }}</td>
-                            <td class="width">{{ package.width }}</td>
-                            <td class="weight">{{ package.weight }}</td>
-                        </tr>
-                        {% endfor %}
-                        {% if packages is empty %}
-                        <tr>
-                            <td class="packageId" hidden></td>
-                            <td class="bottleQuantity"></td>
-                            <td class="height"></td>
-                            <td class="length"></td>
-                            <td class="width"></td>
-                            <td class="weight"></td>
-                        </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      </div>
     </div>
-    {% endif %}
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header border-bottom mb-3 d-flex d-md-none">
+          <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+            
+            <li class="nav-item">
+              <a href="#profile" data-toggle="tab" class="nav-link has-icon active"><i class="far fa-user"></i></a>
+            </li>
+            {% if app.user.addresses[0] is defined %}
+              {% for address in app.user.addresses %}
+            <li class="nav-item">
+              <a href="#address" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-map-marker-alt"></i></a>
+            </li>
+              {% endfor %}
+            {% endif %}
+            <li class="nav-item">
+              <a href="#security" data-toggle="tab" class="nav-link has-icon"><i class="fas fa-key"></i></a>
+            </li>
+            {% if 'ROLE_SELLER' in app.user.roles %}
+            <li class="nav-item">
+              <a href="{{ path('company_profile')}}" class="nav-link has-icon"><i class="fas fa-building"></i></a>
+            </li>
+            {% endif %}
+
+          </ul>
+        </div>
+        <div class="card-body tab-content">
+          <div class="tab-pane active" id="profile">
+            <h6>INFORMATIONS PERSONNELLES</h6>
+            <hr>
+            <form method="post" action="{{ path('edit_user_infos') }}">
+              <div class="col-sm-12 col-md-9 ml-auto mr-auto mb-3">            
+      
+                  {{ form_row(form.firstname) }}
+                  {{ form_row(form.lastname) }}
+                  {{ form_row(form.email) }}
+              <button type="submit" class="btn btn-dark">Valider</button>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="address">
+            <h6>MES ADRESSES</h6>
+            <hr>  
+              <div class="row">
+              {% for address in app.user.addresses %}
+                <div class="col-md-6">
+                  <div class="bg-white card addresses-item mb-4 border border-primary shadow">
+                    <div class="gold-members p-4">
+                      <div class="media">
+                        <div class="mr-3"><i class="icofont-ui-home icofont-3x"></i></div>
+                        <div class="media-body">
+                          <h6 class="mb-1 text-secondary">
+                            {% if 'DELIVERY_ADDRESS' in address.type %}
+                              <span class="badge badge-secondary">LIVRAISON</span>
+                            {% endif %}
+                            {% if 'BILLING_ADDRESS' in address.type %}
+                              <span class="badge badge-secondary">FACTURATION</span>
+                            {% endif %}
+                            {% if 'COMPANY_ADDRESS' in address.type %}
+                              <span class="badge badge-secondary">ENTREPRISE</span>
+                            {% endif %}
+                          </h6>
+                          <p class="text-black">{{ address.street }}, {{ address.city }} {{ address.zipCode }}, {{ address.province }}  {{ address.country }}
+                          </p>
+                          <div class="d-flex">
+                            <a href="{{ path('address_edit',{'id': address.id}) }}" class="btn mr-2">
+                              <i class="fas fa-edit"></i>
+                            </a>
+                              {{ include('address/_delete_form.html.twig') }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              </div>
+            <a href="{{ path('address_new') }}" class="btn btn-dark">Ajouter</a>
+            
+          </div>
+
+          <div class="tab-pane" id="security">
+            <h6>PARAMÈTRES DE SÉCURITÉ</h6>
+            <hr>
+            <form method="post" action="{{ path('edit_user_password') }}">
+              <div class="col-sm-12 col-md-9 ml-auto mr-auto mb-3">            
+                <div class="form-group" data-children-count="1">
+                <label for="user_firstname" class="required">Mot de passe actuel</label>
+                <input type="password" id="user_oldPassword" name="user[oldPassword]" required="required" class="form-control"></div>
+                <span style="float: left">Nouveau&nbsp;</span> {{ form_row(form.password)}}
+              <button type="submit" class="btn btn-dark">Valider</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
-</div> 
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/profile.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/google.js') }}"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
 {% endblock %}

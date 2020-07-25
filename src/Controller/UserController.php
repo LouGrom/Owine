@@ -38,7 +38,7 @@ class UserController extends AbstractController
             $datas['packages'] = $packageRepository->findAllByBottleQuantity($companyId);
         }
         
-        return $this->render('user/edit.html.twig', $datas);
+        return $this->render('user/profile.html.twig', $datas);
     }
 
     /**
