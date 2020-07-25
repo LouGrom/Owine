@@ -121,7 +121,6 @@ class Address
     public function setCountry(string $country): self
     {
         $this->country = $country;
-
         return $this;
     }
 

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Company;
+use App\Form\CompanyType;
 use App\Repository\CompanyRepository;
+use App\Repository\DestinationRepository;
+use App\Repository\PackageRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +29,53 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="company_show", methods={"GET"})
+     * @Route("/infos/edit", name="edit_company")
+     */
+    public function editCompany()
+    {
+        $formValues = $_POST['company'];
+        $company = $this->getUser()->getCompany();
+
+        if(!empty($formValues['name'])) {
+            $company->setName($formValues['name']);
+        }
+        if(!empty($formValues['siret'])) {
+            $company->setSiret($formValues['siret']);
+        }
+        if (!empty($formValues['vat'])) {
+            $company->setVat($formValues['vat']);
+        }
+        if (!empty($formValues['presentation'])) {
+            $company->setPresentation($formValues['presentation']);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($company);
+        $entityManager->flush();
+
+        $this->addFlash("success", "Les informations de votre entreprise ont bien été modifiées");
+
+        return $this->redirectToRoute('company_profile');
+    }
+
+    /**
+     * @Route("/profile", name="company_profile", methods={"GET"})
+     */
+    public function profile(DestinationRepository $destinationRepository, PackageRepository $packageRepository)
+    {
+
+        $company = $this->getUser()->getCompany();
+        $form = $this->createForm(CompanyType::class, $company);
+        
+        return $this->render('company/profile.html.twig', [
+            'destinations' => $destinationRepository->findAll(),
+            'packages' => $packageRepository->findAllByBottleQuantity($company->getId()),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/show", name="company_show", methods={"GET"})
      */
     public function sortBySeller(ProductRepository $productRepository, CompanyRepository $companyRepository, $id)
     {
@@ -42,7 +91,7 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="company_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="company_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Company $company): Response
     {
@@ -56,5 +105,5 @@ class CompanyController extends AbstractController
 
         return $this->redirectToRoute('company_index');
     }
-    
+
 }

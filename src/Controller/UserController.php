@@ -7,6 +7,7 @@ use App\Entity\Address;
 use App\Entity\Destination;
 use App\Form\AddressType;
 use App\Form\UserType;
+use App\Repository\AddressRepository;
 use App\Repository\DestinationRepository;
 use App\Repository\PackageRepository;
 use App\Repository\UserRepository;
@@ -20,25 +21,80 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="profile", methods={"GET"})
      */
-    public function index(UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
+    public function index(AddressRepository $addressRepository, UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserType::class, $user);
+
         $datas = [];
-        if (in_array('ROLE_SELLER', $this->getUser()->getRoles())) {
+        $datas['form'] = $form->createView();
+
+        if (in_array('ROLE_SELLER', $user->getRoles())) {
             $company = $this->getUser()->getCompany();
             $companyId = $company->getId();
-            $datas = [
-                'destinations' => $destinationRepository->findAll(),
-                'packages' => $packageRepository->findAllByBottleQuantity($companyId)
-            ];
+            $datas['destinations'] =  $destinationRepository->findAll();
+            $datas['packages'] = $packageRepository->findAllByBottleQuantity($companyId);
         }
         
         return $this->render('user/profile.html.twig', $datas);
     }
 
     /**
-     * @Route("/{params}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/personal/edit", name="edit_user_infos", methods={"POST"})
      */
-    public function edit(Request $request, $params, DestinationRepository $destinationRepository): Response
+    public function changeInfos(Request $request)
+    {
+        
+        $user = $this->getUser();
+
+        $user->setFirstname($_POST['user']['firstname']);
+        $user->setLastname($_POST['user']['lastname']);
+        $user->setEmail($_POST['user']['email']);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_edit');
+    }
+
+    /**
+     * @Route("/password/edit", name="edit_user_password", methods={"POST"})
+     */
+    public function changePassword(Request $request)
+    {
+        $user = $this->getUser();
+        $oldPassword = $_POST['user']['oldPassword'];
+        $newPassword1 = $_POST['user']['password']['first'];
+        $newPassword2 = $_POST['user']['password']['second'];
+        if(password_verify($oldPassword, $user->getPassword())) {
+
+            if($newPassword1 == $newPassword2) {
+
+                $user->setPassword(password_hash($newPassword1, PASSWORD_DEFAULT));
+            
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash("success", "Votre mot de passe a bien été modifié");
+            } else {
+
+                $this->addFlash("danger", "Vous devez taper deux fois votre nouveau mot de passe");
+            }
+        } else {
+
+            $this->addFlash("danger", "Mauvais mot de passe (banane)");
+        }
+
+        return $this->redirectToRoute('user_edit');
+    }
+
+    /**
+     * @Route("/edit", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, DestinationRepository $destinationRepository): Response
     {
         $user = new User();
         $destinations = $destinationRepository->findAll();
@@ -62,4 +118,5 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

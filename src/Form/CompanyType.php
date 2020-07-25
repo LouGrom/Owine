@@ -16,18 +16,18 @@ class CompanyType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom de votre société *'
+                'label' => 'Nom de votre société'
             ])
             ->add('siret', TextType::class, [
-                'label' => 'Numéro de SIRET de votre société *'
+                'label' => 'Numéro de SIRET de votre société'
             ])
             ->add('vat', TextType::class, [
-                'label' => 'Numéro de TVA de votre société *'
+                'label' => 'Numéro de TVA de votre société'
             ])
-            ->add('picture', FileType::class, [
-                'label' => 'Logo de votre société ou photo du domaine',
-                'required' => false
-            ])
+            // ->add('picture', FileType::class, [
+            //     'label' => 'Logo de votre société ou photo du domaine',
+            //     'required' => false
+            // ])
             ->add('presentation', TextareaType::class, [
                 'label' => 'Enfin, présentez votre entreprise en quelques lignes :'
             ])
