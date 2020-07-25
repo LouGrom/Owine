@@ -23,17 +23,22 @@ class UserController extends AbstractController
      */
     public function index(AddressRepository $addressRepository, UserRepository $userRepository, DestinationRepository $destinationRepository, PackageRepository $packageRepository):Response
     {
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserType::class, $user);
+
         $datas = [];
-        if (in_array('ROLE_SELLER', $this->getUser()->getRoles())) {
+        $datas['form'] = $form->createView();
+
+        if (in_array('ROLE_SELLER', $user->getRoles())) {
             $company = $this->getUser()->getCompany();
             $companyId = $company->getId();
-            $datas = [
-                'destinations' => $destinationRepository->findAll(),
-                'packages' => $packageRepository->findAllByBottleQuantity($companyId)
-            ];
+            $datas['destinations'] =  $destinationRepository->findAll();
+            $datas['packages'] = $packageRepository->findAllByBottleQuantity($companyId);
         }
         
-        return $this->render('user/profile.html.twig', $datas);
+        return $this->render('user/edit.html.twig', $datas);
     }
 
     /**
