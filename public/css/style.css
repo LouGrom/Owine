@@ -187,3 +187,29 @@ height: 400px;
     border: 3px solid #352025;
     border-radius: .25rem;
 }
+
+/*  -------------------------------- Profile --------------------------------- */
+
+.breadcrumb {
+    background-color: #F4EBDD;
+    border: 1px #6e081f solid;
+}
+
+.breadcrumb-item>a {
+    color: #6e081f;
+    font-weight: bold;
+}
+
+.breadcrumb-item.active {
+    color: #897A73;
+}
+
+.nav-pills>a.active {
+    background-color: #6e081f !important;
+    color: #F4EBDD
+}
+
+.nav-pills>a {
+    color: #6e081f;
+}
+
