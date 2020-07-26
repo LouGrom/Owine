@@ -139,6 +139,7 @@ strong {
     justify-content: center;
 }
 
+
 /*  -------------------------------- Company --------------------------------- */
 
 .show_company{
@@ -146,6 +147,12 @@ strong {
     padding-top : 2em;
     padding-bottom: 1em;
 }
+@media (min-width: 576px) {
+  #company_picture{
+    float: right;
+    margin: 0px 16px 0px 16px!important;
+  }
+  }
 
 /*  -------------------------------- Google Map --------------------------------- */
 #map {
@@ -212,7 +219,12 @@ height: 400px;
 .nav-pills>a {
     color: #6e081f;
 }
-
+.addresses-item{
+  border: 1px #6e081f solid!important;
+}
+.addresses-item .btn{
+  border: 1px #352025 solid!important;
+}
 /*  -------------------------------- Profile --------------------------------- */
 
 /**
@@ -729,15 +741,4 @@ height: 400px;
 .shop-conf__heading + p {
   margin-bottom: 100px;
 }
-.addresses-item{
-  border: 1px #6e081f solid!important;
-}
-.addresses-item .btn{
-  border: 1px #352025 solid!important;
-}
-@media (min-width: 576px) {
-#company_picture{
-  float: right;
-  margin: 0px 16px 16px 16px;
-}
-}
+
