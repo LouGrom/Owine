@@ -4,12 +4,10 @@ let appCart = {
 
     init: function(){
 
-        var qruantityInput = document.querySelector('#quantity');
+        var quantityInput = document.querySelector('#quantity');
         var quantityForm = document.querySelector('#quantityForm');
         var stockQuantity = document.querySelector('#stockQuantity');
-        console.log('Quantité max : ' + stockQuantity.innerText)
-        console.log(quantityForm)
-        console.log(appCart.addCartBaseLink)
+        console.log('Quantité max : ' + stockQuantity.innerText);
 
         quantityForm.addEventListener('submit', appCart.handleFormSubmit);
         quantityInput.addEventListener('change', appCart.isChanged);
