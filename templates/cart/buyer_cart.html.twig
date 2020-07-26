@@ -28,7 +28,7 @@
                 <tbody>
                     {% for cart in carts %}
                         {% if cart.product.company == company %}    
-                        <tr>
+                        <tr class="product-row" id="{{ cart.id }}">
                             <td>
                                 <div class="product-item">
                                     <a class="product-thumb" href="{{ path('product_show_shop', {'id': cart.product.id}) }}"><img src="{{ cart.product.picture }}" alt="{{ cart.product.appellation.name }}"></a>
@@ -41,12 +41,12 @@
                             </td>
                             <td class="text-center">
                                 <div class="count-input">
-                                    <input value="{{ cart.quantity }}" type="number" style="width: 60px;">
+                                    <input class="quantity" value="{{ cart.quantity }}" type="number" style="width: 60px;">
                                 </div>
                             </td>
                             {% set totalQuantityByCompany = totalQuantityByCompany + cart.quantity %}
-                            <td class="text-center text-lg text-medium">{{ cart.product.price }} €</td>
-                            <td class="text-center text-lg text-medium">{{ cart.totalAmount }} €</td>
+                            <td class="text-center text-lg text-medium"><span class="productPrice">{{ cart.product.price }}</span> €</td>
+                            <td class="text-center text-lg text-medium"><span class="productTotalPrice">{{ cart.totalAmount }}</span> €</td>
                             {% set totalAmountByCompany = totalAmountByCompany + cart.totalAmount %}
                             <td class="text-center">{{ include('cart/_delete_form.html.twig') }}</td>
                         </tr>
@@ -56,7 +56,7 @@
                             <td colspan="2"></td>
                             <td class="text-center">TOTAL</td>
                             <td >
-                                <div class="column text-lg text-center"><span class="text-medium">{{ totalAmountByCompany }} €</span></div>
+                                <div class="column text-lg text-center text-medium"><span class="totalAmount">{{ totalAmountByCompany }}</span> €</div>
                             </td>
                             <td>
                                 <div class="column text-center"><a class="btn btn-dark" href="{{ path('cart_details',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Payer</a></div>
@@ -70,4 +70,8 @@
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/cart.js') }}"></script>
 {% endblock %}

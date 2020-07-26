@@ -1,54 +1,40 @@
 let appCart = {
 
-    addCartBaseLink : document.querySelector('#addCartBtn').href,
+    apiBaseUrl: 'http://localhost:8000',
 
-    init: function(){
+    init: function () {
+        console.log("Script initialisé. BIP BOP");
+        var products = document.querySelectorAll('.product-row');
 
-        var quantityInput = document.querySelector('#quantity');
-        var quantityForm = document.querySelector('#quantityForm');
-        var stockQuantity = document.querySelector('#stockQuantity');
-        console.log('Quantité max : ' + stockQuantity.innerText)
-        console.log(quantityForm)
-        console.log(appCart.addCartBaseLink)
-
-        quantityForm.addEventListener('submit', appCart.handleFormSubmit);
-        quantityInput.addEventListener('change', appCart.isChanged);
-        // console.log(quantityInput)
+        len = products.length;
+        for (var i = 0; i < len; i++) {
+            products[i].querySelector('.quantity').addEventListener('change', appCart.isChanged);
+        }
     },
 
     isChanged: function(event) {
         
-        appCart.hasError('');
-        let result = event.target.value;
-        
-        if(result < 0) {
-            result = 0
-            event.target.value = 0
+        let input = event.target;
+
+        if(input.value < 1 ){
+            input.value = 1;
         }
+        tableRow = input.closest('tr');
+        table = tableRow.closest('table');
 
-        if(result > parseInt(stockQuantity.innerText)) {
-            appCart.hasError('Stock insuffisant');
-            document.querySelector('#addCartBtn').href = '#';
-        } else {
+        productPrice = tableRow.querySelector('.productPrice');
+        productTotalPrice = tableRow.querySelector('.productTotalPrice');
+        totalAmount = table.querySelector('.totalAmount');
+        quantity = input.value;
 
-            document.querySelector('#addCartBtn').href = appCart.addCartBaseLink + result;
-            console.log(appCart.addCartBaseLink + result)
-        }
-        console.log(result)
+        fetch(appCart.apiBaseUrl + '/cart/'+ tableRow.id +'/editQuantity/' + quantity)
+
+        totalAmount.innerText = (parseFloat(totalAmount.innerText) - parseFloat(productTotalPrice.innerText) + (quantity * parseFloat(productPrice.innerText))).toFixed(2);
+        productTotalPrice.innerText = (quantity * parseFloat(productPrice.innerText)).toFixed(2);
+
+        return;
     },
-
-    handleFormSubmit: function(event) {
-
-        event.preventDefault();
-    },
-
-    hasError: function(errorMessage) {
-        
-        
-        document.querySelector('#errorField').innerText = errorMessage
-        appCart.init;
-    }
-
+    
 }
 
 document.addEventListener('DOMContentLoaded', appCart.init);

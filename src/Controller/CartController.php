@@ -10,6 +10,7 @@ use App\Repository\CompanyRepository;
 use App\Repository\ProductRepository;
 use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +42,26 @@ class CartController extends AbstractController
             'carts' => $carts,
             'companies' => $sellerList
         ]);
+    }
+
+    /**
+     * @Route("/{cartId}/editQuantity/{quantity}", name="edit_cart_quantity")
+     */
+    public function changeQuantity($cartId, $quantity, CartRepository $cartRepository)
+    {
+        $cart = $cartRepository->find($cartId);
+
+        if($quantity > 0 && $quantity < $cart->getProduct()->getStockQuantity()){
+            $cart->setQuantity($quantity);
+            $cart->setTotalAmount($quantity * $cart->getProduct()->getPrice());
+
+            $entityManager = $this->getDoctrine()->getManager();
+        
+            $entityManager->persist($cart);
+            $entityManager->flush();
+        }
+
+        return new JsonResponse(Response::HTTP_OK);
     }
 
     /**
