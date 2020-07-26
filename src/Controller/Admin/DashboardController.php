@@ -72,7 +72,13 @@ class DashboardController extends AbstractDashboardController
         return [
             // Point de menu pour revenir sur la page d'accueil du dashboard
             MenuItem::linktoDashboard('Home','fa fa-landmark'),
+
+            // point de menu pour retourner sur le site en restant connecté
+            MenuItem::linkToRoute('Back to Website', 'fas fa-laptop-house', 'homepage'),   
             
+            // Section invisible sur le front mais servant a créer un espace
+            MenuItem::section('', ''),
+
             // Point de menu concernant les Utilisateurs
             MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
             // MenuItem::section('Users', '', User::class),
@@ -83,10 +89,6 @@ class DashboardController extends AbstractDashboardController
             //     MenuItem::linkToCrud('Sellers', 'fas fa-user-tie', User::class),
                 
             // ]),
-
-            
-            // Section invisible sur le front mais servant a créer un espace
-            MenuItem::section('', ''),
         
              // Point de menu concernant les Adresses 
             MenuItem::linkToCrud('Address', 'fa fa-house-user', Address::class),
@@ -125,7 +127,8 @@ class DashboardController extends AbstractDashboardController
             // Point de menu concernant les Types de produit
             MenuItem::linkToCrud('Type', 'fa fa-th-large', Type::class),
         
-                
+            
+            
             MenuItem::section('', ''),
             // point de menu pour la deconnexion
         
