@@ -12,7 +12,7 @@
 	<div class="card-body">
 		<div class="row show_company">
 			<div class="col-md-12">
-				<img src="{{ company.picture }}" class="mb-3 mr-3 ml-3 rounded float-right mw-100">
+				<img src="{{ company.picture }}" class="rounded mw-100 mb-3" id="company_picture">
 
 				{% if company.seller[0].addresses[0] is defined and company.seller[0].productsForSale[0] is defined %}
 
@@ -42,12 +42,12 @@
 
 		<h2 class="mt-5 mb-4">Itinéraire</h2>
 		<div>
-		<strong>Mode de transport: </strong>
-		<select id="mode" onchange="calcRoute();">
+		<strong>Itinéraire via réseau routier</strong>
+		{# <select id="mode" onchange="calcRoute();">
 			<option value="DRIVING">En voiture</option>
 			<option value="WALKING">A pied</option>
 			<option value="BICYCLING">A velo</option>
-		</select>
+		</select> #}
 		</div>
 		<div id="map"></div>
 
