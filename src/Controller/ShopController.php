@@ -4,7 +4,11 @@ namespace App\Controller;
 
 
 use App\Entity\Product;
+use App\Repository\AppellationRepository;
+use App\Repository\ColorRepository;
+use App\Repository\ProductBrandRepository;
 use App\Repository\ProductRepository;
+use App\Repository\TypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +22,14 @@ class ShopController extends AbstractController
     /**
      * @Route("/", name="product_list_shop")
      */
-    public function list(ProductRepository $productRepository)
+    public function list(ProductRepository $productRepository, ProductBrandRepository $productBrandRepository, TypeRepository $typeRepository, AppellationRepository $appellationRepository, ColorRepository $colorRepository)
     {
         return $this->render('shop/list.html.twig', [
-            'products' => $productRepository->findAll()
+            'products' => $productRepository->findAll(),
+            'brands' => $productBrandRepository->findAll(),
+            'types' => $typeRepository->findAll(),
+            'appellations' => $appellationRepository->findAll(),
+            'colors' => $colorRepository->findAll()
         ]);
     }
 
