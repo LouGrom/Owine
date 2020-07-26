@@ -15,13 +15,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SellerCrudController extends AbstractCrudController
 {
-    private $users;
+    // private $users;
 
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_SELLER']);
+    // public function __construct(UserRepository $userRepository)
+    // {
+    //     $this->users = $userRepository->findBy(['roles'=> 'ROLE_USER, ROLE_SELLER']);
         
-    }
+    // }
 
     public static function getEntityFqcn(): string
     {

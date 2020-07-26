@@ -26,13 +26,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class HomeCrudController extends AbstractCrudController
 {
-    private $companies;
-
-    public function __construct(CompanyRepository $companyRepository)
-    {
-        $this->companies = $companyRepository->findBy(['validated'=>0]);
-    }
-
     public static function getEntityFqcn(): string
     {
         return Company::class;

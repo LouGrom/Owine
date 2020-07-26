@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\CrudController\BuyerCrudController;
 use App\Controller\Admin\CrudController\CompanyCrudController;
 use App\Controller\Admin\CrudController\HomeCrudController;
 use App\Entity\Cart;
@@ -26,6 +27,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 
 
@@ -73,6 +75,14 @@ class DashboardController extends AbstractDashboardController
             
             // Point de menu concernant les Utilisateurs
             MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
+            // MenuItem::section('Users', '', User::class),
+            // MenuItem::subMenu('Users', 'fa fa-users')->setSubItems([
+            //     MenuItem::linkToCrud('Admin', 'fas fa-user-shield', User::class),
+            //     MenuItem::linkToCrud('Buyers', 'fa fa-user-friends', User::class)
+            //     ->setController(BuyerCrudController::class),
+            //     MenuItem::linkToCrud('Sellers', 'fas fa-user-tie', User::class),
+                
+            // ]),
 
             
             // Section invisible sur le front mais servant a créer un espace
@@ -86,9 +96,6 @@ class DashboardController extends AbstractDashboardController
 
             // Point de menu concernant les Marques de produit
             MenuItem::linkToCrud('Brand', 'fa fa-copyright', ProductBrand::class),
-
-            // Point de menu concernant les Transporteurs
-            MenuItem::linkToCrud('Carrier', 'fa fa-truck', Carrier::class),
 
             // Point de menu concernant les Paniers
             MenuItem::linkToCrud('Cart', 'fa fa-shopping-cart', Cart::class),
@@ -107,7 +114,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Destination', 'fa fa-map-marked-alt', Destination::class),
         
             // Point de menu concernant les Commandes intrégrant la liste des produits
-            MenuItem::linkToCrud('Order', 'fa fa-list-alt', Order::class),
+            MenuItem::linkToCrud('Order', 'fa fa-file-text', Order::class),
         
             // Point de menu concernant le Conditionnement des produits
             MenuItem::linkToCrud('Package', 'fa fa-box-open', Package::class),
