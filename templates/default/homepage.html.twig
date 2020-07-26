@@ -56,7 +56,7 @@
 {% else %}
     {# --------------------------------------------------- Utilisateur non connecté ou acheteur en attente V206156 ----------------------------------- #}
     <div class="card mt-2 mb-1 border-0 homepage" style="background-color: #FAF6F0;">
-        <div class="row no-gutters my-auto">
+        <div class="row no-gutters my-auto" id="home">
             <div class="col-md-6">
                 <div class="d-flex justify-content-center">
                     <img src="{{ asset('images/mobile.png') }}" style="width: 83%; height: 83%;" class="card-img" alt="...">
@@ -78,10 +78,11 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-6 my-auto">
                 <div class="card-body">
                     <p class="text-center" style="font-size: 1.4em;">Parcourez la liste des <a href="{{ path('company_list') }}" style="color: #6e081f;">caveaux</a> proposant notre service</p>
-                    <a href="{{ path('company_list') }}""><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
+                    <a href="{{ path('company_list') }}"><p class="text-center mr-3" style="font-size: 3em;"><i class="fas fa-store"></i></p></a>
                 </div>
             </div>
             <div class="col-md-6 my-auto">
@@ -92,10 +93,15 @@
             </div>
         </div>
     </div>
-
+{# <div id="map"></div> #}
 
 {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/homeGoogle.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA2vP46eYfDRuoZrm678JD6w9QimIcyJy0&callback=initMap"></script>
 {% endblock %}
 
 
