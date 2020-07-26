@@ -4,36 +4,137 @@
 
 {% block body %}
     <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
-
-    <div class="row row-cols-1 row-cols-md-3">
-        {% for product in products %}
-        <div class="col mb-4">
-            <div class="card h-100">
-                <div class="imageContainer">
-                {% if product.status == 0 %}
-                    <div class="notToSell">
-                    <p>
-                        Ce produit n'est pas disponible à la vente
-                    </p>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 col-md-3">
+              <form class="mb-3">
+                <div class="well">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Recherchez...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </span>
+                      </div>
                     </div>
-                {% endif %}
-                    <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
-                
+                  </div>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title text-center"><a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a></h5>
+              </form>
+        
+              <!-- Filter -->
+              <form class="shop__filter">
+                <!-- Price -->
+                <h3 class="headline">
+                  <span>Prix</span>
+                </h3>
+                <div class="radio">
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_1" value="" checked="">
+                  <label for="shop-filter-price_1">Moins de 25€</label>
+                </div>
+                <div class="radio">
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_2" value="">
+                  <label for="shop-filter-price_2">Entre 25€ et 50€</label>
+                </div>
+                <div class="radio">
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_3" value="">
+                  <label for="shop-filter-price_3">Entre 50€ et 100€</label>
+                </div>
+        
+                <!-- Checkboxes -->
+                <h3 class="headline">
+                  <span>Appellation</span>
+                </h3>
+                {% for appellation in appellations %}
+                    <div class="checkbox">
+                    <input type="checkbox" value="" id="shop-filter-checkbox_1" checked="">
+                    <label for="shop-filter-checkbox_1">{{ appellation.name }}</label>
+                    </div>
+                {% endfor %}
+        
+                <!-- Radios -->
+                <h3 class="headline">
+                  <span>Type</span>
+                </h3>
+                {% for type in types %}
+                    <div class="checkbox">
+                    <input type="checkbox" value="" id="shop-filter-checkbox_1" checked="">
+                    <label for="shop-filter-checkbox_1">{{ type.name }}</label>
+                    </div>
+                {% endfor %}
+
+        
+                <!-- Colors -->
+                <h3 class="headline">
+                  <span>Couleur</span>
+                </h3>
+                {% for color in colors %}
+                    <div class="checkbox">
+                    <input type="checkbox" value="" id="shop-filter-checkbox_1" checked="">
+                    <label for="shop-filter-checkbox_1">{{ color.name }}</label>
+                    </div>
+                {% endfor %}
+              </form>
+            </div>
+            
+            <div class="col-sm-8 col-md-9">
+                <!-- Filters -->
+                <ul class="shop__sorting">
+                    <li class="active"><a href="#">Prix croissant</a></li>
+                    <li><a href="#">Prix décroissant</a></li>
+                </ul>
+        
+            <div class="row">
+            {% for product in products %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="shop__thumb">
+                    <a href="#">
+                    <div class="shop-thumb__img">
+                        {% if product.status == 0 %}
+                            <div class="notToSell">
+                                <p>Ce produit n'est pas disponible à la vente</p>
+                            </div>
+                        {% endif %}
+                        <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+                    </div>
+                    <h5 class="shop-thumb__title">
+                        <a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a>
+                    </h5>
+                    <div class="shop-thumb__price">
                         <p>{{product.price}}€</p>
                     </div>
                     {% for i in 0..random(4) %}
                         <i class="fa fa-star" aria-hidden="true"></i>
                     {% endfor %}
                     <p class="card-text">{{product.cuveeDomaine}}</p>
-                    <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
-                    <a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a></td>
+                    {# <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p> #}
+                    <a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a>
+                    </a>
+                    
                 </div>
             </div>
+            {% endfor %}
+
+        
+            <!-- Pagination -->
+                          
+            </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                    </ul>
+                </nav>
+            </div> 
         </div>
-        {% endfor %}
     </div>
 {% endblock %}
