@@ -187,7 +187,7 @@ class CartController extends AbstractController
         $totalCartAmount = 0;
         // 1)Créer un objet Order avec les coordonnées de l'user
         $order = new Order();
-        $order->setStatus(0);
+        $order->setStatus(1);
         $order->setCompany($company);
         $order->setBuyer($this->getUser());
 

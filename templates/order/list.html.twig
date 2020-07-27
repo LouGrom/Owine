@@ -5,7 +5,7 @@
 {% block body %}
 <h2 class="mb-3">Vos commandes</h2>
 {% if app.user.sentOrder is empty %}
-<p>Vous n'avez passé aucune commande (pour l'instant HEHEHE)
+<p>Vous n'avez passé aucune commande pour l'instant
 {% else %}
 {% for order in app.user.sentOrder %}
 
@@ -20,31 +20,31 @@
           </div>
           <div class="card-body">
             <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
-              <div class="step completed">
+              <div class="step {% if order.status > 0 %}completed{% endif %}">
                 <div class="step-icon-wrap">
                   <div class="step-icon"><i class="pe-7s-cart"></i></div>
                 </div>
                 <h4 class="step-title">Commande confirmée</h4>
               </div>
-              <div class="step completed">
+              <div class="step {% if order.status > 1 %}completed{% endif %}">
                 <div class="step-icon-wrap">
                   <div class="step-icon"><i class="pe-7s-config"></i></div>
                 </div>
                 <h4 class="step-title">En cours de traitement</h4>
               </div>
-              <div class="step completed">
+              <div class="step {% if order.status > 2 %}completed{% endif %}">
                 <div class="step-icon-wrap">
                   <div class="step-icon"><i class="pe-7s-rocket"></i></div>
                 </div>
                 <h4 class="step-title">Expédié</h4>
               </div>
-              <div class="step">
+              <div class="step {% if order.status > 3 %}completed{% endif %}">
                 <div class="step-icon-wrap">
                   <div class="step-icon"><i class="pe-7s-bicycle"></i></div>
                 </div>
                 <h4 class="step-title">En cours de livraison</h4>
               </div>
-              <div class="step">
+              <div class="step {% if order.status > 4 %}completed{% endif %}">
                 <div class="step-icon-wrap">
                   <div class="step-icon"><i class="pe-7s-home"></i></div>
                 </div>
@@ -59,34 +59,5 @@
       </div>
     {% endfor %}
 {% endif %}
-
-    {# <div class="mb-4">
-        <div class="table-responsive">
-            <table class="table table-borderless text-center">
-                <thead class="thead">
-                    <tr>
-                        <th scope="col">Boutique</th>
-                        <th scope="col">Quantité</th>
-                        <th scope="col">Prix</th>
-                        <th scope="col">Transporteur</th>
-                        <th scope="col">Frais de livraison</th>
-                        <th scope="col">Numéro de suivi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ order.company.name }}</td>
-                        <td>{{ order.totalQuantity }}</td>
-                        <td>{{ order.totalAmount }} €</td>
-                        <td>{{ order.carrier }}</td>
-                        <td>{{ order.shippingCosts }} €</td>
-                        <td>{{ order.trackingNumber }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div> #}
-
-
 
 {% endblock %}
