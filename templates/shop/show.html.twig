@@ -11,7 +11,7 @@
                 {% for i in 0..random(4) %}
                 <i class="fa fa-star" aria-hidden="true"></i>
                 {% endfor %} - Voir les avis
-                <div{% if product.stockQuantity < 60 and product.status == 1 %} hidden{% endif %}>
+                <div{% if product.stockQuantity > 60 or product.status == 0 %} hidden{% endif %}>
                     <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
                 </div>
             </div>
@@ -131,5 +131,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/cart.js') }}"></script>
+    <script src="{{ asset('js/addToCart.js') }}"></script>
 {% endblock %}
