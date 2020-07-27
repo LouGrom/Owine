@@ -6,8 +6,8 @@
     <a href="{{ path('product_list_shop') }}" class="btn btn-dark ml-4">Retour à la liste des produits</a>
     <h2 class="mt-4 ml-3">{{ product.appellation.name }}</h2>
         <div class="d-sm-flex">
-            <div class="col-sm-6 ml-lg-3">
-                <img src="{{ product.picture }}" class="mb-3 rounded mw-100"><br>
+            <div class="col-sm-6">
+                <img src="{{ product.picture }}" class="mb-3 rounded mw-100" style="max-height:500px; max-width: 100%"><br>
                 {% for i in 1..product.rate %}
                 <i class="fa fa-star" aria-hidden="true"></i>
                 {% endfor %} - Voir les avis
@@ -78,7 +78,7 @@
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                             {% endfor %}
                                             <p class="card-text">{{otherProduct.cuveeDomaine}}</p>
-                                            <p>{{otherProduct.description|length > 100 ? otherProduct.description|slice(0, 70) ~ '(...)' : otherProduct.description}}</p>
+                                            <p>{{otherProduct.description}}</p>
                                             <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a>
                                         </div>
                                     </div>

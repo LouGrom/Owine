@@ -30,9 +30,6 @@ let appShop = {
             } else {
                 productCards[i].removeAttribute("hidden", "hidden");
             }
-            
-            
-            
         }
     }
 }
