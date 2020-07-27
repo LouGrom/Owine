@@ -103,7 +103,7 @@
     <div class="d-flex justify-content-end">
 
         {{ include('order/_delete_form.html.twig') }}
-        {% if order.status < 2 %}
+        {% if order.status < 3 %}
             <a class="btn btn-dark ml-3" href="{{ path('order_shiping_label',{'id': order.id}) }}"><i class="fas fa-truck mr-2"></i>Expédier</a>
         {% else %}
             <a class="btn btn-dark ml-3" href="{{ order.shippingLabel }}" target="_blank"><i class="fas fa-truck mr-2"></i>Obtenir le bon de transport</a>

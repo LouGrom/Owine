@@ -49,18 +49,6 @@ class ShopController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/seller/{id}", name="seller_shop")
-     */
-    public function sortBySeller(ProductRepository $productRepository, $id)
-    {
-        
-        return $this->render('shop/list.html.twig', [
-            'products' => $productRepository->findAllByCompany($id)
-        ]);
-    }
-
     /**
      * @Route("/{id}", name="product_show_shop", methods={"GET"})
      */

@@ -3,20 +3,25 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-    <a href="{{ path('board') }}" class="btn btn-dark ml-4">Retour au tableau de bord</a>
+    <div class="d-flex">
+        <a href="{{ path('board') }}" class="btn btn-dark mr-3">Retour au tableau de bord</a>
+        <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-dark mr-3">Modifier</a>
+
+        {{ include('product/_delete_form.html.twig') }}
+    </div>
     <h2 class="mt-4 ml-3">{{ product.appellation.name }}</h2>
         <div class="d-sm-flex">
-            <div class="col-sm-6 ml-lg-3">
-                <img src="{{ product.picture }}" class="mb-3 rounded mw-100"><br>
-                {% for i in 0..random(4) %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% endfor %} - Voir les avis
-                <p class="mt-2"><strong>Stock restant :</strong> {{ product.stockQuantity }}</p>
+            <div class="col-sm-6" style="display:flex; justify-content: center">
+                <div>
+                    <img src="{{ product.picture }}" class="mb-3 rounded mw-100" style="max-height:400px">
+                    
+                </div>
             </div>
             <div>
+                
                 <p class="h4">{{ product.brand.name }}<br>
                 {{ product.vintage }}</p>
-                <p>{{ product.area }} <strong>-</strong> Vin {{ product.color.name }}</p>
+                <p>{{ product.area }} <strong>-</strong> {{ product.color.name }}</p>
                 <hr>
 
                 <p><strong>Type :</strong> <span class="badge badge-secondary badge-product">{{ product.type.name }}</span><br>
@@ -24,15 +29,27 @@
                 <p><span class="h3">{{ product.price }} €</span><br>
                 <span class="small">{{ product.capacity }} ml - {{ (product.price / product.capacity * 1000)|round(2) }}€ / L</span></p>
                 <p>{{ product.alcoholVolume }}% d'alcool</p>
-            </div>     
-        </div>
-            <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
-
-            <div class="d-flex">
-                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-dark mr-3">Modifier</a>
-
-                {{ include('product/_delete_form.html.twig') }}
+                <div class="mb-3">
+                        {% for i in 1..product.rate %}
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        {% endfor %}
+                        {% if product.rate != 5 %}
+                            {% for i in product.rate..4 %}
+                            <i class='far fa-star'></i>
+                            {% endfor %}
+                        {% endif %} - Voir les avis
+                        <p class="mt-2" {% if product.stockQuantity > 60 or product.status == 0 %} hidden{% endif %}><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
+                </div>
+                {% if app.user and 'ROLE_BUYER' in app.user.roles %}
+                    {% if product.status == 1 %}
+                        <a class="btn btn-secondary col-md-12 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
+                    {% else %}
+                        <a class="btn btn-secondary col-md-12 shop__add-cart-btn" href="">Ce produit n'est plus disponible</a>
+            {% endif %}
+        {% endif %}
             </div>
+        </div>
+        <p class="col-md-12"><strong>Description :</strong> {{ product.description }}</p>
     </div>
 
 {% endblock %}
