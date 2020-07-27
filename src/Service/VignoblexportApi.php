@@ -330,4 +330,29 @@ class VignoblexportApi
 
         return $content;
     }
+
+    public function getShippingLabel(Order $order)
+    {
+
+        $response = $this->client
+        ->request(
+            'GET',
+            'http://vignoblexport-fr.publish-it.fr/api/expedition/get-label',
+            ['headers' => [
+                'X-AUTH-TOKEN' => $_ENV['VIGNOBLEXPORT_TOKEN'],
+            ],
+            'query' => [
+                'expeditionId' => '102456'
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $contentType = $response->getHeaders()['content-type'][0];
+        $content = $response->getContent();
+        $content = $response->toArray();
+             
+
+
+        return $content['directLink'];
+    }
 }
