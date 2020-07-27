@@ -52,6 +52,9 @@ class VignoblexportApi
         foreach($sellerPackages as $sellerPackage) {
             $sellerNbBottles[] = $sellerPackage->getBottleQuantity();
         }
+        if(empty($sellerNbBottles)){
+            $sellerNbBottles = [0];
+        }
         $useable = null;
 
         foreach($packages as $choice) {
