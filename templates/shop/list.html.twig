@@ -105,7 +105,7 @@
                     <div class="shop-thumb__price">
                         <p>{{product.price}}€</p>
                     </div>
-                    {% for i in 0..random(4) %}
+                    {% for i in 1..product.rate %}
                         <i class="fa fa-star" aria-hidden="true"></i>
                     {% endfor %}
                     <p class="card-text">{{product.cuveeDomaine}}</p>
