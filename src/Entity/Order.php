@@ -87,6 +87,11 @@ class Order
      */
     private $shippingCosts;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $shippingLabel;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -289,6 +294,18 @@ class Order
     public function setCarrier(string $carrier): self
     {
         $this->carrier = $carrier;
+
+        return $this;
+    }
+
+    public function getShippingLabel(): ?string
+    {
+        return $this->shippingLabel;
+    }
+
+    public function setShippingLabel(?string $shippingLabel): self
+    {
+        $this->shippingLabel = $shippingLabel;
 
         return $this;
     }

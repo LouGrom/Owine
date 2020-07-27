@@ -11,7 +11,7 @@
         <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Mes commandes <i class="far fa-credit-card"></i></i></a></li>
     </ul>
 </div>
-<div class="tab-content">
+<div class="tab-content text-center">
     <div id="products" class="tab-pane fade in active">
         {# TABLEAU DES PRODUITS #}
         <div class="d-flex mt-4">
@@ -25,9 +25,9 @@
                 <th scope="col">Appellation</th>
                 <th scope="col">Type</th>
                 <th scope="col">Couleur</th>
-                <th scope="col">Prix</th>
                 <th scope="col">Code douanier</th>
                 <th scope="col">Stock</th>
+                <th scope="col">Prix</th>
                 <th scope="col">Détails</th>
                 </tr>
             </thead>
@@ -37,9 +37,9 @@
                 <td>{{ product.appellation.name }}</td>
                 <td>{{ product.type.name }}</td>
                 <td>{{ product.color.name }}</td>
-                <td>{{ product.price }}</td>
                 <td>{{ product.hsCode }}</td>
                 <td>{{ product.stockQuantity }}</td>
+                <td>{{ product.price }} €</td>
                 <td><a href="{{ path('product_view', {'id': product.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
                 {% endfor %}
@@ -56,19 +56,21 @@
             <thead class="thead">
                 <tr>
                 <th scope="col">Référence</th>
-                <th scope="col">Code barre</th>
-                <th scope="col">Prix</th>
                 <th scope="col">Client</th>
+                <th scope="col">Adresse du client</th>
+                <th scope="col">Prix</th>
+                {# <th scope="col">Couleur préférée</th> #}
                 <th scope="col">Détails</th>
                 </tr>
             </thead>
             <tbody>
             {% for order in app.user.company.orders %}
                 <tr>
-                <td>{{ order.reference }}</td>
                 <td>{{ order.trackingNumber }}</td>
-                <td>{{ order.totalAmount }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
+                <td>{{ order.buyer.addresses[0].city ~ ' - ' ~ order.buyer.addresses[0].country }}</td>
+                <td>{{ order.totalAmount }} €</td>
+                {# <td style="background-color: #f0f">F0F</td> #}
                 <td><a href="{{ path('order_view', {'id': order.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
             {% endfor %}

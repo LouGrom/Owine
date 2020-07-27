@@ -7,6 +7,7 @@ use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,6 +52,27 @@ class OrderController extends AbstractController
     {
         $order = $orderRepository->find($id);
         $vignoblexportApi->createShipment($order);
+
+    }
+
+    /**
+     * @Route("/{id}/label", name="order_shiping_label", requirements={"id" = "\d+"}, methods={"GET","POST"})
+     */
+    public function getShippingLabel(VignoblexportApi $vignoblexportApi, OrderRepository $orderRepository, $id)
+    {
+        $order = $orderRepository->find($id);
+
+        $content = $vignoblexportApi->getShippingLabel($order);
+        $order->setStatus(2);
+        $order->setShippingLabel($content);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($order);
+        $manager->flush();
+        
+        return $this->redirectToRoute('order_view', [
+            'pdf' => $content,
+            'id' => $id
+        ]);
 
     }
 }

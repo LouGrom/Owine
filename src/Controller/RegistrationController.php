@@ -59,6 +59,8 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->addFlash("success","L'utilisateur a bien été ajouté");
+
             return $this->redirectToRoute('homepage');
         }
 
@@ -85,6 +87,8 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->addFlash("success","L'utilisateur a bien été ajouté");
 
             return $this->redirectToRoute('homepage');
         }
