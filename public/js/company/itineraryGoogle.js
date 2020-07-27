@@ -78,6 +78,7 @@ function initMap() {
     }, function (response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
+
       } else {
         window.alert('Directions request failed due to ' + status);
       }

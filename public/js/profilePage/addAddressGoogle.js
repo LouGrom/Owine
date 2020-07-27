@@ -12,7 +12,7 @@ var componentForm = {
 function initMap() {
   var options = {
     center: { lat: 48.8534, lng: 2.3488 },
-    zoom: 5
+    zoom: 4
 };
 
 initAutocomplete();
