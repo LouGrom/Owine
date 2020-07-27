@@ -7,9 +7,60 @@
 {% if app.user.sentOrder is empty %}
 <p>Vous n'avez passé aucune commande (pour l'instant HEHEHE)
 {% else %}
+{% for order in app.user.sentOrder %}
 
-    {% for order in app.user.sentOrder %}
-    <div class="mb-4">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+<div class="padding-bottom-3x mt-5 mb-5">
+        <div class="card mb-3">
+          <div class="p-4 text-center text-white text-lg bg-dark rounded-top"><span class="text-uppercase">Tracking Order No - </span><span class="text-medium">34VB5540K83</span></div>
+          <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
+            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Expédié via:</span> {{ order.carrier }}</div>
+            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Status:</span> {{ order.status }}</div>
+            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Livraison prévue le:</span> 29 juillet 2020</div>
+          </div>
+          <div class="card-body">
+            <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+              <div class="step completed">
+                <div class="step-icon-wrap">
+                  <div class="step-icon"><i class="pe-7s-cart"></i></div>
+                </div>
+                <h4 class="step-title">Commande confirmée</h4>
+              </div>
+              <div class="step completed">
+                <div class="step-icon-wrap">
+                  <div class="step-icon"><i class="pe-7s-config"></i></div>
+                </div>
+                <h4 class="step-title">En cours de traitement</h4>
+              </div>
+              <div class="step completed">
+                <div class="step-icon-wrap">
+                  <div class="step-icon"><i class="pe-7s-rocket"></i></div>
+                </div>
+                <h4 class="step-title">Expédié</h4>
+              </div>
+              <div class="step">
+                <div class="step-icon-wrap">
+                  <div class="step-icon"><i class="pe-7s-bicycle"></i></div>
+                </div>
+                <h4 class="step-title">En cours de livraison</h4>
+              </div>
+              <div class="step">
+                <div class="step-icon-wrap">
+                  <div class="step-icon"><i class="pe-7s-home"></i></div>
+                </div>
+                <h4 class="step-title">Livré</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap flex-md-nowrap justify-content-center justify-content-sm-between align-items-center">
+          <div class="text-left text-sm-right"><a class="btn btn-outline-primary btn-rounded btn-sm" href="orderDetails" data-toggle="modal" data-target="#orderDetails">Détails de la commande</a></div>
+        </div>
+      </div>
+    {% endfor %}
+{% endif %}
+
+    {# <div class="mb-4">
         <div class="table-responsive">
             <table class="table table-borderless text-center">
                 <thead class="thead">
@@ -34,9 +85,8 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> #}
 
-    {% endfor %}
-{% endif %}
+
 
 {% endblock %}

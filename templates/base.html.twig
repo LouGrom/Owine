@@ -101,11 +101,12 @@
               {% endif %}
               </ul>
 
+
               <form class="form-inline my-2 my-lg-0 mr-3" method="post" action="{{ path('search') }}">
                 <input type="text" value="{{ app.request.query.get('search')}}" class="form-control navSearch" name="search" placeholder="Rechercher">
                 <button type="submit" class="btn my-2 my-sm-0 navSearch__btn"><i class="fas fa-search"></i></button>
               </form>
-
+              
             </div>
           </nav>
           

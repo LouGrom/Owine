@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use App\Service\VignoblexportApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,12 @@ class OrderController extends AbstractController
     /**
      * @Route("/", name="order_list", methods={"GET"})
      */
-    public function index(OrderRepository $orderRepository): Response
+    public function index(OrderRepository $orderRepository, ProductRepository $productRepository): Response
     {
+
         return $this->render('order/list.html.twig', [
             'orders' => $orderRepository->findAll(),
+            'product' => $productRepository->findAll(),
         ]);
     }
 
