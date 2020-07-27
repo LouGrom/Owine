@@ -8,7 +8,7 @@
         <div class="d-sm-flex">
             <div class="col-sm-6 ml-lg-3">
                 <img src="{{ product.picture }}" class="mb-3 rounded mw-100"><br>
-                {% for i in 0..random(4) %}
+                {% for i in 1..product.rate %}
                 <i class="fa fa-star" aria-hidden="true"></i>
                 {% endfor %} - Voir les avis
                 <div{% if product.stockQuantity > 60 or product.status == 0 %} hidden{% endif %}>
@@ -74,7 +74,7 @@
                                                 <h5 class="card-title text-center"><a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}">{{otherProduct.appellation.name }}</a></h5>
                                                 <p>{{otherProduct.price}}€</p>
                                             </div>
-                                            {% for i in 0..random(4) %}
+                                            {% for i in 1..otherProduct.rate %}
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                             {% endfor %}
                                             <p class="card-text">{{otherProduct.cuveeDomaine}}</p>
