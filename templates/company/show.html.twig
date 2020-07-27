@@ -49,37 +49,35 @@
 
 		<div class="row row-cols-1 row-cols-md-3">
 			{% for product in products %}
-				<div class="col mb-4">
-					<div class="card h-100">
-						<div class="imageContainer">
-							{% if product.status == 0 %}
-								<div class="notToSell">
-									<p>
-										Ce produit n'est pas disponible à la vente
-									</p>
-								</div>
-							{% endif %}
-							<a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
-						</div>
-						<div class="card-body">
-							<div class="d-flex justify-content-between">
-								<h5 class="card-title text-center">
-									<a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a>
-								</h5>
-								<p>{{product.price}}€</p>
-							</div>
-							{% for i in 1..product.rate %}
-								<i class="fa fa-star" aria-hidden="true"></i>
-							{% endfor %}
-							<p class="card-text">{{product.cuveeDomaine}}</p>
-							<p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p>
-							<a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails
-								<i class="fa fa-search"></i>
+                <div class="col-sm-6 col-lg-4 product-card">
+                    <div class="shop__thumb">
+                    <div class="shop-thumb__img">
+                        {% if product.status == 0 %}
+                    		<a href="{{ path('product_show_shop', {'id': product.id}) }}">
+                            <div class="notToSell">
+                                <p>Ce produit n'est pas disponible à la vente</p>
+                            </div>
 							</a>
-                        </div>
-				    </div>
-			    </div>
-	        {% endfor %}
+                        {% endif %}
+                        <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-gtop" alt="..." style="max-height:200px; max-width: 100%"></a>
+                    </div>
+                    <h5 class="shop-thumb__title">
+                        <a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a>
+                    </h5>
+                    <div class="shop-thumb__price">
+                        <p><span class="product-card__price">{{product.price}}</span>€</p>
+                    </div>
+                    {% for i in 1..product.rate %}
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    {% endfor %}
+                    <p class="card-text">{{product.cuveeDomaine}}</p>
+                    {# <p>{{product.description|length > 100 ? product.description|slice(0, 70) ~ '(...)' : product.description}}</p> #}
+                    <a href="{{ path('product_show_shop', {'id': product.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a>
+                    </a>
+                    
+                </div>
+            </div>
+            {% endfor %}
 		</div>
 		
     </div>
