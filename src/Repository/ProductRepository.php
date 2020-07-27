@@ -49,19 +49,58 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
-    public function findAllByAppellation($appellation)
+    public function findAllSortByPrice($growingPrice)
     {
         // $builder est une instance de l'objet Query Builder
         $builder = $this->createQueryBuilder('product');
 
+        if($growingPrice == true){
+            $builder->addOrderBy('product.price', 'ASC');
+        } else {
+            $builder->addOrderBy('product.price', 'DESC');
+        }
+
+        $query = $builder->getQuery();
+        return $query->getResult();
+    }
+
+    /**
+     * @return Product[] Return an array of Poducty objects
+     */
+    public function searchProduct($search, $growingPrice = true)
+    {
+
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+        $builder->leftJoin('product.appellation', 'appellation');
+        // $builder->addSelect('appellation');
+        $builder->where('product.cuveeDomaine LIKE :search');
+        $builder->orWhere('appellation.name LIKE :search');
+        $builder->setParameter('search', "%$search%");
+        $builder->setParameter('search', "%$search%");
+        
+        if($growingPrice == true){
+            $builder->orderBy('product.price', 'ASC');
+        } else {
+            $builder->orderBy('product.price', 'DESC');
+        }
+        $query = $builder->getQuery();       
+        return $query->getResult();
+    }
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findAllByAppellation($appellation)
+    {
+        // $builder est une instance de l'objet Query Builder
+        $builder = $this->createQueryBuilder('product');
+        
         $builder->where("product.appellation = :appellation");
 
         $builder->setParameter("appellation", $appellation);
 
-        // on recupère la requete construite
         $query = $builder->getQuery();
-
-        // on demande a doctrine d'éxecuter le requete et de me renvoyer les résultats
         return $query->getResult();
     }
 
@@ -72,25 +111,15 @@ class ProductRepository extends ServiceEntityRepository
     {
 
         $builder = $this->createQueryBuilder('product');
-        // je souhaite sécuriser le parametre $id
         $builder->where("product.id = :productId");
-        // je precise au builder quelle valeur "injecter" dans le parametre :animeId
-        // Cetete methode sécurise le contenu de la variable $id (echapment de car spéciaux ...)
         $builder->setParameter("productId", $id);
-
-        // Je demande a doctrine de faire la jointure avec la relation ->categories
         $builder->leftJoin('product.categories', 'category');
-        // je demande a doctrien d'alimenter les objets de type Category dans mon objet Anime
         $builder->addSelect('category');
 
         $builder->leftJoin('product.types', 'type');
-        // "tu rajoute aux resultats que tu me renvoi les objets de type Character"
         $builder->addSelect('type');
 
-        // on recupère la requete construite
         $query = $builder->getQuery();
-
-        // je demande a doctrine d'éxecuter le requete et de me renvoyer les resultats
         return $query->getOneOrNullResult();
     }
     
@@ -122,44 +151,5 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    /**
-     * @return Product[] Return an array of Poducty objects
-     */
-    public function searchProduct($search)
-    {
-        // $builder est une instance de l'objet Query Builder
-        $builder = $this->createQueryBuilder('product');
-        $builder->orderBy('product.cuveeDomaine');
-
-        if (!empty($search)) {
-            $builder->where('product.cuveeDomaine LIKE :search');
-            $builder->setParameter('search', "%$search%");
-        }
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-     // /**
-    //  * @return Product[] Return an array of Product objects
-    //  */
-    //  public function searchProduct($search) {
-
-    //     $builder = $this->createQueryBuilder('product');
-    //     $builder->orderBy('product.name');
-
-    //     if(!empty($search)){
-    //         $builder->where('product.appellation.name LIKE :search');
-    //         $builder->setParameter('search', "%$search%");
-    //     }
-
-    //     $query = $builder->getQuery();
-
-    //     return $query->getResult();
-    // }
-
-    
 
 }

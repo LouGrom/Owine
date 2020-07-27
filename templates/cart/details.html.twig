@@ -96,10 +96,18 @@
         </table>
         <div class="text-right mt-2">
         {% if app.user.addresses[0] is defined %}
-            <a class="btn btn-dark " href="{{ path('cart_validate',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
+            <a class="btn btn-dark " id="displayLoaderBtn" href="{{ path('cart_validate',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Procéder au paiement</a>
         {% else %}
         <p>Vous devez renseigner une adresse avant de pouvoir valider votre commande</p>
         {% endif %}
         </div>
+        <div id="loaderBox" hidden>
+        <img src="https://www.winewonder.land/assets/frontend/img/preloader.gif">
     </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/loader.js') }}"></script>
 {% endblock %}

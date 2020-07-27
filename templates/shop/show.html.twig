@@ -6,20 +6,17 @@
     <a href="{{ path('product_list_shop') }}" class="btn btn-dark ml-4">Retour à la liste des produits</a>
     <h2 class="mt-4 ml-3">{{ product.appellation.name }}</h2>
         <div class="d-sm-flex">
-            <div class="col-sm-6 ml-lg-3">
-                <img src="{{ product.picture }}" class="mb-3 rounded mw-100"><br>
-                {% for i in 1..product.rate %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% endfor %} - Voir les avis
-                <div{% if product.stockQuantity > 60 or product.status == 0 %} hidden{% endif %}>
-                    <p class="mt-2"><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
+            <div class="col-sm-6" style="display:flex; justify-content: center">
+                <div>
+                    <img src="{{ product.picture }}" class="mb-3 rounded mw-100" style="max-height:400px">
+                    
                 </div>
             </div>
             <div>
                 
                 <p class="h4">{{ product.brand.name }}<br>
                 {{ product.vintage }}</p>
-                <p>{{ product.area }} <strong>-</strong> Vin {{ product.color.name }}</p>
+                <p>{{ product.area }} <strong>-</strong> {{ product.color.name }}</p>
                 <hr>
 
                 <p><strong>Type :</strong> <span class="badge badge-secondary badge-product">{{ product.type.name }}</span><br>
@@ -27,21 +24,29 @@
                 <p><span class="h3">{{ product.price }} €</span><br>
                 <span class="small">{{ product.capacity }} ml - {{ (product.price / product.capacity * 1000)|round(2) }}€ / L</span></p>
                 <p>{{ product.alcoholVolume }}% d'alcool</p>
+                <div class="mb-3">
+                        {% for i in 1..product.rate %}
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        {% endfor %}
+                        {% if product.rate != 5 %}
+                            {% for i in product.rate..4 %}
+                            <i class='far fa-star'></i>
+                            {% endfor %}
+                        {% endif %} - Voir les avis
+                        <p class="mt-2" {% if product.stockQuantity > 60 or product.status == 0 %} hidden{% endif %}><strong>Stock restant :</strong> <span id="stockQuantity">{{ product.stockQuantity }}</span></p>
+                </div>
+                {% if app.user and 'ROLE_BUYER' in app.user.roles %}
+                    {% if product.status == 1 %}
+                        <a class="btn btn-secondary col-md-12 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
+                    {% else %}
+                        <a class="btn btn-secondary col-md-12 shop__add-cart-btn" href="">Ce produit n'est plus disponible</a>
+            {% endif %}
+        {% endif %}
             </div>
         </div>
     <div class="d-inline-block">
     </div>
-    <div class="d-md-flex align-items-center">
-        <p class="col-md-7"><strong>Description :</strong> {{ product.description }}</p>
-        {% if app.user and 'ROLE_BUYER' in app.user.roles %}
-                {% if product.status == 1 %}
-                    <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="#" id="addToCart" data-toggle="modal" data-target="#myModal">Ajouter au panier</a>
-                {% else %}
-                    {# <img src="https://pbs.twimg.com/media/DNZwXGUXkAE8aQh?format=jpg&name=small"> #}
-                    <a class="btn btn-secondary col-md-4 shop__add-cart-btn" href="">Ce produit n'est plus disponible</a>
-            {% endif %}
-        {% endif %}
-    </div>
+        <p class="col-md-12"><strong>Description :</strong> {{ product.description }}</p>
 
     <h2 class="mt-5 mb-4">Autres produits en vente chez <a style="color: #6e081f;" href="{{ path('company_show',{'id': product.company.id}) }}">{{ product.company.name }}</a></h2>
 
@@ -53,32 +58,32 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
-                <div class="carousel-inner">
+                <div class="carousel-inner" style="max-height: 300px">
                     {% for otherProduct in product.company.products %}
                         <div class="carousel-item {% if otherProduct == product.company.products[0] %}active{% endif %}">
                             <div class="card mb-3" style="">
                                 <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <div class="imageContainer">
+                                    <div class="col-md-3 d-flex" style="justify-content: center">
+                                        <div class="imageContainer" style="align-self: center">
                                             {% if otherProduct.status == 0 %}
                                                 <div class="notToSell">
                                                     <p>Ce produit n'est pas disponible à la vente</p>
                                                 </div>
                                             {% endif %}
-                                            <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}"><img src="{{ otherProduct.picture }}" class="card-img-top" alt="..."></a>
+                                            <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}"><img src="{{ otherProduct.picture }}" style="max-height:300px; max-width: 100%;" alt="..."></a>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
                                                 <h5 class="card-title text-center"><a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}">{{otherProduct.appellation.name }}</a></h5>
-                                                <p>{{otherProduct.price}}€</p>
+                                                <p class="h4">{{otherProduct.price}}€</p>
                                             </div>
                                             {% for i in 1..otherProduct.rate %}
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                             {% endfor %}
                                             <p class="card-text">{{otherProduct.cuveeDomaine}}</p>
-                                            <p>{{otherProduct.description|length > 100 ? otherProduct.description|slice(0, 70) ~ '(...)' : otherProduct.description}}</p>
+                                            <p>{{otherProduct.description|length > 500 ? otherProduct.description|slice(0, 250) ~ '(...)' : otherProduct.description}}</p>
                                             <a href="{{ path('product_show_shop', {'id': otherProduct.id}) }}" class="btn btn-dark">Détails <i class="fa fa-search"></i></a>
                                         </div>
                                     </div>

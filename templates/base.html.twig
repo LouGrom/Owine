@@ -26,13 +26,19 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
-            
-            <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/logoOwineBurgundry.png') }}" height="30" class="d-inline-block align-top mr-1">O'wine</a>
-            
+            <div style="display: flex; justify-content: space-between; align-items:center">
+              {% if app.user %}
+              <div class="mr-3">
+                <a class="nav-link profileIcon p-0" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x d-block"></i></a>
+              </div>
+              {% endif %}
+              <a class="navbar-brand" href="{{ path('homepage') }}"><img src="{{ asset('images/logoOwineBurgundry.png') }}" height="30" class="d-inline-block align-top mr-1">O'wine</a>
+            </div>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-          
+            
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -81,32 +87,26 @@
                     </li>
                   {% endif %}
                 {% endif %}
+                {% if app.user %}
+                <li class="nav-item">
+                  <a href="{{ path('app_logout') }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                </li>
+                {% else %}
+                <li class="nav-item align-right">
+                  <a href="{{ path('app_login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ path('app_register') }}" class="nav-link"><i class="fas fa-book"></i> Inscription</a>
+                </li>
+              {% endif %}
               </ul>
 
-              {% if app.user %}
-                <div class="mr-3" id="login-name">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark ml-3">Déconnexion</a>
-                </div>
-                {% else %}
-                <div class="mr-3">
-                  <a href="{{ path('app_register') }}" class="btn btn-dark">Inscription</a>
-                </div>
-                <div class="mr-3">
-                  <a href="{{ path('app_login') }}" class="btn btn-dark">Connexion</a>
-                </div>
-              {% endif %}
 
-              <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('search') }}">
-                <input type="text" value="{{ app.request.query.get('search')}}" placeholder="Rechercher" class="form-control mr-2" name="search">
-                <button type="submit" class="btn btn-outline-dark my-2 my-sm-0"><i class="fa fa-search"></i></button>
+              <form class="form-inline my-2 my-lg-0 mr-3" method="post" action="{{ path('search') }}">
+                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control navSearch" name="search" placeholder="Rechercher">
+                <button type="submit" class="btn my-2 my-sm-0 navSearch__btn"><i class="fas fa-search"></i></button>
               </form>
-
-
-              {% if app.user %}
-              <div class="nav-item">
-              <a class="nav-link" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x"></i></a>
-              </div>
-              {% endif %}
+              
             </div>
           </nav>
           

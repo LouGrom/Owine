@@ -24,14 +24,31 @@ class ShopController extends AbstractController
      */
     public function list(ProductRepository $productRepository, ProductBrandRepository $productBrandRepository, TypeRepository $typeRepository, AppellationRepository $appellationRepository, ColorRepository $colorRepository)
     {
+        if(isset($_GET['sortByPrice']) && ($_GET['sortByPrice'] == 1 or $_GET['sortByPrice'] == 0)){
+            $sortByPrice = $_GET['sortByPrice'];
+        } else {
+            $sortByPrice = 1;
+        }
+        $productList = $productRepository->findAllSortByPrice($sortByPrice);
+
+        if(isset($_GET['search'])){
+            $search = $_GET['search'];
+            $productList = $productRepository->searchProduct($search, $sortByPrice);
+        } else {
+            $search = '';
+        }
+
         return $this->render('shop/list.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productList,
             'brands' => $productBrandRepository->findAll(),
             'types' => $typeRepository->findAll(),
             'appellations' => $appellationRepository->findAll(),
-            'colors' => $colorRepository->findAll()
+            'colors' => $colorRepository->findAll(),
+            'sortByPrice' => $sortByPrice,
+            'search' => $search
         ]);
     }
+
 
     /**
      * @Route("/seller/{id}", name="seller_shop")

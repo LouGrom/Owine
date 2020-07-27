@@ -12,7 +12,7 @@
     {% for company in companies %}
     {% set totalQuantityByCompany = 0 %}
     {% set totalAmountByCompany = 0 %}
-    
+
     <div class="mb-5 pb-5 padding-bottom-3x mb-1">
         <div class="table-responsive shopping-cart">
             <table class="table">
@@ -59,7 +59,7 @@
                                 <div class="column text-lg text-center text-medium"><span class="totalAmount">{{ totalAmountByCompany }}</span> €</div>
                             </td>
                             <td>
-                                <div class="column text-center"><a class="btn btn-dark" href="{{ path('cart_details',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Payer</a></div>
+                                <div class="column text-center"><a class="btn btn-dark" id="displayLoaderBtn" href="{{ path('cart_details',{'companyId': company.id}) }}"><i class="far fa-credit-card mr-2"></i>Payer</a></div>
                             </td>
                         </tr>
                 </tbody>
@@ -68,10 +68,15 @@
     </div>
     {% endfor %}
 
+    <div id="loaderBox" hidden>
+        <img src="https://www.winewonder.land/assets/frontend/img/preloader.gif">
+    </div>
 </div>
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('js/cart.js') }}"></script>
+    <script src="{{ asset('js/loader.js') }}"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 {% endblock %}

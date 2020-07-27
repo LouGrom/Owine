@@ -3,46 +3,52 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mt-2 mb-5">Liste des produits</h1>
-        <div class="container p-0">
-          <div class="row">
-            <div class="col-sm-4 col-md-3 p-0">
-              <form class="mb-3">
-                <div class="well">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Recherchez...">
-                        <span class="input-group-btn">
-                          <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i>
-                          </button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
+		<h1 class="text-center mt-2 mb-5">Liste des produits</h1>
+			<div class="container p-0">
+				<div class="row">
+					<div class="col-sm-4 col-md-3 p-0">
+
+						<form class="mb-3" method="get">
+							<div class="well">
+								<div class="row">
+									<div class="col-sm-10">
+										<div class="input-group">
+											<input type="text" class="form-control" name="search" placeholder="Recherchez...">
+											<span class="input-group-btn">
+												<button class="btn btn-primary" type="submit">
+													<i class="fa fa-search"></i>
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
         
               <!-- Filter -->
+                <!-- ------------------------------------------------------------- Filters --------------------------------------- -->
               <form class="shop__filter">
                 <!-- Price -->
                 <h3 class="headline">
                   <span>Prix</span>
                 </h3>
                 <div class="radio">
-                  <input type="radio" name="shop-filter__price" id="shop-filter-price_1" value="" checked="">
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_0" class="priceFilters" value="0" checked>
+                  <label for="shop-filter-price_0">Tous</label>
+                </div>
+                <div class="radio">
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_1" class="priceFilters" value="25">
                   <label for="shop-filter-price_1">Moins de 25€</label>
                 </div>
                 <div class="radio">
-                  <input type="radio" name="shop-filter__price" id="shop-filter-price_2" value="">
-                  <label for="shop-filter-price_2">Entre 25€ et 50€</label>
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_2" class="priceFilters" value="50">
+                  <label for="shop-filter-price_2">Moins de 50€</label>
                 </div>
                 <div class="radio">
-                  <input type="radio" name="shop-filter__price" id="shop-filter-price_3" value="">
-                  <label for="shop-filter-price_3">Entre 50€ et 100€</label>
+                  <input type="radio" name="shop-filter__price" id="shop-filter-price_3" class="priceFilters" value="100">
+                  <label for="shop-filter-price_3">Moins de 100€</label>
                 </div>
-        
+        		<hr>
                 <!-- Checkboxes -->
                 <h3 class="headline">
                   <span>Appellation</span>
@@ -80,30 +86,31 @@
             </div>
             
             <div class="col-sm-8 col-md-9 p-0">
-                <!-- Filters -->
                 <ul class="shop__sorting">
-                    <li class="active"><a href="#">Prix croissant</a></li>
-                    <li><a href="#">Prix décroissant</a></li>
+                    <li {% if sortByPrice == 1 %}class="active"{% endif %}><a href="{{ path('product_list_shop', {'sortByPrice': true, 'search': search}) }}">Prix croissant</a></li>
+                    <li {% if sortByPrice == 0 %}class="active"{% endif %}><a href="{{ path('product_list_shop', {'sortByPrice': false, 'search': search}) }}">Prix décroissant</a></li>
                 </ul>
+                <!-- ------------------------------------------------------------- /Filters -------------------------------------- -->
         
-            <div class="row">
+            <div class="row col-sm-12">
             {% for product in products %}
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-lg-4 product-card">
                     <div class="shop__thumb">
-                    <a href="#">
                     <div class="shop-thumb__img">
                         {% if product.status == 0 %}
+                    		<a href="{{ path('product_show_shop', {'id': product.id}) }}">
                             <div class="notToSell">
                                 <p>Ce produit n'est pas disponible à la vente</p>
                             </div>
+							</a>
                         {% endif %}
-                        <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-top" alt="..."></a>
+                        <a href="{{ path('product_show_shop', {'id': product.id}) }}"><img src="{{ product.picture }}" class="card-img-gtop" alt="..." style="max-height:200px; max-width: 100%"></a>
                     </div>
                     <h5 class="shop-thumb__title">
                         <a href="{{ path('product_show_shop', {'id': product.id}) }}">{{product.appellation.name }}</a>
                     </h5>
                     <div class="shop-thumb__price">
-                        <p>{{product.price}}€</p>
+                        <p><span class="product-card__price">{{product.price}}</span>€</p>
                     </div>
                     {% for i in 1..product.rate %}
                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -118,7 +125,7 @@
             {% endfor %}
 
         
-            <!-- Pagination -->
+            <!-------------------------------------------------------- Pagination ----------------------------------------->
                           
             </div>
                 <nav aria-label="Page navigation example">
@@ -137,4 +144,8 @@
             </div> 
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/shop.js') }}"></script>
 {% endblock %}

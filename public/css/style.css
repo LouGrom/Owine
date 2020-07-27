@@ -5,6 +5,25 @@ body {
     color: #352025;
 }
 
+.profileIcon:hover {
+  color: #897A73 !important;
+}
+
+.navSearch {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  max-width: 80%;
+}
+
+.navSearch__btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
 strong {
     font-family: 'CooperHewitt-Medium', arial;
 }
@@ -62,7 +81,12 @@ strong {
 
 .card {
     background-color: #F4EBDD;
-    border: 1px #6e081f solid;
+}
+
+.card:hover {
+  border-color: rgba(0, 0, 0, 0.07);
+  -webkit-box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card-title a {
@@ -1032,4 +1056,22 @@ height: 400px;
 .cart-table-header:hover{
   background-color: #e4dbcd;
 
+}
+
+/*  -------------------------------- Loader --------------------------------- */
+
+#loaderBox {
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+}
+
+#loaderBox > img {
+  align-self: center;
 }
