@@ -96,15 +96,15 @@
                 </div>
               {% endif %}
 
-              <form class="form-inline my-2 my-lg-0 mr-3" method="post" action="{{ path('search') }}">
-                <input type="text" value="{{ app.request.query.get('search')}}" class="form-control mr-2" name="search">
-                <button type="submit" class="btn btn-outline-dark my-2 my-sm-0">Rechercher</button>
+              <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('search') }}">
+                <input type="text" value="{{ app.request.query.get('search')}}" placeholder="Rechercher" class="form-control mr-2" name="search">
+                <button type="submit" class="btn btn-outline-dark my-2 my-sm-0"><i class="fa fa-search"></i></button>
               </form>
 
 
               {% if app.user %}
               <div class="nav-item">
-              <a class="nav-link text-start p-0" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x d-block"></i>Mon Profil</a>
+              <a class="nav-link" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x"></i></a>
               </div>
               {% endif %}
             </div>
