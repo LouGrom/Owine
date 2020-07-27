@@ -410,7 +410,10 @@ class AppFixtures extends Fixture
                     [
                         'appellation' => 'Crémant d\'Alsace',
                         'price' => 25,
-                        'description' => "Krug Rosé est né du souhait de la Maison Krug d’offrir à ses amateurs sa vision du Champagne Rosé. C’est un Champagne inédit, à la création duquel préside la même philosophie que Krug Grande Cuvée, dépassant lui aussi la notion même de millésime. Krug Rosé est à la fois surprenant et audacieux. Il offre une palette aromatique aussi étendue qu’inhabituelle pour un Champagne Rosé.",
+                        'description' => "
+                        La richesse d'un terroir, la passion d'une famille. Vieillie sur lattes pendant plus de 48 mois cette édition limitée se veut l'expression de la passion qui nous anime.
+                        Le soin tout particulier apporté à la sélection des raisins se reflète dans sa robe dorée, son nez délicat, et sa finale tranchante.
+                        D'une structure vineuse, d'une salinité et d'une complexité remarquables ce crémant de caractère est résolument un vin de gastronomie. Cépage : Pinot blanc, Chardonnay",
                         'quantity' => 4200,
                         'vintage' => 'Non millésimé',
                         'brand' => 'Henri Ehrhart',

@@ -85,7 +85,7 @@
 
               {% if app.user %}
                 <div class="mr-3" id="login-name">
-                  Bonjour {{ app.user.firstname }} <a href="{{ path('app_logout') }}" class="btn btn-dark ml-3">Déconnexion</a>
+                  <a href="{{ path('app_logout') }}" class="btn btn-dark ml-3">Déconnexion</a>
                 </div>
                 {% else %}
                 <div class="mr-3">
@@ -104,7 +104,7 @@
 
               {% if app.user %}
               <div class="nav-item">
-              <a class="nav-link text-start p-0" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x d-block"></i>Mon Profil</a>
+              <a class="nav-link p-0" href="{{ path('profile') }}"><i class="fas fa-user-circle fa-2x d-block"></i></a>
               </div>
               {% endif %}
             </div>
