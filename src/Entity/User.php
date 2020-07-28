@@ -79,7 +79,7 @@ class User implements UserInterface
     private $company;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user", orphanRemoval=true)
      */
     private $addresses;
 
