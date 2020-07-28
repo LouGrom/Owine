@@ -59,9 +59,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash("success","L'utilisateur a bien été ajouté");
+            $this->addFlash("success","Votre inscription est en cours de traitement, vous pouvez accéder à votre espace personnel dès à présent");
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/user.html.twig', [
@@ -88,9 +88,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash("success","L'utilisateur a bien été ajouté");
+            $this->addFlash("success","Vous êtes bien inscrit sur le site, vous pouvez accéder à votre espace personnel dès à présent");
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/user.html.twig', [
