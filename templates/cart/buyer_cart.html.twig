@@ -4,7 +4,10 @@
 
 {% block body %}
     <h1>Votre panier</h1>
-<div class="column shopping-cart-footer"><a class="btn btn-outline-secondary" href="{{ path('product_list_shop') }}"><i class="fas fa-store mr-2"></i>Retour à la boutique</a></div>
+    <div class="d-flex justify-content-center mb-3">
+        <a class="btn btn-outline-secondary mr-2" href="{{ path('product_list_shop') }}"><i class="fas fa-store mr-2"></i>Retour à la boutique</a>
+        <a class="btn btn-outline-secondary" href="{{ path('order_list') }}"><i class="fas fa-box-open mr-2"></i>Voir mes commandes</a>
+    </div>
     {% if companies is empty %}
     <p>Votre panier est vide !</p>
     {% endif %}

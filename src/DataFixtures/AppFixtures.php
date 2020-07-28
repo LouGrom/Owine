@@ -32,7 +32,7 @@ class AppFixtures extends Fixture
 
         // ----------------------------------------------------------- ProductBrand Random -----------------------------------------------------------------
         // On crée 4 marques
-        $brand_name = ['La Romaneé Conti', 'Henri Ehrhart', 'Krug', 'Tiffon'];
+        $brand_name = ['La Romaneé Conti', 'Henri Ehrhart', 'Krug', 'Tiffon', 'Feun', 'La Brouette', 'Tati', 'Epic fail', 'Le Cep d’Argent', 'Damoiseau', 'Coureur des Bois'];
         for($i = 0; $i < count($brand_name); $i++){
 
             $brand = new ProductBrand();
@@ -89,7 +89,7 @@ class AppFixtures extends Fixture
 
         // ----------------------------------------------------------- Appellation Random -----------------------------------------------------------------
         // On crée les appellations
-        $appellation_name = ['Échézeaux', 'La Tâche', 'Montrachet', 'Champagne', 'Crémant d\'Alsace', 'Alsace Riesling', 'Alsace Pinot Gris', 'Alsace Pinot Noir', 'Cognac'];
+        $appellation_name = ['Échézeaux', 'La Tâche', 'Montrachet', 'Champagne', 'Crémant d\'Alsace', 'Alsace Riesling', 'Alsace Pinot Gris', 'Alsace Pinot Noir', 'Cognac', 'Saint-Pourçain', 'Côtes de Provence', 'Calvados', 'Muscat de Rivesaltes', 'Vin de glace', 'Rhum', 'Crème d\'érable'];
         for($i = 0; $i < count($appellation_name); $i++){
             $appellation = new Appellation();
             $appellation->setName($appellation_name[$i]);
@@ -557,6 +557,406 @@ class AppFixtures extends Fixture
                         'status' => 1,
                         'rate' => 5
                     ],                   
+                ]
+            ],
+            [
+                'name' => 'Ca dépend & Co',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Place_Saint-%C3%89tienne_%28Toulouse%29.jpg/800px-Place_Saint-%C3%89tienne_%28Toulouse%29.jpg',
+                'validated' => 1,
+                'presentation' => "J'ai finalement pogné la twist pour faire la poutine. Je crisse mon camp d'icite anyway, je déguedine au plus sacrant, ça sent la cibole de marde. Osti qui fa frette. Ya 'ien qu'une affaire qui me démange, c'est de le pogner par les dessours de bras pis de le câlicer au travers du châssis. T'es de bonne heure sul piton toé à matin, quessé qui t'arrive ? T'es din patate mon gars, complètement dans le champ.",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Olivier',
+                        'lastname' => 'BAROU',
+                        'email' => 'seller5@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Olivier',
+                        'lastname' => 'BAROU',
+                        'street' => '2 Chemin de la Casquette',
+                        'city' => 'Guéreins',
+                        'zipCode' => '01090',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Saint-Pourçain',
+                        'price' => 8,15,
+                        'description' => "Robe jaune pâle et limpide à reflets verts. Le nez complexe exprime des fruits blancs (pêche, poire), d'agrumes et de fleurs blanches, ainsi qu’une touche miellée typique du Chardonnay majoritaire. La bouche développe une attaque ample et équilibrée, avec une belle longueur de fleurs et de fruits. ",
+                        'quantity' => 36000,
+                        'vintage' => '2017',
+                        'brand' => 'Feun',
+                        'color' => 'Blanc',
+                        'type' => 'Tranquille',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://default8988.blob.core.windows.net/cmsfiles/227/Product/1105/07ba996f-9301-46d5-b0ca-fca31e1ae2f3-zoom.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Auvergne',
+                        'cuveeDomaine' => 'Nicole',
+                        'capacity' => 700,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
+                ]
+            ],
+            [
+                'name' => 'Vinaigrette SARL',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Making_vinaigrette.jpg/800px-Making_vinaigrette.jpg',
+                'validated' => 1,
+                'presentation' => "Sa blonde m'en a sacré toute une au parcheesi, mais elle a été mardeuse. Mâ t'en faire moé des patentes de même, tu vas m'entendre baptinse. Calvenusse de tabarnouche de mausus de cârosse de patente à gosse. Mon char est resté pogné dans crisse de slotche toute la nuite. Il va manger un esti de char de marde tu vas vouère. T'es din patate mon gars, complètement dans le champ.",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Gaétan',
+                        'lastname' => 'BENALOUL',
+                        'email' => 'seller6@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Gaétan',
+                        'lastname' => 'BENALOUL',
+                        'street' => 'Faufichet',
+                        'city' => 'Luceau',
+                        'zipCode' => '72500',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Côtes de Provence',
+                        'price' => 37,
+                        'description' => "Marqué par la minéralité et la finesse d’expression. Volume en bouche, gras et rond. Dominante de fruits blancs, pêche de vigne et poire accompagnés de notes de fruits rouges. Une finale longue et fraîche. Galette de kasha au saumon fumé sauvage et caviar - Palette de porc au citron et courgettes à la niçoise -Ballotines de saumon au chou et au lard - Gambas flambées au whisky, potiron et crème de coco",
+                        'quantity' => 36000,
+                        'vintage' => '2019',
+                        'brand' => 'La Brouette',
+                        'color' => 'Rosé',
+                        'type' => 'Tranquille',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://static.greenweez.com/images/products/112000/600/domaine-du-chardon-bleu-cuvee-ritournelle-bio.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Provence',
+                        'cuveeDomaine' => 'AOP',
+                        'capacity' => 700,
+                        'status' => 1,
+                        'rate' => 5
+                    ],   
+                ] 
+            ],
+            [
+                'name' => 'Michu et fils',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Ancien_batiment_de_l%27abbaye_Notre-Dame_de_Bernay_DSC_0048.jpg/800px-Ancien_batiment_de_l%27abbaye_Notre-Dame_de_Bernay_DSC_0048.jpg',
+                'validated' => 1,
+                'presentation' => "Il va manger un esti de char de marde tu vas vouère. J'ai finalement pogné la twist pour faire la poutine. Mon char est resté pogné dans crisse de slotche toute la nuite. Je crisse mon camp d'icite anyway, je déguedine au plus sacrant, ça sent la cibole de marde. Heille les ti-culs, vous er'virez de bord drette là si vous pensez que vous vous écartez dans le bois talheure. Bon, câlisse, tu vas-tu me crisser patience ?",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Christophe',
+                        'lastname' => 'DENEUVE',
+                        'email' => 'seller7@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Christophe',
+                        'lastname' => 'DENEUVE',
+                        'street' => '4 Blvd de Rochechouart',
+                        'city' => 'Paris',
+                        'zipCode' => '75018',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '01 55 29 50 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Calvados',
+                        'price' => 37,
+                        'description' => "Le Calvados 12 ans a vieilli au minimum 12 ans en fûts de chêne avec 25% de barriques neuves. Les pommes sont mélangées, broyées et pressées. Le jus de pomme fermente complètement pour donner le cidre à distiller. La double distillation a lieu six mois après le processus de fermentation du cidre. La première distillation du cidre donne la petite eau à 30% vol. et c'est la seconde distillation, celle de la petite eau, qui donne le Calvados. Elevage : Douze ans minimum. En barriques de chêne toasté de 400 litres dont 25% de barriques neuves. Mise en bouteille à la commande.",
+                        'quantity' => 36000,
+                        'vintage' => 'Non millésimé',
+                        'brand' => 'Tati',
+                        'color' => 'Blanc',
+                        'type' => 'Spiritueux',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://www.prestigewhisky.fr/3123-thickbox_default/dupont-12-ans.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Normandie',
+                        'cuveeDomaine' => '12 ans',
+                        'capacity' => 700,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
+                ]
+            ],
+            [
+                'name' => 'SCEA Inepoute',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Eglise_Saint-Etienne_de_Saleilles.jpg/1600px-Eglise_Saint-Etienne_de_Saleilles.jpg',
+                'validated' => 1,
+                'presentation' => "Yé un peu niaiseux le niochon de voisin, il crisse eu'rien avec sa vie. Ben coudonc, t'es encore là toé ? Des patates pilées, du steak haché, du maïs en crème, pis kin toé, du pâté chinois. Je crisse mon camp d'icite anyway, je déguedine au plus sacrant, ça sent la cibole de marde. Baptême de crisse de cibole de viande à chien, j'en ai plein mon casse d'être toute décalissé de la vie, avec le windshier de mon char toute déviargé par l'autre esti de cave. Toryeu que c'est cheap cette esti de cochonnerie-là.",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Sébastien',
+                        'lastname' => 'LAMPAZONA',
+                        'email' => 'seller8@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Sébastien',
+                        'lastname' => 'LAMPAZONA',
+                        'street' => '36 Allée des Sapins',
+                        'city' => 'Bourg-lès-Valence',
+                        'zipCode' => '26500',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Muscat de Rivesaltes',
+                        'price' => 12,5,
+                        'description' => "Un premier nez floral évolue vers les agrumes mûrs et les fruits exotiques. En bouche, cette complexité aromatique évolue vers une finale fraîche mentholée, et légèrement épicée.
+                        Servir à 8°C. Apéritif, Roquefort, desserts aux fruits blancs et à la vanille.",
+                        'quantity' => 1800,
+                        'vintage' => '2018',
+                        'brand' => 'Epic fail',
+                        'color' => 'Blanc',
+                        'type' => 'Liqueur',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://www.cazes-rivesaltes.com/wp-content/uploads/2017/04/MUSCAT-DE-RIVESALTES-NM.png',
+                        'hsCode' => '2204.21',
+                        'area' => 'Languedoc',
+                        'cuveeDomaine' => 'Adopte un dev',
+                        'capacity' => 750,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
+                ]
+            ],
+            [
+                'name' => 'Milo le Chat',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://live.staticflickr.com/7133/7717473276_a1d4c92c13_b.jpg',
+                'validated' => 1,
+                'presentation' => "T'es din patate mon gars, complètement dans le champ. Baptême de crisse de cibole de viande à chien, j'en ai plein mon casse d'être toute décalissé de la vie, avec le windshier de mon char toute déviargé par l'autre esti de cave. Ferme-toé un peu le mâche-patate là, va prendre une marche ou quelque chose. Quessé tu veux j'te dise sacrament, fouille-moé bout d'viarge, je le sais-tu moé. Ben coudonc, t'es encore là toé ? Ya 'ien qu'une affaire qui me démange, c'est de le pogner par les dessours de bras pis de le câlicer au travers du châssis.",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Djyp',
+                        'lastname' => 'FOREST FORTIN',
+                        'email' => 'seller9@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Djyp',
+                        'lastname' => 'FOREST FORTIN',
+                        'street' => '78 Avenue du Québec',
+                        'city' => 'Villebon-sur-Yvette',
+                        'zipCode' => '91140',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Vin de glace',
+                        'price' => 29,90,
+                        'description' => "Pour produire le vin de glace, on attend que la température descende en dessous de -8°C. En effet, le raisin doit être récolté gelé puis immédiatement pressé avant d’être mis en fermentation. S’en suit une lente période de maturation qui donnera ce nectar sucré aux arômes riches. Les grandes difficultés d’élaboration du vin de glace, et le faible rendement des parcelles destinées à le produire, en font un produit très rare et assez dispendieux !  Le vin de glace du Cep d’Argent présente une bouche gourmande toute en rondeur avec une belle persistance. Des touches de fruits confits, de miel, de pomme au four, et de chicouté (ronce petit-mûrier). Magnifique sur un foie gras, un fromage bleu, en apéritif ou en vin de dessert…",
+                        'quantity' => 36000,
+                        'vintage' => 'Non millésimé',
+                        'brand' => 'Le Cep d’Argent',
+                        'color' => 'Blanc',
+                        'type' => 'Liqueur',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://www.epicerie-quebecoise.com/media/cache/produit_visuel/images/produit/5ceba20cd2c5d335791909.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Canada',
+                        'cuveeDomaine' => 'Milo',
+                        'capacity' => 200,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
+                ]   
+            ],
+            [
+                'name' => 'La compagnie créole',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://live.staticflickr.com/5626/22601432952_e9f9ebea6e_b.jpg',
+                'validated' => 1,
+                'presentation' => "J'ai ben d'la misère avec les colons en bedaine. Je lui ai garôché une estie de garnotte en plein dans sa crisse de face de crosseur, il en menait pas large je te jure. Ben coudonc, t'es encore là toé ? Ça a fessé dans le dash en esti hier, j'étais paqueté en tabarnak, je suis crissement lendemain de veille. T'es din patate mon gars, complètement dans le champ. Mâ t'en faire moé des patentes de même, tu vas m'entendre baptinse.",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Luc',
+                        'lastname' => 'HIDALGO',
+                        'email' => 'seller10@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Luc',
+                        'lastname' => 'HIDALGO',
+                        'street' => '5 rue de Lobau',
+                        'city' => 'Paris',
+                        'zipCode' => '75004',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Rhum',
+                        'price' => 37,
+                        'description' => "le rhum blanc agricole Damoiseau se distingue par sa richesse aromatique marquée par de délicates notes sucrées, florales et épicées.",
+                        'quantity' => 36000,
+                        'vintage' => 'Non millésimé',
+                        'brand' => 'Damoiseau',
+                        'color' => 'Blanc',
+                        'type' => 'Spiritueux',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 40,
+                        'picture' => 'https://farm5.staticflickr.com/4118/4862732568_4ca5699ec5_b.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Guadeloupe',
+                        'cuveeDomaine' => 'Yoda',
+                        'capacity' => 700,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
+                ]
+            ],
+            [
+                'name' => 'Québec Ipsum Corporation Inc',
+                'siret' => '905 720 041 00052',
+                'vat' => 'FR 15 905720041',
+                'picture' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Quebec_City.jpg/800px-Quebec_City.jpg',
+                'validated' => 1,
+                'presentation' => "Ben coudonc, t'es encore là toé ? Lâche pas la patate, enwoye, tu rentres la gogosse dans la slot pis ça va le faire. Je m'en crisse, mais câlicement. Arrête de faire la baboune tabaslack, a va fondre la slutch. Mâ t'en faire moé des patentes de même, tu vas m'entendre baptinse. Il m'a même pas redonné mon ptit change, ya essayé de me crosser le câlice. T'es de bonne heure sul piton toé à matin, quessé qui t'arrive ? Ben coudonc, t'es encore là toé ? Les crottes de fromage, bien sqouick sqouick dans yeule, c'est ça le bonheur. Yé un peu niaiseux le niochon de voisin, il crisse eu'rien avec sa vie. Quessé tu veux j'te dise sacrament, fouille-moé bout d'viarge, je le sais-tu moé. Bon, câlisse, tu vas-tu me crisser patience ?",
+                'rate' => 5,
+                'seller' => [
+                    [
+                        'firstname' => 'Guillaume',
+                        'lastname' => 'SYLVESTRE',
+                        'email' => 'seller11@mail.fr',
+                        'password' => password_hash("banane", PASSWORD_DEFAULT),
+                        'roles' => ['ROLE_SELLER']
+                    ]
+                ],
+                'address' => [
+                    [
+                        'firstname' => 'Guillaume',
+                        'lastname' => 'SYLVESTRE',
+                        'street' => '18 Avenue du Canada',
+                        'city' => 'Rennes',
+                        'zipCode' => '35200',
+                        'country' => 'France',
+                        'iso' => 'FR',
+                        'phoneNumber' => '05 45 36 87 00'
+                    ]
+                ],
+                'packages' => [
+
+                ],
+                'destinations' => [
+
+                ],
+                'products' => [
+                    [
+                        'appellation' => 'Crème d\'érable',
+                        'price' => 24,90,
+                        'description' => "Cette crème d'érable légèrement alcoolisée est un délice ! Ce produit est élaborée avec un sirop d'érable du Québec 100% pur de première qualité, de la crème fraîche, de l'alcool de grains et un soupçon de rhum. A servir sur glace, comme un Bailey's, ou bien à verser dans un café, un chocolat ou à utiliser en cocktail. La crème Coureur des Bois ravira les amateurs de Bailey's en apportant la saveur de l'érable en plus. Une pure gourmandise à consommer avec modération...",
+                        'quantity' => 18000,
+                        'vintage' => 'Non millésimé',
+                        'brand' => 'Coureur des Bois',
+                        'color' => 'Blanc',
+                        'type' => 'Liqueur',
+                        'category' => 'AOP',
+                        'alcoholVolume' => 15,
+                        'picture' => 'https://www.epicerie-quebecoise.com/media/cache/produit_visuel/images/produit/5ddd1f87ce1f1708171437.jpg',
+                        'hsCode' => '2208.21',
+                        'area' => 'Canada',
+                        'cuveeDomaine' => 'Coureur des Bois',
+                        'capacity' => 700,
+                        'status' => 1,
+                        'rate' => 5
+                    ],    
                 ]
             ]
         ];
