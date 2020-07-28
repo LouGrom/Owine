@@ -35,7 +35,7 @@ class Company
     private $vat;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="company")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="company", orphanRemoval=true)
      */
     private $seller;
 
