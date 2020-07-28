@@ -150,8 +150,6 @@ class CartController extends AbstractController
                 $orderProduct->setQuantity($cart->getQuantity());
 
                 $order->addOrderProduct($orderProduct);
-
-                $entityManager->persist($orderProduct);
             }
         }
 
@@ -163,9 +161,6 @@ class CartController extends AbstractController
         $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
         $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
         $order->setReference('???');
-
-        $entityManager->persist($order);
-        $entityManager->flush();
         
         return $this->render('cart/details.html.twig', [
             'carts' => $cartList,
@@ -187,7 +182,7 @@ class CartController extends AbstractController
         $totalCartAmount = 0;
         // 1)Créer un objet Order avec les coordonnées de l'user
         $order = new Order();
-        $order->setStatus(1);
+        $order->setStatus(2);
         $order->setCompany($company);
         $order->setBuyer($this->getUser());
 
