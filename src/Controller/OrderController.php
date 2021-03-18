@@ -103,7 +103,7 @@ class OrderController extends AbstractController
         $order = $orderRepository->find($id);
 
         $content = $vignoblexportApi->getShippingLabel($order);
-        dd($content);
+        // dd($content);
         $order->setStatus(3);
         $order->setShippingLabel($content);
         $manager = $this->getDoctrine()->getManager();
