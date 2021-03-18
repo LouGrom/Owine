@@ -277,7 +277,7 @@ class VignoblexportApi
         // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-        dump($content);
+        // dump($content);
 
         // dd($response);
         // $statusCode = $response->getStatusCode();
