@@ -43,7 +43,7 @@ let app = {
     },
 
     checkDestination: function (destinationId) {
-        // ça fonctionne parce qu'on est des H4CK3RS (et que j'm'appelle Bob le Bricoleur)
+
         return fetch(app.apiBaseUrl + '/destination/' + destinationId + '/add');
     },
 
@@ -53,9 +53,7 @@ let app = {
     },
 
     isSaved: function (event) {
-
-        console.log("TU AS APPUYÉ SUR LE BOUTON DE VALIDATION ! AAAAAH !!")
-        
+      
         let saveButton = event.currentTarget;
         let row = saveButton.closest('tr');
         let packageId = row.querySelector('.packageId').innerText;

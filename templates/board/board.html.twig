@@ -66,7 +66,7 @@
             <tbody>
             {% for order in app.user.company.orders %}
                 <tr>
-                <td>{{ order.trackingNumber }}</td>
+                <td>{{ order.reference }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
                 <td>{{ order.buyer.addresses[0].city ~ ' - ' ~ order.buyer.addresses[0].country }}</td>
                 <td>{{ order.totalAmount }} €</td>
