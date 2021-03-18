@@ -57,7 +57,7 @@
                 {% if app.user %}
                   {# et qu'on est un seller #}
                   {% if 'ROLE_BUYER' in app.user.roles %}
-                    {# alors on voit le lien vers le tableau de bord  #}
+                    {# alors on voit le lien vers le panier et les commandes  #}
                 <li class="nav-item">
                   <a class="nav-link" href="{{ path('cart_buyer',{'id': (app.user.id)}) }}">Panier</a>
                 </li>
@@ -79,9 +79,9 @@
 
                 {# Si on est connecté #}
                 {% if app.user %}
-                  {# et qu'on est un seller #}
+                  {# et qu'on est un admin #}
                   {% if 'ROLE_ADMIN' in app.user.roles %}
-                    {# alors on voit le lien vers le tableau de bord  #}
+                    {# alors on voit le lien vers EasyAdmin  #}
                     <li class="nav-item">
                       <a class="nav-link" href="{{ path('admin') }}">Tableau d'administration</a>
                     </li>
@@ -109,10 +109,10 @@
               
             </div>
           </nav>
-          
+
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show fixed-top" role="alert">
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
                       {{ message }}
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -120,7 +120,7 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-            
+             
           <div class="container mt-5 mb-3">
             {% block body %}{% endblock %}
           </div>

@@ -157,10 +157,10 @@ class CartController extends AbstractController
         $order->setTotalAmount($totalCartAmount);
  
         // TODO : Infos générées par l'api (plus tard)
-        $order->setTrackingNumber(random_int(10000000, 99999999));
+        // $order->setTrackingNumber(random_int(10000000, 99999999));
         $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
         $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
-        $order->setReference('???');
+        // $order->setReference('???');
         
         return $this->render('cart/details.html.twig', [
             'carts' => $cartList,
@@ -214,7 +214,7 @@ class CartController extends AbstractController
         $order->setTotalAmount($totalCartAmount);
  
         // TODO : Infos générées par l'api (plus tard)
-        $order->setTrackingNumber(random_int(10000000, 99999999));
+        // $order->setTrackingNumber(random_int(10000000, 99999999));
         $order->setCarrier($vignoblexportApi->estimateShippingCosts($order)['name']);
         $order->setShippingCosts($vignoblexportApi->estimateShippingCosts($order)['price']);
         $order->setReference('???');

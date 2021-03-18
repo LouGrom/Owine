@@ -51,8 +51,48 @@ class OrderController extends AbstractController
     public function shipOrder(OrderRepository $orderRepository, VignoblexportApi $vignoblexportApi, $id)
     {
         $order = $orderRepository->find($id);
-        $vignoblexportApi->createShipment($order);
+        $entityManager = $this->getDoctrine()->getManager();
 
+        foreach($order->getOrderProducts() as $orderProduct) {
+
+            $product = [
+                'appellation' => $orderProduct->getProduct()->getAppellation()->getName(),
+                'origin' => $order->getCompany()->getSeller()[0]->getAddresses()[0]->getCountry(),
+                'description' => $orderProduct->getProduct()->getDescription(),
+                'capacity' => $orderProduct->getProduct()->getCapacity(),
+                'degre' => $orderProduct->getProduct()->getAlcoholVolume(),
+                'color' => $orderProduct->getProduct()->getColor()->getName(),
+                'hsCode' => $orderProduct->getProduct()->getHsCode(),
+                'millesime' => $orderProduct->getProduct()->getVintage(),
+                'unitValue' => $orderProduct->getProduct()->getPrice(),
+                'quantity' => $orderProduct->getQuantity(),
+                'manufacturer' => $orderProduct->getProduct()->getBrand()->getName(),
+            ];
+
+            $commodityDetails[] = $product;
+            
+        }
+
+        $packageList = $vignoblexportApi->selectPackage($order);
+
+        $carrierDetails = $vignoblexportApi->estimateShippingCosts($order);
+        // dump($carrierDetails);
+
+        $content = $vignoblexportApi->createShipment($order, $packageList, $carrierDetails, $commodityDetails);
+        // dump($content['expedition']['id']);
+        $order->setReference($content['expedition']['id']);
+        $order->setCarrier($carrierDetails['name']);
+        $order->setTrackingNumber($content['expedition']['codeTracking']);
+        $order->setShippingCosts($carrierDetails['price']);
+        $order->setShippingLabel($content['expedition']['label']['directLink']);
+        $order->setStatus(3);
+        $manager = $this->getDoctrine()->getManager();
+        $entityManager->persist($order);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('order_view', [
+            'id' => $id
+        ]);
     }
 
     /**
@@ -63,6 +103,7 @@ class OrderController extends AbstractController
         $order = $orderRepository->find($id);
 
         $content = $vignoblexportApi->getShippingLabel($order);
+        dd($content);
         $order->setStatus(3);
         $order->setShippingLabel($content);
         $manager = $this->getDoctrine()->getManager();
