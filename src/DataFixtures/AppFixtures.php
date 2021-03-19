@@ -17,7 +17,7 @@ use App\Entity\Cart;
 use App\Entity\Destination;
 use App\Entity\Package;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker;
 use Xvladqt\Faker\LoremFlickrProvider;
 
