@@ -34,7 +34,9 @@ class ProductTest extends WebTestCase
             'brand' => 'Couly-Dutheil',
         ]);
     
-        $this->assertFormValue('#form', 'trialPeriod', '7');
+        self::assertFormValue('#form', 'appellation', 'Chinon');
+        self::assertFormValue('#form', 'area', 'Loire');
+        self::assertFormValue('#form', 'type', 'Vin tranquille');
     }
 
     public function provideUrls()

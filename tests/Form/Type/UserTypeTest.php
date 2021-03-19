@@ -15,6 +15,7 @@ class UserTypeTest extends TypeTestCase
             'lastname' => 'LETEURTRE',
             'email' => 'marjolaine@mail.fr',
             'password' => 'banane',
+            'roles' => 'ROLE_BUYER',
         ];
 
         $model = new User();
