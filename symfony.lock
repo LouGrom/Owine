@@ -121,6 +121,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
     },
+    "liip/test-fixtures-bundle": {
+        "version": "1.11.2"
+    },
     "mledoze/countries": {
         "version": "4.0.0"
     },

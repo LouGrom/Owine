@@ -2,7 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Appellation;
+use App\DataFixtures\AppellationFixtures;
+use App\DataFixtures\ColorFixtures;
+use App\DataFixtures\ProductCategoryFixtures;
+use App\DataFixtures\OrderProductFixtures;
+use App\DataFixtures\CompanyFixtures;
 use App\Entity\User;
 use App\Entity\Address;
 use App\Entity\Product;
@@ -18,10 +22,11 @@ use App\Entity\Destination;
 use App\Entity\Package;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
 use Xvladqt\Faker\LoremFlickrProvider;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -1072,5 +1077,17 @@ class AppFixtures extends Fixture
         $manager->persist($adminAddress);
         
         $manager->flush();
+    }
+
+    public function getDepencies() {
+
+        return [
+            AppellationFixtures::class,
+            ColorFixtures::class,
+            ProductCategoryFixtures::class,
+            OrderProductFixtures::class,
+            CompanyFixtures::class,
+        ];
+
     }
 }

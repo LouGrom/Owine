@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+// TODO
 class ProductTypeTest extends TypeTestCase
 {
     public function testProductType()
