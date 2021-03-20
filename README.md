@@ -18,7 +18,7 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.
 ###> nelmio/cors-bundle ###
 CORS_ALLOW_ORIGIN=^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$
 ###< nelmio/cors-bundle ###
-VIGNOBLEXPORT_TOKEN=on7cONFEljwsVewWLjrn1R70F8rF+GsVj8pwHT7d4e2sF881muXHPGlN2tV851kAUoA=
+VIGNOBLEXPORT_TOKEN=***********************************************************
 ```
 
 Dans le terminal :
