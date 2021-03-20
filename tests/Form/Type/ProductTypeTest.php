@@ -11,23 +11,29 @@ class ProductTypeTest extends TypeTestCase
     public function testProductType()
     {
         $formData = [
-            'appellation' => 'Chinon',
+            'appellation' => '',
             'area' => 'Loire',
-            'type' => 'Vin tranquille',
+            'type' => '',
             'cuveeDomaine' => 'Le château de mon père',
             'capacity' => '750',
             'vintage' => '2016',
-            'color' => 'rouge',
+            'color' => '',
             'alcoholVolume' => '12',
             'price' => '13,5',
             'hsCode' => '2204.21.00',
             'description' => 'La description de mon Chinon',
-            'picture' => 'photo.jpg',
+            'seller' => '',
+            'picture' => '',
             'status' => '1',
             'stockQuantity' => '2000',
-            'brand' => 'Couly-Dutheil',
+            'brand' => '',
+            'rate' => '',
+            'company' => '',
+            'createdAt' => '',
+            'updatedAt' => '',
         ];
 
+        
         $model = new Product();
         // $formData will retrieve data from the form submission; pass it as the second argument
         $form = $this->factory->create(ProductType::class, $model);
@@ -38,6 +44,7 @@ class ProductTypeTest extends TypeTestCase
         // submit the data to the form directly
         $form->submit($formData);
 
+        dd($form);
         // This check ensures there are no transformation failures
         $this->assertTrue($form->isSynchronized());
 

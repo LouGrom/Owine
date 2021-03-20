@@ -35,8 +35,10 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank
-     * @var string The hashed password
+     * @Assert\Regex(
+     * pattern = "/^((?=\S?[A-Z])(?=\S?[a-z])(?=\S*?[0-9]).{8,})\S$/",
+     * match=true,
+     * message="Votre mot de passe doit comporter au moins huit caractères dont 1 caractère spécial, 1 majuscule, 1 chiffre et sans espace.")     * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
