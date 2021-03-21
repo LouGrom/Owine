@@ -27,19 +27,11 @@ class CompanyTypeTest extends TypeTestCase
         ];
 
         $model = new Company();
-        // $formData will retrieve data from the form submission; pass it as the second argument
         $form = $this->factory->create(CompanyType::class, $model);
-
         $expected = new Company();
-        // ...populate $object properties with the data stored in $formData
-
-        // submit the data to the form directly
         $form->submit($formData);
 
-        // This check ensures there are no transformation failures
         $this->assertTrue($form->isSynchronized());
-
-        // check that $formData was modified as expected when the form was submitted
         $this->assertEquals($expected, $model);
     }
 }

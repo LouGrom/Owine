@@ -13,16 +13,6 @@ class ProductTest extends WebTestCase
 
     public function testProductAdd()
     {
-        // j'ajoute les classes que les fixtures qu'implémente FixturesTrait
-        $this->loadFixtures([
-            AppellationFixtures::class,
-            ColorFixtures::class,
-            ProductCategoryFixtures::class,
-            OrderProductFixtures::class,
-            CompanyFixtures::class,
-        ]);
-
-        // $client = $this->makeClient();
         $client = static::createClient();
         $client->request('GET', '/board/product/new');
         $client->submitForm('Submit product', [

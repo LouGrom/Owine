@@ -25,7 +25,7 @@ class UserTest extends WebTestCase
         $userRepository = static::$container->get(UserRepository::class);
 
         // on récupère l'utilisateur avec le ROLE_BUYER
-        $testUser = $userRepository->findOneByEmail('seller@mail.fr');
+        $testUser = $userRepository->findOneByEmail('buyer@mail.fr');
 
         // on simule la connexion de l'utilisateur
         $client->loginUser($testUser);

@@ -63,94 +63,92 @@
           <div class="tab-pane" id="destination">
             <h6>MES DESTINATIONS</h6>
             <hr>  
-
             <div>
               <div class="col-12 mb-3">
               {# Div principale des Destinations#}
-                  <div class="d-md-flex justify-content-between" id="destinations">
-                      <div id="national">
-                          <p class="h5 text-center">National</p>
-                          {% for destination in destinations %}
-                          {% if destination.zone == 'National' %}
-                          <div class="ml-5 ml-md-0">
-                              <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                              <label for="{{ destination.country }}">{{ destination.country }}</label>
-                          </div>
-                      <div>
-                  </div>
-                          {% endif %}
-                          {% endfor %}
-                  </div>
-                  {#Europe#}
-                  <div id="europe">
-                      <p class="h5 text-center">Europe</p>
+                <div class="d-md-flex justify-content-between" id="destinations">
+                  <div id="national">
+                      <p class="h5 text-center">National</p>
                       {% for destination in destinations %}
-                          {% if destination.zone == 'Europe' %}
-                          <div class="ml-5">
-                              <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{destination.id}}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                              <label for="{{ destination.country }}">{{ destination.country }}</label>
-                          </div>
-                          {% endif %}
-                      {% endfor %}
-                  </div>
-                  {#Monde#}
-                  <div id="world">
-                      <p class="h5 text-center">Monde</p>
-                      {% for destination in destinations %}
-                          {% if destination.zone == 'World' %}
-                          <div class="ml-5">
-                              <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
-                              <label for="{{ destination.country }}">{{ destination.country }}</label>
-                          </div>
-                          {% endif %}
-                      {% endfor %}
-                  </div>
-              </div> 
+                      {% if destination.zone == 'National' %}
+                      <div class="ml-5 ml-md-0">
+                          <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                          <label for="{{ destination.country }}">{{ destination.country }}</label>
+                      </div>
+                  <div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+                {#Europe#}
+                <div id="europe">
+                    <p class="h5 text-center">Europe</p>
+                    {% for destination in destinations %}
+                        {% if destination.zone == 'Europe' %}
+                        <div class="ml-5">
+                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{destination.id}}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                            <label for="{{ destination.country }}">{{ destination.country }}</label>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {#Monde#}
+                <div id="world">
+                    <p class="h5 text-center">Monde</p>
+                    {% for destination in destinations %}
+                        {% if destination.zone == 'World' %}
+                        <div class="ml-5">
+                            <input class="destination" type="checkbox" id="{{ destination.country }}" value="{{ destination.id }}" name="{{ destination.country }}" {% if destination in app.user.company.destinations %}checked{% endif %}>
+                            <label for="{{ destination.country }}">{{ destination.country }}</label>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                </div> 
               </div>
-              </div>
+            </div>
           </div>
           <div class="tab-pane" id="package">
             <h6>MES FORMATS DE COLIS</h6>
             <hr>
               <div>
-              <button class="btn btn-dark addPackage mb-3" id="add"><i class="fas fa-plus"></i> Ajouter</button>
+                <button class="btn btn-dark addPackage mb-3" id="add"><i class="fas fa-plus"></i> Ajouter</button>
               </div>
-  
               <div class="table-content table-responsive">
-                  <table class="table table-striped text-center" id="table-list">
-                      <thead class="thead">
-                          <tr>
-                              <th hidden>id</th>
-                              <th>Nombre de bouteilles</th>
-                              <th>Hauteur (en cm)</th>
-                              <th>longueur (en cm)</th>
-                              <th>Largeur (en cm)</th>
-                              <th>Poids (en kg)</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for package in packages %}
-                          <tr class="package">
-                              <td class="packageId" hidden>{{ package.id }}</td>
-                              <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
-                              <td class="height">{{ package.height }}</td>
-                              <td class="length">{{ package.length }}</td>
-                              <td class="width">{{ package.width }}</td>
-                              <td class="weight">{{ package.weight }}</td>
-                          </tr>
-                          {% endfor %}
-                          {% if packages is empty %}
-                          <tr>
-                              <td class="packageId" hidden></td>
-                              <td class="bottleQuantity"></td>
-                              <td class="height"></td>
-                              <td class="length"></td>
-                              <td class="width"></td>
-                              <td class="weight"></td>
-                          </tr>
-                          {% endif %}
-                      </tbody>
-                  </table>
+                <table class="table table-striped text-center" id="table-list">
+                  <thead class="thead">
+                    <tr>
+                      <th hidden>id</th>
+                      <th>Nombre de bouteilles</th>
+                      <th>Hauteur (en cm)</th>
+                      <th>longueur (en cm)</th>
+                      <th>Largeur (en cm)</th>
+                      <th>Poids (en kg)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for package in packages %}
+                    <tr class="package">
+                        <td class="packageId" hidden>{{ package.id }}</td>
+                        <td class="bottleQuantity">{{ package.bottleQuantity }}</td>
+                        <td class="height">{{ package.height }}</td>
+                        <td class="length">{{ package.length }}</td>
+                        <td class="width">{{ package.width }}</td>
+                        <td class="weight">{{ package.weight }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% if packages is empty %}
+                    <tr>
+                        <td class="packageId" hidden></td>
+                        <td class="bottleQuantity"></td>
+                        <td class="height"></td>
+                        <td class="length"></td>
+                        <td class="width"></td>
+                        <td class="weight"></td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
               </div>
           </div>
       </div>
