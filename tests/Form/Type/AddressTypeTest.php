@@ -11,15 +11,17 @@ class AddressTypeTest extends TypeTestCase
     public function testAddressType()
     {
         $formData = [
-            'country' => 'France',
-            'street' => '69B rue du Colombier',
-            'zipCode' => '45000',
-            'city' => 'Orléans',
-            'province' => '',
-            'firstname' => 'Marjolaine',
-            'lastname' => 'LETEURTRE',
-            'phoneNumber' => '0980802020',
-            'iso' => 'FR',
+            [
+                'country' => 'France',
+                'street' => '69B rue du Colombier',
+                'zipCode' => '45000',
+                'city' => 'Orléans',
+                'province' => '',
+                'firstname' => 'Marjolaine',
+                'lastname' => 'LETEURTRE',
+                'phoneNumber' => '0980802020',
+                'iso' => 'FR'
+            ]
         ];
 
         $model = new Address();
@@ -27,7 +29,7 @@ class AddressTypeTest extends TypeTestCase
         $expected = new Address();
         $form->submit($formData);
 
-        $this->assertTrue($form->isSynchronized());
+        $this->assertTrue($form->isValid());
         $this->assertEquals($expected, $model);
     }
 }
