@@ -17,7 +17,7 @@ class CompanyTypeTest extends TypeTestCase
                 'vat' => 'FR 15 905720041',
                 'picture' => 'https://live.staticflickr.com/7133/7717473276_a1d4c92c13_b.jpg',
                 'validated' => 1,
-                'presentation' => "T'es din patate mon gars, complètement dans le champ. Baptême de crisse de cibole de viande à chien, j'en ai plein mon casse d'être toute décalissé de la vie, avec le windshier de mon char toute déviargé par l'autre esti de cave. Ferme-toé un peu le mâche-patate là, va prendre une marche ou quelque chose. Quessé tu veux j'te dise sacrament, fouille-moé bout d'viarge, je le sais-tu moé. Ben coudonc, t'es encore là toé ? Ya 'ien qu'une affaire qui me démange, c'est de le pogner par les dessours de bras pis de le câlicer au travers du châssis.",
+                'presentation' => "Baptême de crisse de cibole de viande à chien, j'en ai plein mon casse d'être toute décalissé de la vie, avec le windshier de mon char toute déviargé par l'autre esti de cave. Quessé tu veux j'te dise sacrament, fouille-moé bout d'viarge, je le sais-tu moé. Ben coudonc, t'es encore là toé ? ",
                 'rate' => 5,
                 'seller' => [
                     [
@@ -40,17 +40,13 @@ class CompanyTypeTest extends TypeTestCase
                         'phoneNumber' => '05 45 36 87 00'
                     ]
                 ],
-                'packages' => [
-
-                ],
-                'destinations' => [
-
-                ],
+                'packages' => [],
+                'destinations' => [],
                 'products' => [
                     [
                         'appellation' => 'Vin de glace',
                         'price' => 29,90,
-                        'description' => "Pour produire le vin de glace, on attend que la température descende en dessous de -8°C. En effet, le raisin doit être récolté gelé puis immédiatement pressé avant d’être mis en fermentation. S’en suit une lente période de maturation qui donnera ce nectar sucré aux arômes riches. Les grandes difficultés d’élaboration du vin de glace, et le faible rendement des parcelles destinées à le produire, en font un produit très rare et assez dispendieux !  Le vin de glace du Cep d’Argent présente une bouche gourmande toute en rondeur avec une belle persistance. Des touches de fruits confits, de miel, de pomme au four, et de chicouté (ronce petit-mûrier). Magnifique sur un foie gras, un fromage bleu, en apéritif ou en vin de dessert…",
+                        'description' => "Pour produire le vin de glace, on attend que la température descende en dessous de -8°C. En effet, le raisin doit être récolté gelé puis immédiatement pressé avant d’être mis en fermentation…",
                         'quantity' => 36000,
                         'vintage' => 'Non millésimé',
                         'brand' => 'Le Cep d’Argent',
@@ -76,6 +72,7 @@ class CompanyTypeTest extends TypeTestCase
         $form->submit($formData);
 
         $this->assertTrue($form->isValid());
+        $this->assertTrue($form->isSynchronized());
         $this->assertEquals($expected, $model);
     }
 }

@@ -25,7 +25,7 @@ class UserController extends AbstractController
     {
 
         $user = $this->getUser();
-        dump($user['addresses']['0']);
+        // dump($user['addresses']['0']);
 
         $form = $this->createForm(UserType::class, $user);
 
