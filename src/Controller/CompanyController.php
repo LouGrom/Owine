@@ -66,6 +66,7 @@ class CompanyController extends AbstractController
 
         $company = $this->getUser()->getCompany();
         $form = $this->createForm(CompanyType::class, $company);
+        // dump($company);
         
         return $this->render('company/profile.html.twig', [
             'destinations' => $destinationRepository->findAll(),

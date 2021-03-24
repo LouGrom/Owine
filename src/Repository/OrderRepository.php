@@ -33,7 +33,6 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    
 
     /*
     public function findOneBySomeField($value): ?Order

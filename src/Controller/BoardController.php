@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @Route("/board")
  */
@@ -17,10 +19,16 @@ class BoardController extends AbstractController
     /**
      * @Route("/", name="board")
      */
-    public function board()
+    public function board(UserInterface $user)
     {
-        $productsList=$this->getDoctrine()->getRepository(Product::class)->findAll();
-        $ordersList=$this->getDoctrine()->getRepository(Order::class)->findAll();
+
+        $companyId = $user->getCompany()->getId();
+        $productsList=$this->getDoctrine()->getRepository(Product::class)->findBy([
+            'company' => $companyId
+        ]);
+        $ordersList=$this->getDoctrine()->getRepository(Order::class)->findBy([
+            'company' => $companyId
+        ]);
         return $this->render('board/board.html.twig', [
             'productsList' => $productsList,
             'ordersList'=> $ordersList

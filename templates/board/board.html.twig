@@ -8,7 +8,7 @@
 <div class="d-flex justify-content-around">
     <ul class="nav nav-pills">
         <li class="active mr-3"><a href="#products" data-toggle="pill" class="btn btn-dark">Mes produits <i class="fa fa-wine-bottle"></i></a></li>
-        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Mes commandes <i class="far fa-credit-card"></i></i></a></li>
+        <li class="active"><a href="#orders" data-toggle="pill" class="btn btn-dark">Mes commandes <i class="far fa-credit-card"></i></a></li>
     </ul>
 </div>
 <div class="tab-content text-center">
@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for product in app.user.company.products %}
+            {% for product in productsList %}
                 <tr>
                 <td>{{ product.appellation.name }}</td>
                 <td>{{ product.type.name }}</td>
@@ -42,7 +42,7 @@
                 <td>{{ product.price }} €</td>
                 <td><a href="{{ path('product_view', {'id': product.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
             </table>
         </div>
@@ -59,18 +59,17 @@
                 <th scope="col">Client</th>
                 <th scope="col">Adresse du client</th>
                 <th scope="col">Prix</th>
-                {# <th scope="col">Couleur préférée</th> #}
+
                 <th scope="col">Détails</th>
                 </tr>
             </thead>
             <tbody>
-            {% for order in app.user.company.orders %}
+            {% for order in ordersList %}
                 <tr>
                 <td>{{ order.reference }}</td>
                 <td>{{ order.buyer.firstname ~ ' ' ~ order.buyer.lastname }}</td>
                 <td>{{ order.buyer.addresses[0].city ~ ' - ' ~ order.buyer.addresses[0].country }}</td>
                 <td>{{ order.totalAmount }} €</td>
-                {# <td style="background-color: #f0f">F0F</td> #}
                 <td><a href="{{ path('order_view', {'id': order.id}) }}" class="btn btn-dark"><span class="d-none d-md-inline">Voir </span><i class="fa fa-search"></i></a></td>
                 </tr>
             {% endfor %}

@@ -10,41 +10,36 @@
 </div>
 <div id="map"></div>
 <table id="address">
-{{ form_row(form.street, { 'id': 'address'} ) }}
-{{ form_row(form.city, { 'id': 'locality'} ) }}
-{{ form_row(form.zipCode, { 'id': 'postal_code'} ) }}
-{{ form_row(form.province, { 'id': 'administrative_area_level_1'} ) }}
-{{ form_row(form.country, { 'id': 'country'} ) }}
-{{ form_row(form.iso, { 'id': 'iso'} ) }}
-
+	{{ form_row(form.street, { 'id': 'address'} ) }}
+	{{ form_row(form.city, { 'id': 'locality'} ) }}
+	{{ form_row(form.zipCode, { 'id': 'postal_code'} ) }}
+	{{ form_row(form.province, { 'id': 'administrative_area_level_1'} ) }}
+	{{ form_row(form.country, { 'id': 'country'} ) }}
+	{{ form_row(form.iso, { 'id': 'iso'} ) }}
 </table>
-
-
-	<table id="address" hidden>
-		<tr>
-			<td class="label">Adresse</td>
-			<td class="slimField"><input class="field street_number" id="street_number" disabled="true"/></td>
-			<td class="wideField" colspan="2"><input class="field route" id="route" disabled="true"/></td>
-		</tr>
-		<tr>
-			<td class="label">Ville</td>
-			<td class="wideField" colspan="3"><input class="field" id="locality" disabled="true"/></td>
-		</tr>
-		<tr>
-			<td class="label">Province</td>
-			<td class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"/></td>
-			<td class="label">Code Postal</td>
-			<td class="wideField"><input class="field" id="postal_code" disabled="true"/></td>
-		
-		</tr>
-		<tr>
-			<td class="label">Pays</td>
-			<td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
-		</tr>
-	<button class="btn save"><strong>{{ button_label|default('Enregistrer') }}</strong></button>
-	</table>
-
-            
+<table id="address" hidden>
+	<tr>
+		<td class="label">Adresse</td>
+		<td class="slimField"><input class="field street_number" id="street_number" disabled="true"/></td>
+		<td class="wideField" colspan="2"><input class="field route" id="route" disabled="true"/></td>
+	</tr>
+	<tr>
+		<td class="label">Ville</td>
+		<td class="wideField" colspan="3"><input class="field" id="locality" disabled="true"/></td>
+	</tr>
+	<tr>
+		<td class="label">Province</td>
+		<td class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"/></td>
+		<td class="label">Code Postal</td>
+		<td class="wideField"><input class="field" id="postal_code" disabled="true"/></td>
+	
+	</tr>
+	<tr>
+		<td class="label">Pays</td>
+		<td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
+	</tr>
+<button class="btn save"><strong>{{ button_label|default('Enregistrer') }}</strong></button>
+</table>         
             
 {{ form_end(form) }}
 
