@@ -105,9 +105,17 @@
         {{ include('order/_delete_form.html.twig') }}
         {% if order.status == 2 %}
             <!-- <a class="btn btn-dark ml-3" href="{{ path('order_shiping_label',{'id': order.id}) }}"><i class="fas fa-truck mr-2"></i>Expédier</a> -->
-            <a class="btn btn-dark ml-3" href="{{ path('order_ship',{'id': order.id}) }}"><i class="fas fa-truck mr-2"></i>Expédier</a>
+            <a class="btn btn-dark ml-3" id="displayLoaderBtn" href="{{ path('order_ship',{'id': order.id}) }}"><i class="fas fa-truck mr-2"></i>Expédier</a>
         {% else %}
             <a class="btn btn-dark ml-3" href="{{ order.shippingLabel }}" target="_blank"><i class="fas fa-truck mr-2"></i>Obtenir le bon de transport</a>
         {% endif %}
     </div>
+
+    <div id="loaderBox" hidden>
+        <img src="https://www.weinwunderland.de/assets/frontend/img/preloader.gif">
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/loader.js') }}"></script>
 {% endblock %}
